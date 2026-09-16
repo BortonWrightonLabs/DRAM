@@ -1,0 +1,47 @@
+nextflow_pipeline {
+
+    name "Test standalone QC"
+    script "../main.nf"
+    tag "pipeline"
+
+    test("Test QC with input FASTA") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                annotate = false
+                summarize = false
+                qc = true
+                anno_dbs = ""
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("${params.outdir}/ANNOTATE/raw_rrna_scan.tsv").exists()
+        }
+    }
+
+    test("Test QC with supplied RNA tables") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                input_fasta = null
+                rename = false
+                annotate = false
+                summarize = false
+                qc = true
+                anno_dbs = ""
+                rrnas = "${projectDir}/tests/data/owc/qc/rrnas"
+                trnas = "${projectDir}/tests/data/owc/qc/trnas"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert path("${params.outdir}/ANNOTATE/raw_rrna_scan.tsv").exists()
+            assert path("${params.outdir}/ANNOTATE/raw_trna_scan.tsv").exists()
+        }
+    }
+}

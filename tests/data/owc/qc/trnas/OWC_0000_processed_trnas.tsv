@@ -1,0 +1,2 @@
+input_fasta	query_id	tRNA #	begin	end	type	codon	score	note	gene_id
+OWC_0000	OWC_0000_test_tRNA	1	1	75	Ala	TGC	75.0		Ala (TGC)

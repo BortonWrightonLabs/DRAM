@@ -183,11 +183,11 @@ Annotate called genes. You will need to specify what databases to annotate again
 
 `--qc`
 
-Run quality control options for DRAM workflow. The QC step collects rRNA and tRNA scans using Barrnap and tRNAscan-SE for the genome_states.tsv output as a baseline. Additional options for QC can be found in the Parameters API documentation or `--help`.
+Run quality control options for the DRAM workflow. With `--input_fasta`, QC scans for rRNA and tRNA using Barrnap and tRNAscan-SE. Without raw FASTA, QC can collect precomputed `--rrnas` and `--trnas` tables. It can also add `--bin_quality` and `--taxa` data to annotations produced by `--annotate` or supplied with `--annotations`. QC outputs remain under the `ANNOTATE` output directory.
 
 `--summarize`
 
-Distill out annotations from the topic toolkit default (set of predetermined distill topics). You can also specify additional ecosystem toolkits with `--sum_ecos [OPTIONS]` or custom distill sheets. See the Parameters API documentation for more details, or `--help`.
+Distill out annotations from the topic toolkit default (set of predetermined distill topics). You can also specify additional ecosystem toolkits with `--sum_ecos [OPTIONS]` or custom distill sheets. To summarize without running `--annotate`, provide an existing DRAM annotations TSV with `--annotations`. QC remains optional in either mode. See the Parameters API documentation for more details, or `--help`.
 
 `--visualize`
 

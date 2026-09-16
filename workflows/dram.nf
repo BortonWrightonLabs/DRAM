@@ -19,9 +19,13 @@ include { FORMAT_KEGG_DB         } from "../modules/local/database/format_kegg_d
 include { MMSEQS_GPU_DATABASE    } from "../modules/local/database/mmseqs_gpu_database.nf"
 include { MERGE                  } from "../subworkflows/local/merge.nf"
 include { ANNOTATE               } from "../subworkflows/local/annotate.nf"
+include { QC                     } from "../subworkflows/local/qc.nf"
 include { ADD_ANNOTATIONS        } from "../modules/local/add_and_combine/add_annotations.nf"
 include { SUMMARIZE              } from "../modules/local/distill/distill.nf"
 include { DECOMPRESS_FASTA       } from "../modules/local/rename/decompress_fasta.nf"
+include { RENAME_FASTA           } from "../modules/local/rename/rename_fasta.nf"
+include { resourceBytes          } from '../subworkflows/local/utils_resource_classes.nf'
+include { batchManifestToTuples; collectNamePathTuples } from '../subworkflows/local/utils_channels.nf'
 
 
 /*
@@ -48,7 +52,7 @@ workflow DRAM {
     // if annotate with raw fasta but no call, we can infer we need to call genes, so set call to true
     // Also, if call is specified, set call to true
     call = false
-    if ((params.annotate && params.input_fasta != "") || params.call) {
+    if ((params.annotate && params.input_fasta) || params.call) {
         call = true
     }
     visualize = false
@@ -60,7 +64,7 @@ workflow DRAM {
         traits = true
     }
 
-    if (params.input_fasta && (params.rename || call)) {
+    if (params.input_fasta && (params.rename || call || params.qc)) {
         ch_fasta_raw = channel
             .fromPath(file(params.input_fasta) / params.fasta_fmt, checkIfExists: true)
                 .ifEmpty { exit 1, "Cannot find any fasta files matching: ${params.input_fasta}\nNB: Path needs to follow pattern: path/to/directory/" }
@@ -80,6 +84,14 @@ workflow DRAM {
 
         DECOMPRESS_FASTA( ch_fasta_branched.gz )
         ch_fasta = DECOMPRESS_FASTA.out.decompressed_fasta.mix( ch_fasta_branched.plain )
+
+        if (params.rename) {
+            ch_fasta_collected = collectNamePathTuples(ch_fasta)
+            RENAME_FASTA( ch_fasta_collected )
+            ch_fasta = batchManifestToTuples(RENAME_FASTA.out.renamed_batch)
+        }
+
+        ch_fasta = ch_fasta.map { name, fasta -> tuple(name, fasta, resourceBytes(fasta)) }
     }
     viz_rules_system = params.viz_rules_system
 
@@ -271,7 +283,7 @@ workflow DRAM {
         // Pipeline steps
         //
 
-        if (params.input_fasta || params.input_genes) {
+        if (params.annotate || params.call) {
 
             ANNOTATE (
                 ch_fasta,
@@ -298,13 +310,8 @@ workflow DRAM {
             )
         }
 
-        if (params.annotate){ // If the user has specified --annotate, us the outputted annotations
+        if (params.annotate){ // If the user has specified --annotate, use the outputted annotations
             ch_final_annots = ANNOTATE.out.ch_combined_annotations
-            if( params.add_annotations ){
-                ch_add_annots = file(params.add_annotations)
-                ADD_ANNOTATIONS( ANNOTATE.out.ch_combined_annotations, ch_add_annots )
-                ch_final_annots = ADD_ANNOTATIONS.out.combined_annots_out
-            }
         } else if (params.annotations) {
             ch_final_annots = channel
                 .fromPath(params.annotations, checkIfExists: true)
@@ -313,10 +320,24 @@ workflow DRAM {
             ch_final_annots = default_sheet
         }
 
+        ch_trna_combined = default_sheet
+        if (params.qc) {
+            scan_input_fasta = params.input_fasta ? true : false
+            QC( ch_fasta, default_sheet, ch_final_annots, scan_input_fasta )
+            ch_final_annots = QC.out.ch_final_annots
+            ch_trna_combined = QC.out.ch_trna_combined
+        }
+
+        if (params.annotate && params.add_annotations) {
+            ch_add_annots = file(params.add_annotations)
+            ADD_ANNOTATIONS( ch_final_annots, ch_add_annots )
+            ch_final_annots = ADD_ANNOTATIONS.out.combined_annots_out
+        }
+
         if (distill_flag) {
             SUMMARIZE(
                 ch_final_annots,
-                ANNOTATE.out.ch_trna_combined,
+                ch_trna_combined,
                 distill_topic,
                 distill_ecosystem,
                 distill_custom

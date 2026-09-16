@@ -25,7 +25,7 @@
                 },
                 "qc": {
                     "type": "boolean",
-                    "description": "Run quality control steps such as collect rRNA and tRNA scans. See QC section for more options."
+                    "description": "Run quality control steps. With --input_fasta, DRAM scans for rRNA and tRNA; without FASTA, optional precomputed --rrnas and --trnas tables can be collected. QC can enrich generated or supplied annotations with bin quality and taxonomy."
                 },
                 "summarize": {
                     "type": "boolean",
@@ -284,19 +284,19 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "description": "Path to annotations tsv to distill. Required if running without annotate"
+                    "description": "Path to an annotations TSV for summarize, QC enrichment, visualization, or traits without running annotate."
                 },
                 "rrnas": {
                     "type": "string",
-                    "format": "file-path",
+                    "format": "directory-path",
                     "exists": true,
-                    "description": "Path to folder containing individual rRNA files generated with tRNAscan-SE. Can be used when running distill without call to add additional information."
+                    "description": "Path to a directory containing individual rRNA TSV files generated with Barrnap. Can be used by QC without raw FASTA input."
                 },
                 "trnas": {
                     "type": "string",
-                    "format": "file-path",
+                    "format": "directory-path",
                     "exists": true,
-                    "description": "Path to folder containging individual tRNA files generated with tRNAscan-SE. Can be used when running distill without call to add additional information."
+                    "description": "Path to a directory containing individual tRNA TSV files generated with tRNAscan-SE. Can be used by QC without raw FASTA input."
                 },
                 "distill_dummy_sheet": {
                     "type": "string",
