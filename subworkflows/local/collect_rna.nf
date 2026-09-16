@@ -28,15 +28,14 @@ workflow COLLECT_RNA {
     take:
     ch_fasta  // channel: [ val(input_fasta name), path(fasta), val(logical bytes) ]
     default_sheet // Path to dummy sheet
-    call          // boolean: whether gene calling flag is set
+    scan_input_fasta // boolean: whether raw FASTA input is available
 
     main:
 
     run_rrna_collect = false
     run_trna_collect = false
 
-    // If we didn't run call
-    if (!call) {
+    if (!scan_input_fasta) {
         if (params.rrnas) {
             channel.fromPath("${params.rrnas}/*.tsv", checkIfExists: true)
                 .ifEmpty { exit 1, "Cannot find individual rRNA files generated with barrnap at: ${params.rrnas}\nNB: Path needs to follow pattern: path/to/directory" }
@@ -57,7 +56,7 @@ workflow COLLECT_RNA {
         else {
             log.warn("No tRNA files provided, skipping tRNA steps.")
         }
-    } else { // If we did run call then we need to generate the rrnas and trnas from the fastas
+    } else {
         ch_fasta_by_resource = bucketFastaBatches(ch_fasta,
             params.rna_batch_size as int,
             batchMaxBytes(params.rna_batch_max_size))

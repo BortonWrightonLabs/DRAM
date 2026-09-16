@@ -1,43 +1,11 @@
-include { RENAME_FASTA           } from "../../modules/local/rename/rename_fasta.nf"
 include { RENAME_PROTEINS        } from "../../modules/local/rename/rename_proteins.nf"
 include { RENAME_PROTEINS as RENAME_FNA       } from "../../modules/local/rename/rename_proteins.nf"
 include { CALL                   } from "../../subworkflows/local/call.nf"
-include { QC                     } from "../../subworkflows/local/qc.nf"
 include { DB_SEARCH              } from "../../subworkflows/local/db_search.nf"
 include { GENE_LOCS              } from "../../modules/local/annotate/gene_locs.nf"
 include { GENERATE_GFF  } from "../../modules/local/add_and_combine/generate_gff.nf"
 include { resourceBytes } from './utils_resource_classes.nf'
-
-def batchManifestToTuples(ch_renamed_batch) {
-    ch_renamed_batch.flatMap { manifest, renamed_files ->
-        def files = renamed_files instanceof List ? renamed_files : [renamed_files]
-        def files_by_name = files.collectEntries { renamed_file ->
-            [(renamed_file.getFileName().toString()): renamed_file]
-        }
-
-        manifest.readLines()
-            .findAll { line -> line }
-            .collect { line ->
-                def (name, relpath) = line.split('\t')
-                def renamed_file = files_by_name[relpath]
-                if (!renamed_file) {
-                    error("Could not find renamed file `${relpath}` listed in ${manifest}")
-                }
-                tuple(name, renamed_file)
-            }
-    }
-}
-
-def collectNamePathTuples(ch_name_path, check_size = false) {
-    ch_name_path
-        .collect(flat: false)
-        .map { rows ->
-            def names = rows.collect { tup -> tup[0] }
-            def paths = rows.collect { tup -> tup[1] }
-            tuple(names, paths)
-        }
-        .filter { names, _paths -> !check_size || names.size() > 0 }
-}
+include { batchManifestToTuples; collectNamePathTuples } from './utils_channels.nf'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW TO ANNOTATE
@@ -46,7 +14,7 @@ def collectNamePathTuples(ch_name_path, check_size = false) {
 
 workflow ANNOTATE {
     take:
-    ch_fasta  // channel: [ val(input_fasta name), path(fasta) ]
+    ch_fasta  // channel: [ val(input_fasta name), path(fasta), val(logical bytes) ]
     default_sheet // Path to dummy sheet
     call     // boolean: whether gene calling flag is set
     use_kegg
@@ -70,37 +38,18 @@ workflow ANNOTATE {
 
     main:
     // n_fastas = 0
-    ch_rrna_collected = default_sheet
-    ch_trna_collected = default_sheet
-    ch_trna_combined = default_sheet
     ch_combined_annotations = default_sheet
 
     ch_quast_stats = default_sheet
-    ch_collected_fna = default_sheet
     ch_gene_gff = channel.empty()
     ch_filtered_fasta = channel.empty()
     ch_called_genes = channel.empty()
 
     if (call){
-        // n_fastas = file("$params.input_fasta/${params.fasta_fmt}").size()
-
-        if(params.rename) {
-            def ch_fasta_collected = collectNamePathTuples(ch_fasta)
-
-            RENAME_FASTA( ch_fasta_collected )
-
-            ch_fasta = batchManifestToTuples(RENAME_FASTA.out.renamed_batch)
-        }
-
-        // This is the final input FASTA used by CALL and RNA scans. Carry its
-        // size as immutable per-sample metadata instead of re-statting it.
-        ch_fasta = ch_fasta.map { name, fasta -> tuple(name, fasta, resourceBytes(fasta)) }
-
         CALL( ch_fasta )
         ch_quast_stats = CALL.out.ch_quast_stats
         ch_gene_locs = CALL.out.ch_gene_locs
         ch_called_proteins = CALL.out.ch_called_proteins
-        ch_collected_fna = CALL.out.ch_collected_fna
         ch_gene_gff = CALL.out.ch_gene_gff
         ch_filtered_fasta = CALL.out.ch_filtered_fasta
         ch_called_genes = CALL.out.ch_called_genes
@@ -179,18 +128,7 @@ workflow ANNOTATE {
         ch_combined_annotations = DB_SEARCH.out.ch_combined_annotations
     }
 
-    if (params.qc){
-        QC( ch_fasta, default_sheet, ch_combined_annotations, ch_collected_fna, call )
-        ch_rrna_collected = QC.out.ch_rrna_collected
-        ch_trna_collected = QC.out.ch_trna_collected
-        ch_trna_combined = QC.out.ch_trna_combined
-        ch_combined_annotations = QC.out.ch_final_annots
-    }
-
     emit:
-    ch_rrna_collected
-    ch_trna_collected
-    ch_trna_combined
     ch_combined_annotations
     ch_quast_stats
 

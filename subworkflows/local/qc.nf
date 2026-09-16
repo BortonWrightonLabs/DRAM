@@ -13,12 +13,11 @@ workflow QC {
     ch_fasta  // channel: [ val(input_fasta name), path(fasta), val(logical bytes) ]
     default_sheet // Path to dummy sheet
     ch_combined_annotations  // channel: [ path(combined_annotations_out) ]
-    ch_collected_fna
-    call                     // boolean: whether gene calling flag is set
+    scan_input_fasta         // boolean: whether raw FASTA input is available
 
     main:
 
-    COLLECT_RNA( ch_fasta, default_sheet, call )
+    COLLECT_RNA( ch_fasta, default_sheet, scan_input_fasta )
     ch_rrna_collected = COLLECT_RNA.out.ch_rrna_collected
     ch_trna_collected = COLLECT_RNA.out.ch_trna_collected
     ch_trna_combined = COLLECT_RNA.out.ch_trna_combined
@@ -41,7 +40,7 @@ workflow QC {
         ch_updated_taxa_annots = ADD_TAXA.out.annots_taxa_out
     }
     else{
-        ch_updated_taxa_annots = ch_combined_annotations
+        ch_updated_taxa_annots = ch_updated_annots
     }
 
     ch_final_annots = ch_updated_taxa_annots

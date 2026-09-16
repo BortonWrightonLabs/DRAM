@@ -1,0 +1,2 @@
+input_fasta	query_id	type	begin	end	e-value	strand	note
+OWC_0000	OWC_0000_test_rRNA	rRNA	1	100	1e-20	+	Name=5S_rRNA;product=5S ribosomal RNA
