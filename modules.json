@@ -25,6 +25,11 @@
                         "git_sha": "5e748ff2b0f990949081c9e49792622eb3fe9ee9",
                         "installed_by": ["modules"]
                     },
+                    "rundbcan/cazymeannotation": {
+                        "branch": "master",
+                        "git_sha": "5e0b34c7ad0841e3e160b15a0180bf2b9be0e3bf",
+                        "installed_by": ["modules"]
+                    },
                     "rundbcan/easysubstrate": {
                         "branch": "master",
                         "git_sha": "5e0b34c7ad0841e3e160b15a0180bf2b9be0e3bf",

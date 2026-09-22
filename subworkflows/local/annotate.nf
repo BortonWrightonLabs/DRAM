@@ -93,9 +93,6 @@ workflow ANNOTATE {
 
         // n_fastas = file("$params.input_genes/${params.genes_fmt}").size()
 
-        def ch_called_proteins_collected = collectNamePathTuples(ch_called_proteins)
-        GENERATE_GFF( ch_called_proteins_collected )
-        ch_gene_gff = batchManifestToTuples(GENERATE_GFF.out.generated_gff_batch)
     }
 
     if (params.annotate){
@@ -123,7 +120,8 @@ workflow ANNOTATE {
             use_card,
             use_tcdb,
             use_dram_db,
-            use_vog
+            use_vog,
+            call
             )
         ch_combined_annotations = DB_SEARCH.out.ch_combined_annotations
     }

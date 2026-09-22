@@ -54,6 +54,7 @@ include { HMM_SEARCH_WORKFLOW as HMM_METALS } from './hmm_search_workflow'
 include { ANTISMASH_ANTISMASH                           } from '../../modules/nf-core/antismash/antismash/main'
 include { RGI_MAIN                                      } from '../../modules/nf-core/rgi/main/main'
 include { RUNDBCAN_EASYSUBSTRATE                        } from '../../modules/nf-core/rundbcan/easysubstrate/main'
+include { RUNDBCAN_CAZYMEANNOTATION                     } from '../../modules/nf-core/rundbcan/cazymeannotation/main'
 
 include {checkDBVersion                                 } from '../../subworkflows/local/utils_pipeline_setup.nf'
 
@@ -89,6 +90,7 @@ workflow DB_SEARCH {
     use_tcdb
     use_dram_db
     use_vog
+    call
 
     main:
 
@@ -203,23 +205,41 @@ workflow DB_SEARCH {
 
     // dbCAN3 annotation
     if  (use_dbcan) {
+        if (params.save_cgc && call) {
+            ch_dbcan_inputs = ch_called_proteins
+                .join(ch_gene_gff, by: [0])
+                .multiMap { name, called_proteins, _protein_bytes, gene_gff ->
+                    proteins:
+                        tuple([id: name], called_proteins)
 
-        ch_dbcan_inputs = ch_called_proteins
-            .join(ch_gene_gff, by: [0])
-            .multiMap { name, called_proteins, _protein_bytes, gene_gff ->
-                proteins:
-                    tuple([id: name], called_proteins)
-
-                gff:
-                    tuple([id: name], gene_gff, "prodigal")
+                    gff:
+                        tuple([id: name], gene_gff, "prodigal")
+                }
+            RUNDBCAN_EASYSUBSTRATE(
+                ch_dbcan_inputs.proteins,
+                ch_dbcan_inputs.gff,
+                DB_CHANNEL_SETUP.out.ch_dbcan_db
+            )
+            dbcanOutputChannels = dbcanOutputChannels.mix(RUNDBCAN_EASYSUBSTRATE.out.dbcanhmm_results)
+            dbcanOutputChannels = dbcanOutputChannels.mix(RUNDBCAN_EASYSUBSTRATE.out.dbcansub_results)
+        } else {
+            if (params.save_cgc && !call) {
+                log.warn("dbCAN CGC can only be ran with raw fasta files and not already called genes due to input constraints, failling back to CAZyme Annotation")
             }
-        RUNDBCAN_EASYSUBSTRATE(
-            ch_dbcan_inputs.proteins,
-            ch_dbcan_inputs.gff,
-            DB_CHANNEL_SETUP.out.ch_dbcan_db
-        )
-        dbcanOutputChannels = dbcanOutputChannels.mix(RUNDBCAN_EASYSUBSTRATE.out.dbcanhmm_results)
-        dbcanOutputChannels = dbcanOutputChannels.mix(RUNDBCAN_EASYSUBSTRATE.out.dbcansub_results)
+            ch_dbcan_inputs = ch_called_proteins
+                .multiMap { name, called_proteins, _protein_bytes->
+                    proteins:
+                        tuple([id: name], called_proteins)
+                }
+            RUNDBCAN_CAZYMEANNOTATION(
+                ch_dbcan_inputs.proteins,
+                DB_CHANNEL_SETUP.out.ch_dbcan_db
+            )
+            dbcanOutputChannels = dbcanOutputChannels.mix(RUNDBCAN_CAZYMEANNOTATION.out.dbcanhmm_results)
+            dbcanOutputChannels = dbcanOutputChannels.mix(RUNDBCAN_CAZYMEANNOTATION.out.dbcansub_results)
+
+        }
+
     }
     // CAMPER annotation
     if (use_camper) {
@@ -314,21 +334,25 @@ workflow DB_SEARCH {
     }
     // antiSMASH
     if (use_antismash) {
-        ch_filtered_fasta.ifEmpty{ log.warn("Antismash requires raw fasta files, skipping antismash") }
-        ch_antismash_inputs = ch_filtered_fasta
-            .join(ch_gene_gff, by: [0])
-            .multiMap { name, filtered_fasta, _fasta_bytes, gene_gff ->
-                fasta:
-                    tuple([id: name], filtered_fasta)
+        if (call) {
+            ch_filtered_fasta.ifEmpty{ log.warn("antiSMASH requires raw fasta files, skipping antismash") }
+            ch_antismash_inputs = ch_filtered_fasta
+                .join(ch_gene_gff, by: [0])
+                .multiMap { name, filtered_fasta, _fasta_bytes, gene_gff ->
+                    fasta:
+                        tuple([id: name], filtered_fasta)
 
-                gff:
-                    gene_gff
-            }
-        ANTISMASH_ANTISMASH(
-            ch_antismash_inputs.fasta,
-            DB_CHANNEL_SETUP.out.ch_antismash_db,
-            ch_antismash_inputs.gff
-        )
+                    gff:
+                        gene_gff
+                }
+            ANTISMASH_ANTISMASH(
+                ch_antismash_inputs.fasta,
+                DB_CHANNEL_SETUP.out.ch_antismash_db,
+                ch_antismash_inputs.gff
+            )
+        } else {
+            log.warn("antiSMASH can only be ran with raw fasta files and not already called genes due to input constraints")
+        }
     }
     // RGI with CARD
     if (use_rgi) {
