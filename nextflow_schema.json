@@ -213,6 +213,10 @@
                     "type": "boolean",
                     "hidden": true
                 },
+                "save_cgc": {
+                    "type": "boolean",
+                    "description": "Whether dbcan step should additionally run and save CAZyme Gene Cluster step information. Not consumed by DRAM, but maybe helpful for users."
+                },
                 "add_annotations": {
                     "type": "string",
                     "format": "file-path",
