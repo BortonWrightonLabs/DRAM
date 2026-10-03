@@ -310,10 +310,10 @@
             }
         },
         "product_options": {
-            "title": "Product Options",
+            "title": "Visualization Options",
             "type": "object",
             "fa_icon": "fas fa-dna",
-            "description": "The purpose of DRAM --product is to generate a product visualization of the annotations and save the output to the output directory.",
+            "description": "The purpose of DRAM --visualize is to generate a product visualization of the annotations and save the output to the output directory.",
             "properties": {
                 "viz_rules_tsv": {
                     "type": "string",
@@ -331,18 +331,32 @@
                     "format": "file-path",
                     "description": "Path to metaT mapping file of gene abundances in samples. Must have a column named 'Geneid' that matches the query_id column in the annotations file.",
                     "fa_icon": "fas fa-cog"
+                },
+                "viz_common_rules_tsv": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to common rules file of aliases used throughout the visualizations",
+                    "hidden": true,
+                    "fa_icon": "fas fa-cog"
                 }
             }
         },
         "adjectives_options": {
-            "title": "Adjectives Options",
+            "title": "Trait Options",
             "type": "object",
             "fa_icon": "fas fa-dna",
-            "description": "The purpose of DRAM --adjectives is to use the outputted DRAM annotations file to make a table of adjectives. You need to use the Kegg, FeGenie, and Sulfur Databases.",
+            "description": "The purpose of DRAM --traits is to use the outputted DRAM annotations file to make a table of adjectives. You need to use the Kegg, FeGenie, and Sulfur Databases.",
             "properties": {
                 "trait_rules_tsv": {
                     "type": "string",
                     "description": "This is an optional path to a rules file with strict formatting. It will take the place of the original rules file that is stored with the script. For formatting, see the original rules.tsv sheet stored with the script in the repo."
+                },
+                "trait_common_rules_tsv": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to common rules file of aliases used throughout the visualizations",
+                    "hidden": true,
+                    "fa_icon": "fas fa-cog"
                 }
             }
         },
