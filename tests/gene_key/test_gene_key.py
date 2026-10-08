@@ -57,7 +57,8 @@ def write_inputs(folder: Path, genomes: list[str]) -> dict:
         (dirs["dbcan"] / f"{genome}_dbCAN_hmm_results.tsv").write_text(
             "HMM Name\tTarget Name\ti-Evalue\n"
             + "".join(
-                f"{family}.hmm\t{gene}\t1e-50\n" for gene, family in data["dbcan"].items()
+                f"{family}.hmm\t{gene}\t1e-50\n"
+                for gene, family in data["dbcan"].items()
             )
         )
         (dirs["dbcan"] / f"{genome}_dbCANsub_hmm_results.tsv").write_text(
@@ -77,10 +78,14 @@ def combine(folder: Path, genomes: list[str]) -> pl.DataFrame:
         [
             sys.executable,
             str(BIN / "combine_annotations.py"),
-            "--annotations_dir", str(dirs["annotations"]),
-            "--genes_dir", str(dirs["genes"]),
-            "--dbcan_dir", str(dirs["dbcan"]),
-            "--output", str(output),
+            "--annotations_dir",
+            str(dirs["annotations"]),
+            "--genes_dir",
+            str(dirs["genes"]),
+            "--dbcan_dir",
+            str(dirs["dbcan"]),
+            "--output",
+            str(output),
         ],
         check=True,
         cwd=folder,
