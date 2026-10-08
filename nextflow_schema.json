@@ -274,7 +274,7 @@
             "properties": {
                 "sum_ecos": {
                     "type": "string",
-                    "description": "Ecosystem to distill. Options: <eng_sys|ag|marine|gut|bgc> If more than one ecosystem included, they must be seperated by a comma (--sum_ecos eng_sys,ag or --sum_ecos 'eng_sys,ag')."
+                    "description": "Ecosystem to distill. Options: <eng_sys|ag|aquatic|gut|bgc> If more than one ecosystem included, they must be seperated by a comma (--sum_ecos eng_sys,ag or --sum_ecos 'eng_sys,ag')."
                 },
                 "sum_topics": {
                     "type": "string",

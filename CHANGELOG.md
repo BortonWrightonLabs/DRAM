@@ -37,6 +37,9 @@ All notable changes to this project will be documented in this file.
   Update traits, viz ag, and viz bgc with common rules.
   traits now uses dram_viz directly and outputs df and heatmap
 
+  Add a syntax to specify aliases, an alias is now preceeded with an @ in the rule definition to resolve the alias, ex: @SomeAlias1 | @SomeAlias2 If you don't preface them with an @ they don't resolve. Need to add a check for if you don't include an @. This would look like checking if any NAME/gene_id defined matches an alias. If you use an alias and it isn't defined, then you get a rules error.
+
+  Add rule_options column option for general rule behavior like requiring certain columns in the annotation for a rule to show up at all.
 
 
 ## 2.0.0-beta37 - 2026-09-08

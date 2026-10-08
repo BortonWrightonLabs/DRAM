@@ -104,12 +104,12 @@ workflow PIPELINE_INITIALISATION {
         }
     }
 
-    if (((params.adjectives || params.traits) || (params.visualize || params.product)) && ((!use_kegg && !use_kofam) || !use_fegenie || !use_sulfur)) {
-        // If they are using a premade annotations file, we just trust that they used kegg, fegenies, or sulfur
-        if (!params.annotations) {
-            error("When using Traits or viz, make sure you use (Kegg or Kofam), FeGenie, and Sulfur Databases")
-        }
-    }
+    // if (((params.adjectives || params.traits) || (params.visualize || params.product)) && ((!use_kegg && !use_kofam) || !use_fegenie || !use_sulfur)) {
+    //     // If they are using a premade annotations file, we just trust that they used kegg, fegenies, or sulfur
+    //     if (!params.annotations) {
+    //         error("When using Traits or viz, make sure you use (Kegg or Kofam), FeGenie, and Sulfur Databases")
+    //     }
+    // }
 
     if (use_pfam) {
         error("PFAM database is currently disabled in this pipeline due to a bug in the DRAM2 implementation with the PFAM database. It will be re-enabled in a future release.")
