@@ -5,8 +5,8 @@ process TRAITS {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_dram-viz:2f4dc05eb05107db' :
-        'community.wave.seqera.io/library/python_dram-viz:c3ddf425b4b554b9' }"
+        'oras://community.wave.seqera.io/library/python_dram-viz:59f651a89c8eda1c' :
+        'community.wave.seqera.io/library/python_dram-viz:d69f76b2d33e9ab7' }"
 
     input:
     path( ch_combined_annotations, stageAs: "raw-annotations.tsv" )

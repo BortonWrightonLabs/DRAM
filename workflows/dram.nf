@@ -172,7 +172,7 @@ workflow DRAM {
         }
 
         if (distill_ecosystem != "") {
-            def validEcos = ['eng_sys', 'ag', 'bgc', 'gut', 'marine']
+            def validEcos = ['eng_sys', 'ag', 'bgc', 'gut', 'aquatic']
             def distillEcosystemList = distill_ecosystem.split(',')
             def vizRulesSystemList = viz_rules_system ?
                 viz_rules_system.split(',').collect { it.trim() } :
@@ -182,11 +182,11 @@ workflow DRAM {
                 if (!validEcos.contains(ecosysItem)) {
                     error("Invalid distill ecosystem: $ecosysItem. Valid values are ${validEcos.join(',')}. If you included those, try comma separating them without spaces.")
                 }
-                if (ecosysItem == "ag") {
-                    if (!((use_kegg || use_kofam) && use_metals && use_dbcan)) {
-                        error("When sum_ecos ag, you must include (kegg or kofam), metals, and dbcan databases")
-                    }
-                }
+                // if (ecosysItem == "ag") {
+                //     if (!((use_kegg || use_kofam) && use_metals && use_dbcan)) {
+                //         error("When sum_ecos ag, you must include (kegg or kofam), metals, and dbcan databases")
+                //     }
+                // }
                 if (!vizRulesSystemList.contains(ecosysItem)) {
                     vizRulesSystemList << ecosysItem
                 }

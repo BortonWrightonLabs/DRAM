@@ -200,7 +200,7 @@ def make_genome_stats(
 )
 @click.option(
     "--distill_ecosystem",
-    default="eng_sys,ag,bgc,gut,marine",
+    default="eng_sys,ag,bgc,gut,aquatic",
     help="Default distillates ecosystems to run.",
 )
 @click.option(
@@ -267,8 +267,8 @@ def distill(
         distill_ecos_sheets.append(DISTILL_DIR / "distill_bgc.tsv")
     if "gut" in distill_ecosystem:
         distill_ecos_sheets.append(DISTILL_DIR / "distill_gut.tsv")
-    if "marine" in distill_ecosystem:
-        distill_ecos_sheets.append(DISTILL_DIR / "distill_marine.tsv")
+    if "aquatic" in distill_ecosystem:
+        distill_ecos_sheets.append(DISTILL_DIR / "distill_aquatic.tsv")
 
     distill_custom_sheets = []
     if custom_distillate:

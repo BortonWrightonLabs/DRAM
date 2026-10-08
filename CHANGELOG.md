@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0-beta39 - 2026-10-08
+
+[4594735](https://github.com/BortonWrightonLabs/DRAM/commit/45947355343e5e9261fd23c59e68c03434a49ece)...[bdcac80](https://github.com/BortonWrightonLabs/DRAM/commit/bdcac8056da8a0080d371a2366e6c8839ed5a1a0)
+
+### Bug Fixes
+
+- Decouple SUMMARIZE from ANNOTATE output through QC for annotations ([bc823d6](https://github.com/BortonWrightonLabs/DRAM/commit/bc823d6b35402dbad41a87d968ad2cbf753ad85b))
+
+  SUMMARIZE was reliant on ANNOTATIONS output directly, through the access
+  of ANNOTATE.out.ch_trna_combined (from QC), meaning --annotations
+  failed. Now these are decoupled, but QC still outputs to the ANNOTATE
+  output namespace.
+
+
+- No longer gen gff file, fixing dbcan output ([afd40b1](https://github.com/BortonWrightonLabs/DRAM/commit/afd40b1971bc38c5fc135126a2b4d22948c16a97))
+
+  DRAM no longer will try to generate a gff file from called genes. dbcan
+  CGC needs a gff file, so called genes can't run CGC anymore, but by
+  default we don't need CGC. Add option to save CGC output if users
+  want it, but only run CAZyme Annotation normally, and fall back to
+  CAZyme Annotation if users input called genes and try to save CGC.
+
+  antiSMASH can also not be ran with called genes anymore because it
+  also needs a gff file.
+
+
+
+### Documentation
+
+- Update rule parser docs ([bdcac80](https://github.com/BortonWrightonLabs/DRAM/commit/bdcac8056da8a0080d371a2366e6c8839ed5a1a0))
+
+
+
+### Features
+
+- Update common rules for traits, ag, and bgc. alias rules syntax ([59af0df](https://github.com/BortonWrightonLabs/DRAM/commit/59af0df029f749f7fb57ce1abb4f84f5537d7ef5))
+
+  Add alias syntax for rules parsing. Must use `@` now for alias.
+  Update traits, viz ag, and viz bgc with common rules.
+  traits now uses dram_viz directly and outputs df and heatmap
+
+
+- Update traits, rule_parser, and marine->aquatic ([52bb33c](https://github.com/BortonWrightonLabs/DRAM/commit/52bb33c39525f9b8db4b963ba0b0e82de5745507))
+
+
+
 ## 2.0.0-beta38 - 2026-10-03
 
 [4594735](https://github.com/BortonWrightonLabs/DRAM/commit/45947355343e5e9261fd23c59e68c03434a49ece)...[59af0df](https://github.com/BortonWrightonLabs/DRAM/commit/59af0df029f749f7fb57ce1abb4f84f5537d7ef5)
@@ -37,6 +83,9 @@ All notable changes to this project will be documented in this file.
   Update traits, viz ag, and viz bgc with common rules.
   traits now uses dram_viz directly and outputs df and heatmap
 
+  Add a syntax to specify aliases, an alias is now preceeded with an @ in the rule definition to resolve the alias, ex: @SomeAlias1 | @SomeAlias2 If you don't preface them with an @ they don't resolve. Need to add a check for if you don't include an @. This would look like checking if any NAME/gene_id defined matches an alias. If you use an alias and it isn't defined, then you get a rules error.
+
+  Add rule_options column option for general rule behavior like requiring certain columns in the annotation for a rule to show up at all.
 
 
 ## 2.0.0-beta37 - 2026-09-08

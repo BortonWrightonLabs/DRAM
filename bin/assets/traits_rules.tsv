@@ -1,30 +1,29 @@
-name	rule	rule_options	topic_ecosystem	notes	Order
-phototroph	@phototroph		traits	I edited this- any one of these should be true for phototroph	1
-CO2-fixation	@CO2fixation		traits	"I edited this "	2
-CO-metabolism	@carboxydotroph		traits		3
-hydrogen-metabolism	@HydrogenUse		traits		4
-obligate-fermenter	@Fermenter		traits		5
-aerobic	@Aerobe		traits		6
-microaerophillic	@Microaerophillic		traits		7
-dissimilatory-nitrogen-reduction	@Nreducer		traits		8
-dissimilatory-nitrate-reduction-to-ammonium (partial or full)	@DNRA		traits	I edited this - maddie check is nested	9
-aerobic-ammonia-oxidizer	@AerobicAmmoniaOxidizer		traits		10
-nitrite-oxidizer	@NitriteOxidoreductase		traits		11
-comammox	@Comammox		traits	"I edited this "	12
-anaerobic-ammonium-oxidation	@Annamox		traits		13
-nitrogen-fixer	@nitrogen-fixer		traits		14
-iron-reduction	@IronReduction		traits		15
-iron-oxidation	@IronOxidation		traits		16
-sulfate-reduction	@Sulfatereducer		traits		17
-non-sulfate-sulfur-reduction	@ThiosulfateOrTetrathionate		traits		18
-sulfur-oxidizer	@sulfateoxidizer		traits		19
-sulfur-disproporationation	@SulfurDisproporationation		traits		20
-methanogen or ANME	@Methanogen	{"include_when":{"all_columns_absent":["taxonomy"]}}	traits	"This should only show up if no taxonomy is provided. "	21
-hydrogenotrophic-methanogen	@hydrogenotrophic	{"include_when":{"all_columns_present":["taxonomy"]}}	traits	"This should only show up if taxonomy is provided. "	22
-acetoclastic-methanogen	@acetoclastic	{"include_when":{"all_columns_present":["taxonomy"]}}	traits	"This should only show up if taxonomy is provided. "	23
-methylotrophic-methanogen	@methylotroph	{"include_when":{"all_columns_present":["taxonomy"]}}	traits	"This should only show up if taxonomy is provided. "	24
-methanotroph	@Methanotroph		traits		25
-anaerobic-methanotrophic-Archaea	@anaerobic-methanotrophic-Archaea		traits		26
-nitrite-oxidizer-or-nitrate-reducer	@NOxorRed		traits		27
-ammonia-or-methane-oxidizer	@AmmoniaMethaneOxidizer		traits		28
-probable-iron-reduction	@ProbIronReduction		traits		29
+name	rule	rule_options	topic_ecosystem
+phototroph	@phototroph		traits
+CO2-fixation	@CO2fixation		traits
+hydrogen-metabolism	@HydrogenUse		traits
+obligate-fermenter	@Fermenter		traits
+aerobic	@Aerobe		traits
+microaerophillic	@Microaerophillic		traits
+dissimilatory-nitrogen-reduction	@Nreducer		traits
+dissimilatory-nitrate-reduction-to-ammonium (partial or full)	@DNRA		traits
+aerobic-ammonia-oxidizer	@AerobicAmmoniaOxidizer		traits
+nitrite-oxidizer	@NitriteOxidoreductase		traits
+comammox	@Comammox		traits
+anaerobic-ammonium-oxidation	@Annamox		traits
+nitrogen-fixer	@nitrogen-fixer		traits
+iron-reduction	@IronReduction		traits
+iron-oxidation	@IronOxidation		traits
+sulfate-reduction	@Sulfatereducer		traits
+non-sulfate-sulfur-reduction	@ThiosulfateOrTetrathionate		traits
+sulfur-oxidizer	@sulfateoxidizer		traits
+sulfur-disproporationation	@SulfurDisproporationation		traits
+methanogen or ANME	@Methanogen	"{""include_when"":{""all_columns_absent"":[""taxonomy""]}}"	traits
+hydrogenotrophic-methanogen	@hydrogenotrophic	"{""include_when"":{""all_columns_present"":[""taxonomy""]}}"	traits
+acetoclastic-methanogen	@acetoclastic	"{""include_when"":{""all_columns_present"":[""taxonomy""]}}"	traits
+methylotrophic-methanogen	@methylotroph	"{""include_when"":{""all_columns_present"":[""taxonomy""]}}"	traits
+aerobic-methanotroph	@AerobicMethanotroph		traits
+anaerobic-methanotrophic-Archaea	@anaerobic-methanotrophic-Archaea	"{""include_when"":{""all_columns_present"":[""taxonomy""]}}"	traits
+nitrite-oxidizer-or-nitrate-reducer	@NOxorRed		traits
+ammonia-or-methane-oxidizer	@AmmoniaMethaneOxidizer		traits
+probable-iron-reduction	@ProbIronReduction		traits
