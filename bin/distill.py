@@ -54,6 +54,9 @@ EXCEL_MAX_CELL_SIZE = 32767
 FASTA_COLUMN = os.getenv("FASTA_COLUMN", "input_fasta")
 DISTILL_DIR = Path(__file__).parent / "assets/forms/distill_sheets"
 DEFAULT_GROUPBY_COLUMN = COL_SHEET
+# Genes are keyed on genome + query_id; \x1f (unit separator) cannot occur in either.
+GENE_KEY = "_gene_key"
+GENE_KEY_SEPARATOR = "\x1f"
 
 
 def check_columns(data, logger):
@@ -80,18 +83,30 @@ def make_genome_summary(
         .otherwise(pl.col("gene_id"))
         .alias(COL_RULE)
     )
+    # A gene is identified by its genome AND its query_id. query_id alone is not
+    # unique across genomes: per-sample assemblers reuse contig names (MEGAHIT
+    # k141_*), so the same "k141_100_1" occurs in many bins. Keying on query_id
+    # alone merged unrelated genes in the rule evaluation and credited every hit
+    # to every genome sharing the id.
+    annotations = annotations.with_columns(
+        pl.concat_str(
+            [pl.col(fasta_column).cast(pl.String), pl.col("query_id").cast(pl.String)],
+            separator=GENE_KEY_SEPARATOR,
+        ).alias(GENE_KEY)
+    )
     df = evaluate_rules_on_anno(
         rules=genome_summary_frame,
         # rules_tsv_path="/home/projects-wrighton-2/Pipeline_Development/DRAM2-Nextflow/DRAM/bin/assets/forms/distill_sheets/distill_metals.tsv",
         annotations=annotations,
-        count_col="query_id",
+        count_col=GENE_KEY,
         label_col="gene_id",
         alias_col=None,
         rules_col=COL_RULE,
     )
     df = df.join(
-        annotations.select([pl.col("query_id"), pl.col(fasta_column)]), on="query_id"
-    ).drop("query_id")
+        annotations.select([pl.col(GENE_KEY), pl.col(fasta_column)]).unique(),
+        on=GENE_KEY,
+    ).drop(GENE_KEY)
     df = df.group_by(fasta_column).agg(pl.exclude(fasta_column).sum())
 
     df = df.select(pl.exclude(fasta_column)).transpose(

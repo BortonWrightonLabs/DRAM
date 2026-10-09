@@ -81,14 +81,19 @@ def convert_bit_scores_to_numeric(lf: pl.LazyFrame) -> pl.LazyFrame:
     )
 
 
+def input_fasta_from_genes_path(gene_faa) -> str:
+    return Path(gene_faa).stem.split("_called_genes")[0]
+
+
+# Genes are keyed on (input_fasta, query_id): query_id alone is not unique across
+# genomes, because per-sample assemblers reuse contig names (MEGAHIT k141_*).
 def count_motifs(gene_faa, motif="(C..CH)", genes_faa_dict=None):
     if genes_faa_dict is None:
         genes_faa_dict = dict()
+    input_fasta_name = input_fasta_from_genes_path(gene_faa)
     for seq in read_sequence(gene_faa, format="fasta"):
-        if seq.metadata["id"] not in genes_faa_dict:
-            genes_faa_dict[seq.metadata["id"]] = {}
-
-        genes_faa_dict[seq.metadata["id"]]["heme_regulatory_motif_count"] = len(
+        key = (input_fasta_name, seq.metadata["id"])
+        genes_faa_dict.setdefault(key, {})["heme_regulatory_motif_count"] = len(
             list(seq.find_with_regex(motif))
         )
     return genes_faa_dict
@@ -97,9 +102,9 @@ def count_motifs(gene_faa, motif="(C..CH)", genes_faa_dict=None):
 def set_gene_data(gene_faa, genes_faa_dict=None):
     if genes_faa_dict is None:
         genes_faa_dict = dict()
+    input_fasta_name = input_fasta_from_genes_path(gene_faa)
     for seq in read_sequence(gene_faa, format="fasta"):
-        if seq.metadata["id"] not in genes_faa_dict:
-            genes_faa_dict[seq.metadata["id"]] = {}
+        gene = genes_faa_dict.setdefault((input_fasta_name, seq.metadata["id"]), {})
 
         split_label = seq.metadata["id"].split("_")
         gene_position = split_label[-1]
@@ -107,28 +112,30 @@ def set_gene_data(gene_faa, genes_faa_dict=None):
             "#"
         )[1:4]
 
-        input_fasta_name = Path(gene_faa).stem.split("_called_genes")[0]
-        genes_faa_dict[seq.metadata["id"]][FASTA_COLUMN] = input_fasta_name
-        genes_faa_dict[seq.metadata["id"]]["scaffold"] = (
+        gene["scaffold"] = (
             seq.metadata["id"]
-            .removeprefix(genes_faa_dict[seq.metadata["id"]][FASTA_COLUMN])
+            .removeprefix(input_fasta_name)
             .removeprefix("_")
             .removesuffix(f"_{gene_position}")
         )
-        genes_faa_dict[seq.metadata["id"]]["gene_number"] = int(gene_position)
-        genes_faa_dict[seq.metadata["id"]]["start_position"] = int(start_position)
-        genes_faa_dict[seq.metadata["id"]]["stop_position"] = int(end_position)
-        genes_faa_dict[seq.metadata["id"]]["strandedness"] = int(strandedness)
+        gene["gene_number"] = int(gene_position)
+        gene["start_position"] = int(start_position)
+        gene["stop_position"] = int(end_position)
+        gene["strandedness"] = int(strandedness)
     return genes_faa_dict
 
 
 def genes_dict_to_frame(genes_faa_dict: dict) -> pl.DataFrame:
     rows = []
-    for query_id, values in genes_faa_dict.items():
-        row = {"query_id": query_id}
+    for (input_fasta, query_id), values in genes_faa_dict.items():
+        row = {"query_id": query_id, FASTA_COLUMN: input_fasta}
         row.update(values)
         rows.append(row)
-    return pl.DataFrame(rows) if rows else pl.DataFrame(schema={"query_id": pl.String})
+    return (
+        pl.DataFrame(rows)
+        if rows
+        else pl.DataFrame(schema={"query_id": pl.String, FASTA_COLUMN: pl.String})
+    )
 
 
 def organize_columns(df: pl.DataFrame, special_columns=None) -> pl.DataFrame:
@@ -209,22 +216,15 @@ def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output):
             gene_path = str(gene_path)
             count_motifs(gene_path, "(C..CH)", genes_faa_dict=genes_faa_dict)
             set_gene_data(gene_path, genes_faa_dict)
-        gene_lf = pl.LazyFrame(list(genes_faa_dict.values())).with_columns(
-            query_id=pl.Series(genes_faa_dict.keys())
-        )
+        gene_lf = genes_dict_to_frame(genes_faa_dict).lazy()
         gene_lf_cols = gene_lf.collect_schema().names()
         columns = [col for col in gene_lf_cols if col not in (FASTA_COLUMN, "query_id")]
         combined_data_lf = combined_data_lf.drop(columns, strict=False)
-        # Use a full join so genes without hits remain in the output.
+        # Use a full join so genes without hits remain in the output. Join on the
+        # genome too: query_id alone is not unique across genomes.
         combined_data_lf = combined_data_lf.join(
-            gene_lf, how="full", on="query_id", coalesce=True
+            gene_lf, how="full", on=["query_id", FASTA_COLUMN], coalesce=True
         )
-        combined_data_lf = combined_data_lf.with_columns(
-            pl.when(pl.col(FASTA_COLUMN).is_not_null() & (pl.col(FASTA_COLUMN) != ""))
-            .then(pl.col(FASTA_COLUMN))
-            .otherwise(pl.col(FASTA_COLUMN + "_right"))
-            .alias(FASTA_COLUMN)
-        ).drop(FASTA_COLUMN + "_right", strict=False)
     if dbcan_paths:
         dbcan_lf = pl.concat(
             [
@@ -248,14 +248,8 @@ def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output):
             pl.col("i-Evalue").alias("dbcan_i_Evalue"),
         )
         combined_data_lf = combined_data_lf.join(
-            dbcan_lf, how="full", on="query_id", coalesce=True
+            dbcan_lf, how="full", on=["query_id", FASTA_COLUMN], coalesce=True
         )
-        combined_data_lf = combined_data_lf.with_columns(
-            pl.when(pl.col(FASTA_COLUMN).is_not_null() & (pl.col(FASTA_COLUMN) != ""))
-            .then(pl.col(FASTA_COLUMN))
-            .otherwise(pl.col(FASTA_COLUMN + "_right"))
-            .alias(FASTA_COLUMN)
-        ).drop(FASTA_COLUMN + "_right", strict=False)
     if dbcan_sub_paths:
         dbcan_sub_lf = pl.concat(
             [
@@ -282,14 +276,8 @@ def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output):
             pl.col("i-Evalue").alias("dbcan_sub_i_Evalue"),
         )
         combined_data_lf = combined_data_lf.join(
-            dbcan_sub_lf, how="full", on="query_id", coalesce=True
+            dbcan_sub_lf, how="full", on=["query_id", FASTA_COLUMN], coalesce=True
         )
-        combined_data_lf = combined_data_lf.with_columns(
-            pl.when(pl.col(FASTA_COLUMN).is_not_null() & (pl.col(FASTA_COLUMN) != ""))
-            .then(pl.col(FASTA_COLUMN))
-            .otherwise(pl.col(FASTA_COLUMN + "_right"))
-            .alias(FASTA_COLUMN)
-        ).drop(FASTA_COLUMN + "_right", strict=False)
 
     combined_data_lf = convert_bit_scores_to_numeric(combined_data_lf)
     all_columns = combined_data_lf.collect_schema().names()
