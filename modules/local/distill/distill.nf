@@ -5,8 +5,8 @@ process SUMMARIZE {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_click_polars_pyarrow_pruned:67e7bc1132e4cf91' :
-        'community.wave.seqera.io/library/python_click_polars_pyarrow_pruned:45e45e8e79698c99' }"
+        'oras://community.wave.seqera.io/library/python_click_polars_pyarrow_pruned:f4fa28bd045c50b4' :
+        'community.wave.seqera.io/library/python_click_polars_pyarrow_pruned:68ca1a1d70b909e3' }"
 
     input:
     path( ch_combined_annotations, stageAs: "raw-annotations.tsv" )

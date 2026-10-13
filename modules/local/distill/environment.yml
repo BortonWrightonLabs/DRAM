@@ -5,7 +5,7 @@ channels:
 dependencies:
   - python=3.14
   - click<9.0
-  - polars>1
+  - polars >1,<2
   - pyarrow
   - xlsxwriter
   - numpy
