@@ -9,7 +9,7 @@ from utils.logger import get_logger
 from utils.click_utils import validate_comma_separated
 from utils.excel import write_summarized_genomes_to_xlsx
 from utils.pl_utils import read_csv
-from rule_parser.src.rules import evaluate_rules_on_anno, ID_EXPR_DICT
+from dram_rules.rule_parser.rules import evaluate_rules_on_anno, ID_EXPR_DICT
 
 logger = get_logger(filename=Path(__file__).stem)
 
