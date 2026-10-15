@@ -5,8 +5,8 @@ process PRODUCT_HEATMAP {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_dram-viz:59f651a89c8eda1c' :
-        'community.wave.seqera.io/library/python_dram-viz:d69f76b2d33e9ab7' }"
+        'oras://community.wave.seqera.io/library/python_dram-viz_polars:8b538a388b4146b3' :
+        'community.wave.seqera.io/library/python_dram-viz_polars:6f921b219603f384' }"
 
     input:
     path(ch_final_annots, stageAs: "raw-annotations.tsv")
