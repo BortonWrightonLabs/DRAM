@@ -15,9 +15,8 @@ nitrogen-fixer	@nitrogen-fixer		traits
 iron-reduction	@IronReduction		traits
 iron-oxidation	@IronOxidation		traits
 sulfate-reduction	@Sulfatereducer		traits
-non-sulfate-sulfur-reduction	@ThiosulfateOrTetrathionate		traits
+non-sulfate-sulfur-reduction	@Non-sulfate-sulfur-reduction		traits
 sulfur-oxidizer	@sulfateoxidizer		traits
-sulfur-disproporationation	@SulfurDisproporationation		traits
 methanogen or ANME	@Methanogen	"{""include_when"":{""all_columns_absent"":[""taxonomy""]}}"	traits
 hydrogenotrophic-methanogen	@hydrogenotrophic	"{""include_when"":{""all_columns_present"":[""taxonomy""]}}"	traits
 acetoclastic-methanogen	@acetoclastic	"{""include_when"":{""all_columns_present"":[""taxonomy""]}}"	traits
