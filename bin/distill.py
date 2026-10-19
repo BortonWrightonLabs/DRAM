@@ -52,7 +52,7 @@ DISTILATE_SORT_ORDER_COLUMNS = [COL_HEADER, COL_SUBHEADER, COL_MODULE, COL_GENE_
 EXCEL_MAX_CELL_SIZE = 32767
 
 FASTA_COLUMN = os.getenv("FASTA_COLUMN", "input_fasta")
-DISTILL_DIR = Path(__file__).parent / "assets/forms/distill_sheets"
+DISTILL_DIR = Path(__file__).parent / "rules/src/dram_rules/data/summarize_sheets"
 DEFAULT_GROUPBY_COLUMN = COL_SHEET
 
 
