@@ -2,9 +2,10 @@ include { packSearchBatches; unpackBatchOutputs } from '../../subworkflows/local
 include { resourceClass } from '../../subworkflows/local/utils_resource_classes.nf'
 
 workflow {
+    def mib = 1024L * 1024L
     def gib = 1024L * 1024L * 1024L
     def record = { name, bytes -> [name, file("/tmp/${name}.faa"), file("/tmp/${name}.tsv"), bytes] }
-    assert [gib, gib + 1, 20 * gib, 20 * gib + 1].collect { resourceClass(it) } == ['small', 'medium', 'medium', 'large']
+    assert [200 * mib, 200 * mib + 1, gib, gib + 1].collect { resourceClass(it) } == ['small', 'medium', 'medium', 'large']
     def records = [record('c', 4L), record('a', 4L), record('b', 4L)]
     def batches = packSearchBatches(records, 2, 8L)
     assert batches.collect { it[1] } == [['a', 'b'], ['c']]
@@ -14,7 +15,7 @@ workflow {
     assert packSearchBatches([record('a', 9L), record('b', 1L)], 10, 8L)*.getAt(1) == [['b'], ['a']]
     assert packSearchBatches([], 10, 8L) == []
     // Resource class uses the largest individual query, not the batch total.
-    assert packSearchBatches([record('a', gib / 2 as long), record('b', gib / 2 as long)], 2, gib)[0][0] == 'small'
+    assert packSearchBatches([record('a', 150 * mib), record('b', 150 * mib)], 2, gib)[0][0] == 'small'
     // Inputs below the threshold can share a batch even when their classes differ.
     def mixed = packSearchBatches([record('a', 1L), record('b', 20 * gib + 1)], 10, 100 * gib)
     assert mixed.size() == 1

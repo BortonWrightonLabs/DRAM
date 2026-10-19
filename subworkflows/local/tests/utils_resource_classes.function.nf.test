@@ -4,11 +4,13 @@ nextflow_function {
     script "subworkflows/local/utils_resource_classes.nf"
     tag "resource_classes"
 
-    test("1 GiB is small") {
+    test("200 MiB is small") {
         function "resourceClass"
         when {
             function {
-                input[0] = 1024L * 1024L * 1024L
+                """
+                input[0] = 200L * 1024L * 1024L
+                """
             }
         }
         then {
@@ -17,37 +19,43 @@ nextflow_function {
         }
     }
 
-    test("More than 1 GiB is medium") {
+    test("More than 200 MiB is medium") {
         function "resourceClass"
         when {
             function {
+                """
+                input[0] = (200L * 1024L * 1024L) + 1L
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result == "medium"
+        }
+    }
+
+    test("1 GiB is medium") {
+        function "resourceClass"
+        when {
+            function {
+                """
+                input[0] = 1024L * 1024L * 1024L
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result == "medium"
+        }
+    }
+
+    test("More than 1 GiB is large") {
+        function "resourceClass"
+        when {
+            function {
+                """
                 input[0] = (1024L * 1024L * 1024L) + 1L
-            }
-        }
-        then {
-            assert function.success
-            assert function.result == "medium"
-        }
-    }
-
-    test("20 GiB is medium") {
-        function "resourceClass"
-        when {
-            function {
-                input[0] = 20L * 1024L * 1024L * 1024L
-            }
-        }
-        then {
-            assert function.success
-            assert function.result == "medium"
-        }
-    }
-
-    test("More than 20 GiB is large") {
-        function "resourceClass"
-        when {
-            function {
-                input[0] = (20L * 1024L * 1024L * 1024L) + 1L
+                """
             }
         }
         then {
@@ -56,11 +64,107 @@ nextflow_function {
         }
     }
 
+    test("Custom small threshold") {
+        function "resourceClass"
+        when {
+            params {
+                resource_class_small_max_size = '100.MB'
+                resource_class_medium_max_size = '500.MB'
+            }
+            function {
+                """
+                input[0] = 100L * 1024L * 1024L
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result == "small"
+        }
+    }
+
+    test("Custom medium threshold") {
+        function "resourceClass"
+        when {
+            params {
+                resource_class_small_max_size = '100.MB'
+                resource_class_medium_max_size = '500.MB'
+            }
+            function {
+                """
+                input[0] = 500L * 1024L * 1024L
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result == "medium"
+        }
+    }
+
+    test("Custom large threshold") {
+        function "resourceClass"
+        when {
+            params {
+                resource_class_small_max_size = '100.MB'
+                resource_class_medium_max_size = '500.MB'
+            }
+            function {
+                """
+                input[0] = (500L * 1024L * 1024L) + 1L
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result == "large"
+        }
+    }
+
+    test("Reject equal thresholds") {
+        function "resourceClass"
+        when {
+            params {
+                resource_class_small_max_size = '1.GB'
+                resource_class_medium_max_size = '1.GB'
+            }
+            function {
+                """
+                input[0] = 1L
+                """
+            }
+        }
+        then {
+            assert !function.success
+            assert function.stdout.join("\n").contains('Resource class thresholds must be positive')
+        }
+    }
+
+    test("Reject zero threshold") {
+        function "resourceClass"
+        when {
+            params {
+                resource_class_small_max_size = '0.B'
+            }
+            function {
+                """
+                input[0] = 1L
+                """
+            }
+        }
+        then {
+            assert !function.success
+            assert function.stdout.join("\n").contains('Resource class thresholds must be positive')
+        }
+    }
+
     test("Count one file") {
         function "resourceBytes"
         when {
             function {
+                """
                 input[0] = file("${projectDir}/subworkflows/local/tests/fixtures/flat.txt")
+                """
             }
         }
         then {
@@ -73,10 +177,12 @@ nextflow_function {
         function "resourceBytes"
         when {
             function {
+                """
                 input[0] = [
                     file("${projectDir}/subworkflows/local/tests/fixtures/flat.txt"),
                     file("${projectDir}/subworkflows/local/tests/fixtures/nested/nested.txt")
                 ]
+                """
             }
         }
         then {
@@ -89,7 +195,9 @@ nextflow_function {
         function "resourceBytes"
         when {
             function {
+                """
                 input[0] = file("${projectDir}/subworkflows/local/tests/fixtures")
+                """
             }
         }
         then {

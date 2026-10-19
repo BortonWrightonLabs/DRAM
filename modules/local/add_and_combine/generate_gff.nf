@@ -1,8 +1,6 @@
 process GENERATE_GFF {
     label 'process_tiny'
 
-    errorStrategy 'finish'
-
     input:
     tuple val(fasta_names), path(input_genes)
 

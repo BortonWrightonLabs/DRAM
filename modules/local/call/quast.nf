@@ -1,8 +1,6 @@
 process QUAST {
     label 'process_quast'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
         'oras://community.wave.seqera.io/library/python_pandas_scikit-bio_hmmer_pruned:0bcae53ff4ef8178' :

@@ -1,8 +1,6 @@
 process TRAITS {
     label 'process_small'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
         'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:4c61417bc024049e' :

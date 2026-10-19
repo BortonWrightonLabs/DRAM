@@ -140,73 +140,91 @@
                 },
                 "use_dram_db": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the DRAM team specialized databases for annotation."
                 },
                 "use_camper": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the CAMPer database for annotation."
                 },
                 "use_canthyd": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the Cant_Hyd database for annotation."
                 },
                 "use_dbcan": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the dbCAN database for annotation."
                 },
                 "use_fegenie": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the FeGenie database for annotation."
                 },
                 "use_kegg": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the KEGG database for annotation."
                 },
                 "use_kofam": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the Kofam database for annotation."
                 },
                 "use_merops": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the MEROPS database for annotation."
                 },
                 "use_methyl": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the Methyl database for annotation."
                 },
                 "use_pfam": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the PFAM database for annotation. Currently disabled for this release as a bug was discovered with the pfam DRAM2 implementation. It will be re-enabled in the next release."
                 },
                 "use_sulfur": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the Sulfur database for annotation."
                 },
                 "use_uniref": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the UniRef database for annotation."
                 },
                 "use_metals": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the Metals database for annotation."
                 },
                 "use_antismash": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the antiSMASH database, currently experimental. Raw antiSMASH output only."
                 },
                 "use_rgi": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use RGI AMR analysis tool, currently experimental. Raw RGI output only."
                 },
                 "use_card": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the CARD database for annotation."
                 },
                 "use_tcdb": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "Use the TCDB database for annotation."
                 },
                 "use_vog": {
+                    "hidden": true,
                     "type": "boolean"
                 },
                 "use_viral": {
@@ -693,60 +711,84 @@
                     "type": "integer",
                     "minimum": 1,
                     "default": 24,
+                    "hidden": true,
                     "description": "Maximum number of CPUs that any single task can request."
                 },
                 "max_memory": {
                     "type": "string",
                     "default": "200.GB",
                     "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
                     "description": "Maximum memory that any single task can request, for example '64.GB'."
                 },
                 "max_time": {
                     "type": "string",
                     "default": "168.h",
                     "pattern": "^(\\d+\\.?\\s*(s|m|h|d|day)\\s*)+$",
+                    "hidden": true,
                     "description": "Maximum wall time that any single task can request, for example '48.h'."
+                },
+                "resource_class_small_max_size": {
+                    "type": "string",
+                    "default": "200.MB",
+                    "pattern": "^[1-9][0-9]*\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
+                    "description": "Inclusive input-size ceiling for the small resource class. Must be positive and smaller than resource_class_medium_max_size. Uses binary units."
+                },
+                "resource_class_medium_max_size": {
+                    "type": "string",
+                    "default": "1.GB",
+                    "pattern": "^[1-9][0-9]*\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
+                    "description": "Inclusive input-size ceiling for the medium resource class. Larger inputs use the large class. Must exceed resource_class_small_max_size. Uses binary units."
                 },
                 "call_batch_size": {
                     "type": "integer",
                     "minimum": 1,
                     "default": 1,
+                    "hidden": true,
                     "description": "Maximum FASTA inputs processed sequentially per CALL_GENES task. 1 disables batching."
                 },
                 "call_batch_max_size": {
                     "type": "string",
                     "default": "1.GB",
                     "pattern": "^[1-9][0-9]*\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
                     "description": "Largest individual FASTA that may join a CALL_GENES batch. Larger inputs run alone; combined batch size is ignored."
                 },
                 "rna_batch_size": {
                     "type": "integer",
                     "minimum": 1,
                     "default": 1,
+                    "hidden": true,
                     "description": "Maximum FASTA inputs processed sequentially per tRNA or rRNA scan task. 1 disables batching."
                 },
                 "rna_batch_max_size": {
                     "type": "string",
                     "default": "1.GB",
                     "pattern": "^[1-9][0-9]*\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
                     "description": "Largest individual FASTA that may join an RNA-scan batch. Larger inputs run alone; combined batch size is ignored."
                 },
                 "search_batch_size": {
                     "type": "integer",
                     "minimum": 1,
                     "default": 1,
+                    "hidden": true,
                     "description": "Maximum inputs searched sequentially against one database per HMM/MMseqs task. 1 disables batching. Can be combined with job arrays."
                 },
                 "search_batch_max_size": {
                     "type": "string",
                     "default": "1.GB",
                     "pattern": "^[1-9][0-9]*\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
                     "description": "Largest individual query input that may join a search batch, for example '1.GB'. Inputs above this size run alone. Database size and combined batch size are ignored. Use a positive integer and unit."
                 },
                 "job_array_size": {
                     "type": "integer",
                     "minimum": 0,
                     "default": 0,
+                    "hidden": true,
                     "description": "Maximum tasks per job array on supported executors. Values 0 and 1 disable arrays; values 2 or greater enable them for array-labelled processes."
                 }
             }
@@ -759,22 +801,27 @@
             "properties": {
                 "product": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "alias for visualize."
                 },
                 "adjectives": {
                     "type": "boolean",
+                    "hidden": true,
                     "description": "alias for traits."
                 },
                 "distill_topic": {
                     "type": "string",
+                    "hidden": true,
                     "description": "alias for sum_topics"
                 },
                 "distill_ecosystem": {
                     "type": "string",
+                    "hidden": true,
                     "description": "alias for sum_ecos."
                 },
                 "distill_custom": {
                     "type": "string",
+                    "hidden": true,
                     "description": "alias for sum_custom."
                 }
             }

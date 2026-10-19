@@ -33,18 +33,23 @@ def resourceBytes(value) {
     )
 }
 
-/*
- * Resource classes intentionally use binary units because Nextflow's GiB-sized
- * resource values are also binary quantities.
- */
 def resourceClass(bytes) {
-    def ONE_GIB = 1024L * 1024L * 1024L
-    def TWENTY_GIB = 20L * ONE_GIB
+    def thresholds = [params.resource_class_small_max_size, params.resource_class_medium_max_size].collect { value ->
+        def normalized = value.toString().replaceFirst(/\.(?=\s*[KMGT]?B$)/, '')
+        nextflow.util.MemoryUnit.of(normalized).toBytes()
+    }
+    def (small_max_bytes, medium_max_bytes) = thresholds
 
-    if (bytes <= ONE_GIB) {
+    if (small_max_bytes < 1 || medium_max_bytes <= small_max_bytes) {
+        throw new IllegalArgumentException(
+            'Resource class thresholds must be positive, with resource_class_small_max_size < resource_class_medium_max_size'
+        )
+    }
+
+    if (bytes <= small_max_bytes) {
         return 'small'
     }
-    if (bytes <= TWENTY_GIB) {
+    if (bytes <= medium_max_bytes) {
         return 'medium'
     }
     return 'large'

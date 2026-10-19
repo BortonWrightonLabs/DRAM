@@ -94,7 +94,11 @@ Use `.*:HMM_KOFAM:SEARCH_.*` for KOfam HMM searches, or replace `SEARCH_.*` with
 
 ### Resource caps and job arrays
 
-DRAM chooses per-task CPU, memory, and time requests from fixed defaults. CALL_GENES, TRNA_SCAN, RRNA_SCAN, HMM_SEARCH, MMSEQS_SEARCH, and QUAST vary their requests according to input size. Mixed runs are separated into small (at most 1 GiB), medium (over 1 through 20 GiB), and large (over 20 GiB) task classes.
+DRAM chooses per-task CPU, memory, and time requests from fixed defaults. CALL_GENES, TRNA_SCAN, RRNA_SCAN, HMM_SEARCH, MMSEQS_SEARCH, and QUAST vary their requests according to input size. Mixed runs are separated into small (at most 200 MiB), medium (over 200 MiB through 1 GiB), and large (over 1 GiB) task classes.
+
+Set `--resource_class_small_max_size '200.MB'` and `--resource_class_medium_max_size '1.GB'` to change the inclusive upper limits of the small and medium classes. Larger inputs use the large class. Both limits must be positive, and the medium limit must exceed the small limit. Nextflow size units are binary: `200.MB` means 200 MiB.
+
+Class thresholds control which resource requests an input receives. The independent `*_batch_size` and `*_batch_max_size` parameters control how many inputs share a task and which inputs may join a batch. To change CPU, memory, or time requests within a class, override the resource labels from `conf/base.config` in your custom config.
 
 Workload size is stored as per-sample channel metadata rather than re-read by every downstream database. DRAM measures the final decompressed/renamed input FASTA once for CALL_GENES, TRNA_SCAN, and RRNA_SCAN. After gene calling, it separately measures the called protein FASTA for every HMM/MMseqs search and the filtered FASTA for consumers such as QUAST and antiSMASH. Files, collections, and directory contents within one input are summed recursively. Database size, auxiliary description files, metadata tables, and the physical size of a generated MMseqs index are not included.
 
