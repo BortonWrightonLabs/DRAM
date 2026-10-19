@@ -3,8 +3,6 @@
 process TRNA_COLLECT {
     label 'process_small'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
         'oras://community.wave.seqera.io/library/python_pandas_barrnap_trnascan-se:e21b0760a084ff3c' :

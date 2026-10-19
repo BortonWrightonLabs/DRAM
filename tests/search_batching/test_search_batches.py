@@ -29,7 +29,9 @@ class SearchBatchTests(unittest.TestCase):
                 path.write_text(name + "\n")
                 if suffix in [".faa", ".mmsdb"] and name in ["medium", "large"]:
                     with path.open("r+b") as handle:
-                        handle.truncate((2 if name == "medium" else 21) * 1024**3)
+                        handle.truncate(
+                            (500 * 1024**2 if name == "medium" else 2 * 1024**3)
+                        )
         (self.fixtures / "info.tsv").write_text("info\n")
         (self.fixtures / "target.hmm").write_text("hmm\n")
         with (self.fixtures / "target.hmm").open("r+b") as handle:
@@ -60,9 +62,11 @@ params {{
     max_cpus = 1
     max_memory = '1.GB'
     max_time = '168.h'
+    resource_class_small_max_size = '200.MB'
+    resource_class_medium_max_size = '1.GB'
     job_array_size = 0
     search_batch_size = 1
-    search_batch_max_size = '1.GB'
+    search_batch_max_size = '200.MB'
     duplicate_test = false
 }}
 includeConfig '{ROOT}/conf/base.config'

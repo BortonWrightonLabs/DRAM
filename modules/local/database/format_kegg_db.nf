@@ -1,8 +1,6 @@
 process FORMAT_KEGG_DB {
     label 'process_huge'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
         'oras://community.wave.seqera.io/library/python_scikit-bio_scipy_mmseqs2:9d5864f776f52aa0' :

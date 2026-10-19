@@ -24,7 +24,9 @@ class PreprocessingBatchTests(unittest.TestCase):
             path.write_text(name + "\n")
             if name in ["medium", "large"]:
                 with path.open("r+b") as handle:
-                    handle.truncate((2 if name == "medium" else 21) * 1024**3)
+                    handle.truncate(
+                        (500 * 1024**2 if name == "medium" else 2 * 1024**3)
+                    )
 
         mock_bin = self.fixtures / "bin"
         mock_bin.mkdir()
@@ -52,11 +54,13 @@ params {{
     max_cpus = 1
     max_memory = '1.GB'
     max_time = '168.h'
+    resource_class_small_max_size = '200.MB'
+    resource_class_medium_max_size = '1.GB'
     job_array_size = 0
     call_batch_size = 1
-    call_batch_max_size = '1.GB'
+    call_batch_max_size = '200.MB'
     rna_batch_size = 1
-    rna_batch_max_size = '1.GB'
+    rna_batch_max_size = '200.MB'
     min_contig_len = 1
     prodigal_mode = 'meta'
     prodigal_trans_table = 11

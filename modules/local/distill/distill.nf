@@ -1,8 +1,6 @@
 process SUMMARIZE {
     label 'process_medium'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
         'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:51f8873f5a533b04' :

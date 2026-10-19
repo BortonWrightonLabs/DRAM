@@ -2,8 +2,6 @@ process HMM_SEARCH {
     label 'process_hmm_search'
     label 'process_array'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
         'oras://community.wave.seqera.io/library/python_pandas_polars_hmmer_pruned:1742d882bc99fed5' :
