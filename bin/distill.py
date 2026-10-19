@@ -9,7 +9,7 @@ from utils.logger import get_logger
 from utils.click_utils import validate_comma_separated
 from utils.excel import write_summarized_genomes_to_xlsx
 from utils.pl_utils import read_csv
-from rule_parser.src.rules import evaluate_rules_on_anno, ID_EXPR_DICT
+from dram_rules.rule_parser.rules import evaluate_rules_on_anno, ID_EXPR_DICT
 
 logger = get_logger(filename=Path(__file__).stem)
 
@@ -52,7 +52,7 @@ DISTILATE_SORT_ORDER_COLUMNS = [COL_HEADER, COL_SUBHEADER, COL_MODULE, COL_GENE_
 EXCEL_MAX_CELL_SIZE = 32767
 
 FASTA_COLUMN = os.getenv("FASTA_COLUMN", "input_fasta")
-DISTILL_DIR = Path(__file__).parent / "assets/forms/distill_sheets"
+DISTILL_DIR = Path(__file__).parent / "rules/src/dram_rules/data/summarize_sheets"
 DEFAULT_GROUPBY_COLUMN = COL_SHEET
 
 

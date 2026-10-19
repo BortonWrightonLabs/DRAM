@@ -1,8 +1,6 @@
 process ADD_BIN_QUALITY {
     label 'process_small'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
         'oras://community.wave.seqera.io/library/python_pandas_biopython:81f6b2a8fb71cdc6' :

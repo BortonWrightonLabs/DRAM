@@ -1,12 +1,10 @@
 process PRODUCT_HEATMAP {
     label 'process_small'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_dram-viz_polars:8b538a388b4146b3' :
-        'community.wave.seqera.io/library/python_dram-viz_polars:6f921b219603f384' }"
+        'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:4c61417bc024049e' :
+        'community.wave.seqera.io/library/python_bokeh_panel_click_pruned:dbf89098a8999d72' }"
 
     input:
     path(ch_final_annots, stageAs: "raw-annotations.tsv")
@@ -35,7 +33,7 @@ process PRODUCT_HEATMAP {
         def dataframe_rules_system = rules_system_value ?: (rules_tsv ? '' : 'default')
         def dataframe_suffix = dataframe_rules_system ? "_${dataframe_rules_system}" : ''
         """
-        dram_viz \\
+        dram_viz.py \\
             --annotations ${ch_final_annots} \\
             --fasta_column ${fasta_column} \\
             --save_dataframes \\

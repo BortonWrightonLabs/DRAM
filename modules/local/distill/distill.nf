@@ -1,12 +1,10 @@
 process SUMMARIZE {
     label 'process_medium'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_click_polars_pyarrow_pruned:f4fa28bd045c50b4' :
-        'community.wave.seqera.io/library/python_click_polars_pyarrow_pruned:68ca1a1d70b909e3' }"
+        'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:51f8873f5a533b04' :
+        'community.wave.seqera.io/library/python_bokeh_panel_click_pruned:5f117a69db01d17e' }"
 
     input:
     path( ch_combined_annotations, stageAs: "raw-annotations.tsv" )

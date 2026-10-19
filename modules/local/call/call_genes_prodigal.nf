@@ -2,8 +2,6 @@ process CALL_GENES {
     label 'process_call_genes'
     label 'process_array'
 
-    errorStrategy 'finish'
-
     tag { sample_names.join(',') }
 
     conda "${moduleDir}/environment.yml"

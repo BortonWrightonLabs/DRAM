@@ -1,12 +1,10 @@
 process TRAITS {
     label 'process_small'
 
-    errorStrategy 'finish'
-
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_dram-viz_polars:8b538a388b4146b3' :
-        'community.wave.seqera.io/library/python_dram-viz_polars:6f921b219603f384' }"
+        'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:4c61417bc024049e' :
+        'community.wave.seqera.io/library/python_bokeh_panel_click_pruned:dbf89098a8999d72' }"
 
     input:
     path( ch_combined_annotations, stageAs: "raw-annotations.tsv" )
@@ -22,7 +20,7 @@ process TRAITS {
 
     """
 
-    dram_viz \\
+    dram_viz.py \\
         --annotations ${ch_combined_annotations} \\
         --save_dataframes \\
         -r ${rules_tsv} \\
