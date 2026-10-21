@@ -649,24 +649,19 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "description": "Only required if you need to concatenate all of KEGG's provided pep files. Root directory to downloaded KEGG peptide files. The pipeline will search for all pep files in this directory and concatenate them into a single file. In format <root_dir>/*/*.pep."
+                    "description": "Root directory containing matching KEGG peptide and KFF annotation files. Concatenates <root_dir>/*/*.pep and <root_dir>/*/*.kff. Alternatively, provide both kegg_pep_loc and kegg_kff_loc."
                 },
                 "kegg_pep_loc": {
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "description": "Path to and of the gene fasta files that are provided by the KEGG FTP server or a concatenated version of them. Either this or kegg_pep_root_dir must be provided."
+                    "description": "Path to a KEGG peptide FASTA or concatenated peptide FASTA (.pep or .pep.gz). Requires kegg_kff_loc unless kegg_pep_root_dir is provided."
                 },
-                "gene_ko_link_loc": {
+                "kegg_kff_loc": {
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "description": "Path to and of the KO file that is provided by the KEGG FTP server."
-                },
-                "skip_gene_ko_link": {
-                    "type": "boolean",
-                    "fa_icon": "fas fa-question-circle",
-                    "description": "Skip the gene_ko_link file. If you are using an older version of KEGG that does not supply the gene_ko_link file you can use this option to skip the gene_ko_link file. Otherwise, the gene_ko_link file is required."
+                    "description": "Path to matching KEGG tab-separated KFF annotations or a concatenated KFF file (.kff or .kff.gz). Supplies KO assignments and descriptions including EC numbers. Required alongside kegg_pep_loc unless kegg_pep_root_dir is provided."
                 },
                 "kegg_download_date": {
                     "type": "string",
