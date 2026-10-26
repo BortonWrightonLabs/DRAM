@@ -54,7 +54,7 @@ process MMSEQS_SEARCH {
         mmseqs rmdb mmseqs_out/passing.mmsdb
 
         # Convert results to BLAST outformat 6
-        mmseqs convertalis query_database/${input_fasta}.mmsdb ${db_name}.mmsdb  mmseqs_out/best.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus}
+        mmseqs convertalis query_database/${input_fasta}.mmsdb ${db_name}.mmsdb  mmseqs_out/best.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus} --format-mode 4 --format-output "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
 
         mmseqs rmdb mmseqs_out/best.mmsdb
 
@@ -63,8 +63,8 @@ process MMSEQS_SEARCH {
         # Do profile search:
         mmseqs search query_database/${input_fasta}.mmsdb ${db_name}.mmspro mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/tmp -k 5 -s 7  --threads ${task.cpus}
 
-        # Convert results to BLAST outformat 6
-        mmseqs convertalis query_database/${input_fasta}.mmsdb ${db_name}.mmspro mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus}
+        # Convert results to BLAST outformat 6 but include target headers for description parsing if possible
+        mmseqs convertalis query_database/${input_fasta}.mmsdb ${db_name}.mmspro mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus} --format-mode 4 --format-output "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
     fi
 
     # Check if the mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv file is empty

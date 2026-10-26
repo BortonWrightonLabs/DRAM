@@ -41,7 +41,8 @@ process MMSEQS_SEARCH_GPU {
     mmseqs rmdb mmseqs_out/${input_fasta}_${db_name}.mmsdb
     mmseqs filterdb mmseqs_out/${input_fasta}_${db_name}_passing.mmsdb mmseqs_out/${input_fasta}_${db_name}_best.mmsdb --extract-lines 1
     mmseqs rmdb mmseqs_out/${input_fasta}_${db_name}_passing.mmsdb
-    mmseqs convertalis query_database/${input_fasta}.mmsdb "\${target_db}" mmseqs_out/${input_fasta}_${db_name}_best.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus}
+    # Convert results to BLAST outformat 6 but include target headers for description parsing if possible
+    mmseqs convertalis query_database/${input_fasta}.mmsdb "\${target_db}" mmseqs_out/${input_fasta}_${db_name}_best.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus} --format-mode 4 --format-output "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
     mmseqs rmdb mmseqs_out/${input_fasta}_${db_name}_best.mmsdb
 
     if [ -s "mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv" ]; then

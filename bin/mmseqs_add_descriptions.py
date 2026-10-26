@@ -1,6 +1,28 @@
 #!/usr/bin/env python
 import sys
+import re
 import pandas as pd
+
+
+def extract_kegg_orthology(description):
+    if pd.isna(description):
+        return None
+    orthologies = dict.fromkeys(re.findall(r"\bK\d{5}\b", description))
+    return "/".join(orthologies) or None
+
+
+def extract_kegg_EC(description):
+    if pd.isna(description):
+        return None
+    ec_fields = re.findall(r"\[EC:([^\]]*)\]", description)
+    if not ec_fields:
+        return None
+    ec_numbers = dict.fromkeys(
+        number
+        for field in ec_fields
+        for number in re.findall(r"\b\d+\.\d+\.\d+\.\d+\b", field)
+    )
+    return "; ".join(f"EC:{number}" for number in ec_numbers)
 
 
 def assign_rank(row, a_rank, b_rank, db_name_bit_score):
@@ -36,8 +58,22 @@ def main(
     print("Gene locations loaded. Sample rows:")
     print(df_gene_locs.head())
 
-    df_mmseqs = pd.read_csv(raw_mmseqs_path, sep="\t", header=None, usecols=[0, 1, 11])
-    df_mmseqs.columns = ["query_id", f"{db_name}_id", f"{db_name}_bitScore"]
+    df_mmseqs = pd.read_csv(
+        raw_mmseqs_path,
+        sep="\t",
+        usecols=lambda column: column in {"query", "target", "bits", "theader"},
+    )
+    if df_mmseqs.empty:
+        print("No MMseqs hits. Skipping further processing.")
+        return
+    df_mmseqs.rename(
+        columns={
+            "query": "query_id",
+            "target": f"{db_name}_id",
+            "bits": f"{db_name}_bitScore",
+        },
+        inplace=True,
+    )
     print("MMseqs data loaded and columns renamed. Sample rows:")
     print(df_mmseqs.head())
 
@@ -45,7 +81,7 @@ def main(
     print("Merged MMseqs output with gene locations. Sample rows:")
     print(df_merged.head())
 
-    if descriptions_path != "NULL":
+    if descriptions_path and descriptions_path != "NULL":
         df_descriptions = pd.read_csv(descriptions_path, sep="\t")
         first_column = df_descriptions.columns[0]
         df_descriptions.rename(columns={first_column: f"{db_name}_id"}, inplace=True)
@@ -87,24 +123,56 @@ def main(
         # Drop A_rank and B_rank columns as they should not be output
         df_merged.drop(columns=["A_rank", "B_rank"], inplace=True, errors="ignore")
 
+    if "theader" in df_merged.columns:
+        description_column = f"{db_name}_description"
+        if description_column in df_merged.columns:
+            df_merged[description_column] = df_merged[description_column].fillna(
+                df_merged["theader"]
+            )
+        else:
+            df_merged[description_column] = df_merged["theader"]
+        df_merged.drop(columns="theader", inplace=True)
+
+    description_column = f"{db_name}_description"
+    if description_column in df_merged.columns:
+        if db_name == "kegg":
+            df_merged["kegg_EC"] = df_merged[description_column].apply(extract_kegg_EC)
+            df_merged.rename(columns={"kegg_id": "kegg_gene_name"}, inplace=True)
+            df_merged["kegg_id"] = df_merged[description_column].apply(
+                extract_kegg_orthology
+            )
+        elif db_name == "merops":
+            df_merged["merops_family"] = (
+                df_merged[description_column]
+                .fillna("")
+                .str.findall(r"#(\w*.)#")
+                .apply(lambda families: ";".join(families))
+            )
+
     df_merged.to_csv(output_path, index=False)
     print("Merged DataFrame saved to", output_path)
 
 
 if __name__ == "__main__":
-    input_fasta = sys.argv[1]
-    db_name = sys.argv[2]
-    descriptions_path = sys.argv[3]
-    bit_score_threshold = float(sys.argv[4])
-    gene_locs_path = sys.argv[5]
+    args = sys.argv[1:]
+    try:
+        float(args[2])
+    except (IndexError, ValueError):
+        pass
+    else:
+        args.insert(2, "NULL")
+
+    input_fasta = args[0]
+    db_name = args[1]
+    descriptions_path = args[2]
+    bit_score_threshold = float(args[3])
+    gene_locs_path = args[4]
     raw_mmseqs_path = (
-        sys.argv[6]
-        if len(sys.argv) > 6
-        else f"mmseqs_out/{input_fasta}___mmseqs_{db_name}.tsv"
+        args[5] if len(args) > 5 else f"mmseqs_out/{input_fasta}___mmseqs_{db_name}.tsv"
     )
     output_path = (
-        sys.argv[7]
-        if len(sys.argv) > 7
+        args[6]
+        if len(args) > 6
         else f"mmseqs_out/{input_fasta}___mmseqs_{db_name}_formatted.csv"
     )
 

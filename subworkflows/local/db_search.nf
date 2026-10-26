@@ -35,13 +35,6 @@ include { MMSEQS_SEARCH_GPU_WORKFLOW as MMSEQS_GPU_UNIREF } from './mmseqs_searc
 include { MMSEQS_SEARCH_GPU_WORKFLOW as MMSEQS_GPU_CARD } from './mmseqs_search_workflow'
 include { MMSEQS_SEARCH_GPU_WORKFLOW as MMSEQS_GPU_TCDB } from './mmseqs_search_workflow'
 
-include { ADD_SQL_DESCRIPTIONS as SQL_UNIREF            } from "../../modules/local/annotate/add_sql_descriptions.nf"
-include { ADD_SQL_DESCRIPTIONS as SQL_VIRAL             } from "../../modules/local/annotate/add_sql_descriptions.nf"
-include { ADD_SQL_DESCRIPTIONS as SQL_MEROPS            } from "../../modules/local/annotate/add_sql_descriptions.nf"
-include { ADD_SQL_DESCRIPTIONS as SQL_KEGG              } from "../../modules/local/annotate/add_sql_descriptions.nf"
-include { ADD_SQL_DESCRIPTIONS as SQL_PFAM              } from "../../modules/local/annotate/add_sql_descriptions.nf"
-include { ADD_SQL_DESCRIPTIONS as SQL_DBCAN             } from "../../modules/local/annotate/add_sql_descriptions.nf"
-
 include { HMM_SEARCH_WORKFLOW as HMM_KOFAM } from './hmm_search_workflow'
 include { HMM_SEARCH_WORKFLOW as HMM_DRAM_DB } from './hmm_search_workflow'
 include { HMM_SEARCH_WORKFLOW as HMM_VOG } from './hmm_search_workflow'
@@ -116,7 +109,6 @@ workflow DB_SEARCH {
 
     )
 
-    ch_sql_descriptions_db = file(params.sql_descriptions_db)
     ch_kofam_list = file(params.kofam_list)
     ch_vog_list = file(params.vog_list)
     ch_camper_hmm_list = file(params.camper_hmm_list)
@@ -177,14 +169,12 @@ workflow DB_SEARCH {
     if (use_kegg) {
         if (use_gpu_kegg) {
             MMSEQS_GPU_KEGG(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_kegg_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, kegg_name)
-            ch_mmseqs_unformatted = MMSEQS_GPU_KEGG.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_GPU_KEGG.out.mmseqs_search_formatted_out
         } else {
             MMSEQS_KEGG(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_kegg_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, kegg_name)
-            ch_mmseqs_unformatted = MMSEQS_KEGG.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_KEGG.out.mmseqs_search_formatted_out
         }
 
-        SQL_KEGG(ch_mmseqs_unformatted, kegg_name, ch_sql_descriptions_db)
-        ch_mmseqs_formatted = SQL_KEGG.out.sql_formatted_hits
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
     }
     // KOFAM annotation
@@ -196,10 +186,8 @@ workflow DB_SEARCH {
     // PFAM annotation
     if (use_pfam) {
         MMSEQS_PFAM(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_pfam_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, pfam_name)
-        ch_mmseqs_unformatted = MMSEQS_PFAM.out.mmseqs_search_formatted_out
+        ch_mmseqs_formatted = MMSEQS_PFAM.out.mmseqs_search_formatted_out
 
-        SQL_PFAM(ch_mmseqs_unformatted, pfam_name, ch_sql_descriptions_db)
-        ch_mmseqs_formatted = SQL_PFAM.out.sql_formatted_hits
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
     }
 
@@ -302,28 +290,24 @@ workflow DB_SEARCH {
     if (use_merops) {
         if (use_gpu_merops) {
             MMSEQS_GPU_MEROPS(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_merops_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, merops_name)
-            ch_mmseqs_unformatted = MMSEQS_GPU_MEROPS.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_GPU_MEROPS.out.mmseqs_search_formatted_out
         } else {
             MMSEQS_MEROPS(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_merops_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, merops_name)
-            ch_mmseqs_unformatted = MMSEQS_MEROPS.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_MEROPS.out.mmseqs_search_formatted_out
         }
 
-        SQL_MEROPS(ch_mmseqs_unformatted, merops_name, ch_sql_descriptions_db)
-        ch_mmseqs_formatted = SQL_MEROPS.out.sql_formatted_hits
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
     }
     // Uniref annotation
     if (use_uniref) {
         if (use_gpu_uniref) {
             MMSEQS_GPU_UNIREF(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_uniref_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, uniref_name)
-            ch_mmseqs_unformatted = MMSEQS_GPU_UNIREF.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_GPU_UNIREF.out.mmseqs_search_formatted_out
         } else {
             MMSEQS_UNIREF(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_uniref_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, uniref_name)
-            ch_mmseqs_unformatted = MMSEQS_UNIREF.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_UNIREF.out.mmseqs_search_formatted_out
         }
 
-        SQL_UNIREF(ch_mmseqs_unformatted, uniref_name, ch_sql_descriptions_db)
-        ch_mmseqs_formatted = SQL_UNIREF.out.sql_formatted_hits
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
     }
     // Metals annotation
@@ -400,14 +384,12 @@ workflow DB_SEARCH {
     if (params.use_viral) {
         if (use_gpu_viral) {
             MMSEQS_GPU_VIRAL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_viral_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, viral_name)
-            ch_mmseqs_unformatted = MMSEQS_GPU_VIRAL.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_GPU_VIRAL.out.mmseqs_search_formatted_out
         } else {
             MMSEQS_VIRAL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_viral_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, viral_name)
-            ch_mmseqs_unformatted = MMSEQS_VIRAL.out.mmseqs_search_formatted_out
+            ch_mmseqs_formatted = MMSEQS_VIRAL.out.mmseqs_search_formatted_out
         }
 
-        SQL_VIRAL(ch_mmseqs_unformatted, viral_name, ch_sql_descriptions_db)
-        ch_mmseqs_formatted = SQL_VIRAL.out.sql_formatted_hits
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
     }
 
