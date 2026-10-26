@@ -258,21 +258,20 @@ workflow DRAM {
 
     } else if (params.format_kegg){
         if ( params.kegg_pep_root_dir ) {
-            CAT_KEGG_PEP( file(params.kegg_pep_root_dir) )
+            CAT_KEGG_PEP( file(params.kegg_pep_root_dir, checkIfExists: true) )
             kegg_pep_f = CAT_KEGG_PEP.out.kegg_pep
+            kegg_kff_f = CAT_KEGG_PEP.out.kegg_kff
         }
         else {
-            kegg_pep_f = file(params.kegg_pep_loc)
+            if (!params.kegg_pep_loc || !params.kegg_kff_loc) {
+                error("--format_kegg requires --kegg_pep_root_dir containing organism .pep and .kff files, or both --kegg_pep_loc and --kegg_kff_loc.")
+            }
+            kegg_pep_f = file(params.kegg_pep_loc, checkIfExists: true)
+            kegg_kff_f = file(params.kegg_kff_loc, checkIfExists: true)
         }
 
-        if ( !kegg_pep_f.exists() ) {
-            error("Error: when using running format_kegg, the kegg_pep_loc file must exists or the user must provide the KEGG pep file root directories. KEGG pep file not found at ${params.kegg_pep_loc} nor kegg pep root directory at ${params.kegg_pep_root_dir}.")
-        }
-
-        gene_ko_link_f = params.gene_ko_link_loc && file(params.gene_ko_link_loc).exists() ? file(params.gene_ko_link_loc) : default_sheet
-        kegg_download_date = params.kegg_download_date ? params.kegg_download_date : "''"
-        skip_gene_ko_link = params.skip_gene_ko_link ? "true" : "false"
-        FORMAT_KEGG_DB( kegg_pep_f, gene_ko_link_f, kegg_download_date, skip_gene_ko_link )
+        kegg_download_date = params.kegg_download_date ?: ""
+        FORMAT_KEGG_DB( kegg_pep_f, kegg_kff_f, kegg_download_date )
 
     } else if (params.merge_annotations){
         MERGE()
