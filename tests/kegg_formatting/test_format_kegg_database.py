@@ -12,13 +12,20 @@ import subprocess
 
 
 ROOT = Path(__file__).resolve().parents[2]
-spec = importlib.util.spec_from_file_location("format_kegg", ROOT / "bin/format_kegg_database.py")
+spec = importlib.util.spec_from_file_location(
+    "format_kegg", ROOT / "bin/format_kegg_database.py"
+)
 formatter = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(formatter)
 
 
 def kff_row(gene, ko="", description=""):
-    return "\t".join([gene, "CDS", "3", "12", "1..12", "", "", "", "original", ko, description]) + "\n"
+    return (
+        "\t".join(
+            [gene, "CDS", "3", "12", "1..12", "", "", "", "original", ko, description]
+        )
+        + "\n"
+    )
 
 
 class KeggFormattingTests(unittest.TestCase):
@@ -30,17 +37,25 @@ class KeggFormattingTests(unittest.TestCase):
                 ">chyl:CE91St63_15060 bile-acid 7-alpha-dehydratase\nMA\nAA\n"
                 ">org:bare\nMBB\n>org:missing original\nMCC\n>org:empty original\nMDD\n"
             )
-            annotation = kff_row("chyl:CE91St63_15060", "K15872", "baiE; bile-acid 7alpha-dehydratase [EC:4.2.1.106]")
+            annotation = kff_row(
+                "chyl:CE91St63_15060",
+                "K15872",
+                "baiE; bile-acid 7alpha-dehydratase [EC:4.2.1.106]",
+            )
             kff.write_text(
-                annotation + annotation
+                annotation
+                + annotation
                 + kff_row("org:bare", "K00001 K00002", "enzyme [EC:1.2.3.- 1.2.3.4]")
                 + kff_row("org:empty")
             )
-            result = "".join(formatter.generate_modified_kegg_fasta(pep, kff, directory))
-            self.assertEqual(result,
+            result = "".join(
+                formatter.generate_modified_kegg_fasta(pep, kff, directory)
+            )
+            self.assertEqual(
+                result,
                 ">chyl:CE91St63_15060 bile-acid 7-alpha-dehydratase; K15872; baiE; bile-acid 7alpha-dehydratase [EC:4.2.1.106]\nMA\nAA\n"
                 ">org:bare K00001; K00002; enzyme [EC:1.2.3.- 1.2.3.4]\nMBB\n"
-                ">org:missing original\nMCC\n>org:empty original\nMDD\n"
+                ">org:missing original\nMCC\n>org:empty original\nMDD\n",
             )
             self.assertEqual(list(Path(directory).glob("kegg_metadata_*")), [])
 
@@ -59,7 +74,9 @@ class KeggFormattingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             kff = Path(directory) / "bad.kff"
             kff.write_text("org:gene CDS 3\n")
-            with self.assertRaisesRegex(ValueError, r"bad.kff:1: expected 11 tab-separated"):
+            with self.assertRaisesRegex(
+                ValueError, r"bad.kff:1: expected 11 tab-separated"
+            ):
                 list(formatter.kff_annotations(kff))
 
     def test_build_uses_enriched_fasta(self):
@@ -71,7 +88,9 @@ class KeggFormattingTests(unittest.TestCase):
             kff.write_text(kff_row("org:gene", "K15872", "enzyme [EC:4.2.1.106]"))
             with patch.object(formatter, "create_mmseqs") as create:
                 formatter.prepare_databases(pep, kff, output, threads=2)
-            create.assert_called_once_with(str(output / "kegg.mod.fa"), str(output / "kegg.mmsdb"), threads=2)
+            create.assert_called_once_with(
+                str(output / "kegg.mod.fa"), str(output / "kegg.mmsdb"), threads=2
+            )
             self.assertIn("[EC:4.2.1.106]", (output / "kegg.mod.fa").read_text())
 
     @unittest.skipUnless(shutil.which("nextflow"), "Nextflow is not installed")
@@ -115,16 +134,26 @@ workflow {{
     FORMAT_DIRECT(file('{pep_gz}'), file('{kff_gz}'), '20260528')
 }}
 """)
-            environment = dict(os.environ, NXF_HOME=os.environ.get("NXF_HOME", str(Path.home() / ".nextflow")))
+            environment = dict(
+                os.environ,
+                NXF_HOME=os.environ.get("NXF_HOME", str(Path.home() / ".nextflow")),
+            )
             result = subprocess.run(
                 ["nextflow", "run", "main.nf", "-ansi-log", "false", "--threads", "1"],
-                cwd=project, env=environment, capture_output=True, text=True, timeout=120,
+                cwd=project,
+                env=environment,
+                capture_output=True,
+                text=True,
+                timeout=120,
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             fastas = list(project.glob("work/*/*/kegg/kegg.mod.fa"))
             self.assertEqual(len(fastas), 2, result.stdout + result.stderr)
             for fasta in fastas:
-                self.assertEqual(fasta.read_text(), ">org:gene original; K15872; enzyme [EC:4.2.1.106]\nMAAA\n")
+                self.assertEqual(
+                    fasta.read_text(),
+                    ">org:gene original; K15872; enzyme [EC:4.2.1.106]\nMAAA\n",
+                )
 
 
 if __name__ == "__main__":

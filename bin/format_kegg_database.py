@@ -126,9 +126,13 @@ def kff_annotations(kegg_kff):
                 continue
             fields = line.rstrip("\r\n").split("\t")
             if len(fields) != 11 or not fields[0].strip():
-                raise ValueError(f"{kegg_kff}:{line_number}: expected 11 tab-separated KFF fields and a gene ID")
+                raise ValueError(
+                    f"{kegg_kff}:{line_number}: expected 11 tab-separated KFF fields and a gene ID"
+                )
             kos = re.findall(r"\bK\d{5}\b", fields[9])
-            annotation = "; ".join(dict.fromkeys(kos + [fields[10].strip()])).strip("; ")
+            annotation = "; ".join(dict.fromkeys(kos + [fields[10].strip()])).strip(
+                "; "
+            )
             if annotation:
                 yield fields[0].strip(), annotation
 
@@ -141,14 +145,18 @@ def generate_modified_kegg_fasta(kegg_fasta, kegg_kff, temporary_dir=None):
     same gene are retained. Memory use does not grow with the number of genes.
     """
     with TemporaryDirectory(prefix="kegg_metadata_", dir=temporary_dir) as directory:
-        with closing(sqlite3.connect(path.join(directory, "annotations.sqlite"))) as connection:
+        with closing(
+            sqlite3.connect(path.join(directory, "annotations.sqlite"))
+        ) as connection:
             connection.execute(
                 "CREATE TABLE annotations (gene TEXT, annotation TEXT, "
                 "PRIMARY KEY (gene, annotation)) WITHOUT ROWID"
             )
             annotations = iter(kff_annotations(kegg_kff))
             while batch := list(islice(annotations, 10000)):
-                connection.executemany("INSERT OR IGNORE INTO annotations VALUES (?, ?)", batch)
+                connection.executemany(
+                    "INSERT OR IGNORE INTO annotations VALUES (?, ?)", batch
+                )
                 connection.commit()
 
             missing = 0
@@ -164,7 +172,8 @@ def generate_modified_kegg_fasta(kegg_fasta, kegg_kff, temporary_dir=None):
                     gene = fields[0]
                     description = fields[1] if len(fields) > 1 else ""
                     rows = connection.execute(
-                        "SELECT annotation FROM annotations WHERE gene = ? ORDER BY annotation", (gene,)
+                        "SELECT annotation FROM annotations WHERE gene = ? ORDER BY annotation",
+                        (gene,),
                     ).fetchall()
                     if not rows:
                         missing += 1
@@ -174,7 +183,10 @@ def generate_modified_kegg_fasta(kegg_fasta, kegg_kff, temporary_dir=None):
                                 description += ("; " if description else "") + part
                     yield ">" + gene + (" " + description if description else "") + "\n"
             if missing:
-                LOGGER.warning("%s FASTA records had no KFF annotation; original headers retained", missing)
+                LOGGER.warning(
+                    "%s FASTA records had no KFF annotation; original headers retained",
+                    missing,
+                )
 
 
 def get_iso_date():
@@ -183,9 +195,17 @@ def get_iso_date():
 
 def main():
     parser = argparse.ArgumentParser(description="Prepare KEGG database")
-    parser.add_argument("--kegg_loc", required=True, type=str, help="Path to the KEGG peptide FASTA (.pep or .pep.gz)")
     parser.add_argument(
-        "--kegg_kff_loc", required=True, type=str, help="Path to matching KEGG annotations (.kff or .kff.gz)"
+        "--kegg_loc",
+        required=True,
+        type=str,
+        help="Path to the KEGG peptide FASTA (.pep or .pep.gz)",
+    )
+    parser.add_argument(
+        "--kegg_kff_loc",
+        required=True,
+        type=str,
+        help="Path to matching KEGG annotations (.kff or .kff.gz)",
     )
     parser.add_argument(
         "--output_dir", type=str, help="Path to the output directory", default="kegg"
