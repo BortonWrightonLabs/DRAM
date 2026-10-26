@@ -577,11 +577,6 @@
                     "default": "${launchDir}/databases/methyl_gpu/",
                     "hidden": true
                 },
-                "sql_descriptions_db": {
-                    "type": "string",
-                    "default": "${launchDir}/databases/db_descriptions/description_db.sqlite",
-                    "hidden": true
-                },
                 "kegg_e_value": {
                     "type": "string",
                     "default": "1e-05",
