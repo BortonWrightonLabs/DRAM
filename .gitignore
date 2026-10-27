@@ -48,6 +48,7 @@ nextflow-LOCAL.config
 .Rhistory
 .nextflow*
 databases/
+databases
 assets/bbmap/*
 assets/bbmap
 assets/bbmap/
