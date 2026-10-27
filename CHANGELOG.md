@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0-beta40 - 2026-10-27
+
+[c9018fc](https://github.com/BortonWrightonLabs/DRAM/commit/c9018fc6fc57e5fb6f317370d4fb43e1a98e3d82)...[a962b41](https://github.com/BortonWrightonLabs/DRAM/commit/a962b4120c94d8279991086725362f1444f3b09d)
+
+### Bug Fixes
+
+- Bugfixes with rules submodule ([a962b41](https://github.com/BortonWrightonLabs/DRAM/commit/a962b4120c94d8279991086725362f1444f3b09d))
+
+
+
+### Features
+
+- Enrich protein database headers with KO and EC annotations from KFF files ([7ecf8b8](https://github.com/BortonWrightonLabs/DRAM/commit/7ecf8b8a3e41d707529b3e2d4e7753755653f47a))
+
+
+- Pull accession from HMM if possible ([b7801e2](https://github.com/BortonWrightonLabs/DRAM/commit/b7801e211ab8b8afd8064c719cd2467cd0effb11))
+
+
+
+### Package
+
+- Update ag bgc rules for viz, move to wide viz/traits output ([a1f8e19](https://github.com/BortonWrightonLabs/DRAM/commit/a1f8e1908b749915b63f83b785ab46051b94a121))
+
+
+- Move to using dram_viz/dram-rules as submodule directly ([3b67e62](https://github.com/BortonWrightonLabs/DRAM/commit/3b67e6206a0a42788dfcf0e6997359a6edc5b5e0))
+
+  dram_viz was installed as a conda package before
+  Now use it directly as a submodule, so we can iterate
+  it faster and easier, but still allow the package to be
+  installed as a conda package for desktop use by users.
+
+
+- Resource class change, and retries ([94dfe80](https://github.com/BortonWrightonLabs/DRAM/commit/94dfe801494e7f34cad2d13b2b3486802da7e460))
+
+  Change resource class size defaults to be much smaller,
+  plus make them easier for users to change them in the config
+  so that small medium and large can easily by controller.
+
+  Make processes retry by default instead of just finish and crash
+  on fail
+
+
+
+### Refactor
+
+- Remove desc db in favor of direct mmseqs theader use ([7f96f98](https://github.com/BortonWrightonLabs/DRAM/commit/7f96f98c78959d6cfb170906b440c6c5c2f42d79))
+
+  mmseqs covertalis can return the target header as the descriptions
+  instead of relying on the sqlite description database. This is more
+  foolproof since any database update can directly pull from the new
+  headers. When we build the new kegg database, we can build it with
+  updated headers from the kff files.
+
+
+
 ## 2.0.0-beta39 - 2026-10-08
 
 [4594735](https://github.com/BortonWrightonLabs/DRAM/commit/45947355343e5e9261fd23c59e68c03434a49ece)...[bdcac80](https://github.com/BortonWrightonLabs/DRAM/commit/bdcac8056da8a0080d371a2366e6c8839ed5a1a0)
