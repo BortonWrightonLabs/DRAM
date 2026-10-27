@@ -9,10 +9,10 @@ import numpy as np
 # (so query_name here was target_id in DRAM1, model_start model_end were target_start target_end in DRAM1, etc.)
 HMMSCAN_ALL_COLUMNS = [
     "query_id",
-    "target_ascession",
+    "target_accession",
     "target_length",
     "query_name",
-    "query_ascession",
+    "query_accession",
     "query_length",
     "full_evalue",
     "full_bitScore",
@@ -64,6 +64,7 @@ OUTPUT_COLUMNS = [
     "stop_position",
     "strandedness",
     "{db_name}_id",
+    "{db_name}_acc",
     "{db_name}_ids",
     "{db_name}_full_bitScore",
     "{db_name}_domain_bitScore",
@@ -88,6 +89,11 @@ def parse_hmmsearch_domtblout(file):
             column_data[col].append(HMMSCAN_COLUMN_TYPES[i](line[i]))
 
     hmmsearch_frame = pd.DataFrame(column_data)
+    accessions = hmmsearch_frame["query_accession"].astype("string").str.strip()
+    hmmsearch_frame["query_accession"] = accessions.mask(
+        accessions.str.casefold().isin(["na", "n/a", "nan", "none", "null", "<na>"])
+        | ~accessions.str.contains(r"[A-Za-z0-9]", na=False)
+    )
 
     # Extract the sign part from the description column to determine strandedness
     hmmsearch_frame["strandedness"] = hmmsearch_frame["description"].apply(
@@ -290,6 +296,7 @@ def main(hmm_domtbl, hmm_info_path, ec_from_info, gene_locs, db_name, output):
     ).drop_duplicates(subset=["query_id"])
     hits_sig = hits_sig.rename(
         columns={
+            "query_accession": f"{db_name}_acc",
             "full_bitScore": f"{db_name}_full_bitScore",
             "domain_bitScore": f"{db_name}_domain_bitScore",
         }
