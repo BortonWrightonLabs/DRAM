@@ -4,7 +4,7 @@
 
 - Nextflow **25.04.0 or newer**, as required by DRAM's `nextflow.config` manifest.
 - A Java version supported by your chosen Nextflow release. See the [Nextflow installation requirements](https://www.nextflow.io/docs/stable/install.html).
-- One dependency management profile: `apptainer`, `singularity`, `docker`, `podman`, `conda`, or `mamba`. The runtime you select must be installed and available on the nodes that execute tasks.
+- One container runtime: **Apptainer, Singularity CE, Docker, Podman, Shifter, or Charliecloud**. Alternatively, use **Conda or Mamba** to create software environments without containers. The selected runtime or environment manager must be installed and available on the nodes that execute tasks.
 - Preformatted DRAM databases for the annotation databases you select.
 - For SLURM, access to a submission host with `sbatch`, `squeue`, and `scancel`, an allocation if required, and shared storage accessible from compute nodes.
 
@@ -22,13 +22,30 @@ conda activate env_nf
 nextflow -version
 ```
 
-Install or load one runtime and check that it is available, for example:
+#### Available container runtimes
+
+DRAM includes the following container profiles in its `nextflow.config`. Install or load the runtime available on your system, then select its matching profile when launching DRAM:
+
+| Container runtime | Nextflow option |
+| --- | --- |
+| Apptainer | `-profile apptainer` |
+| Singularity CE | `-profile singularity` |
+| Docker | `-profile docker` |
+| Podman | `-profile podman` |
+| Shifter | `-profile shifter` |
+| Charliecloud | `-profile charliecloud` |
+
+Choose one container runtime profile per run. A profile configures Nextflow to use that runtime; it does not install the runtime itself. On an HPC system, use a runtime supported by your administrators and available on the compute nodes. Selecting SLURM is separate: for example, `-profile apptainer,slurm` uses Apptainer for software and SLURM for task submission.
+
+Check that your chosen runtime is available, for example:
 
 ```bash
 apptainer --version
 ```
 
-Choose `-profile apptainer` when running with Apptainer, `-profile singularity` for Singularity, or the corresponding profile for another supported runtime. The `conda` profile creates task environments automatically; `mamba` also requires Mamba. Installing Nextflow in a Conda environment does not require using the `conda` execution profile.
+#### Conda and Mamba alternatives
+
+Conda and Mamba are environment managers, not container runtimes. Use `-profile conda` to create task environments with Conda, or `-profile mamba` to create them using Mamba. The latter requires Mamba to be installed. Choose one of these profiles instead of a container runtime profile. Installing Nextflow in a Conda environment does not require using the `conda` execution profile.
 
 ### 2. Prepare a launch directory and databases
 
