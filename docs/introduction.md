@@ -1,20 +1,16 @@
 # Introduction to DRAM2
 
-> As of May 11, 2026, we will not be making public changes to DRAM2 code ahead of our upcoming publication. We appreciate your patience, & stay tuned for more!
-
-----
-
 Welcome to the wiki for Distilling and Refining Annotations of Metabolism 2 (DRAM2)!
 
-### Introduction
+## Introduction
 
 DRAM2 (Distilling and Refining Annotations of Metabolism, version 2) is a tool for annotating genomic and metagenomic assemblies (e.g., scaffolds or contigs) as well as predicted genes (nucleotide or amino acid sequences). It organizes genome annotations into metabolic functions across three levels of increasing interpretation: (1) **ANNOTATE**, (2) **SUMMARIZE**, and (3) **VISUALIZE**. The **ANNOTATE** output contains all database hits for every gene in each genome, generating a comprehensive output of most annotation pipelines. DRAM2 extends beyond this by organizing (**SUMMARIZE**) and visualizing (**VISUALIZE**) annotations into ecosystem-relevant functional categories, enabling more interpretable comparisons across genomes and ecosystems. The DRAM2 workflow enables the analysis of large numbers of microbial genomes or metagenomes, highlighting functional guilds and supporting inference of organismal metabolism across datasets.
 
-### DRAM2 Overview & Workflow
+## DRAM2 Overview & Workflow
 
-Here provide we an overview on the DRAM2 workflow:
+The DRAM2 workflow is outlined below:
 
-- A quick start guide can be found here https: [Usage](//dramit.readthedocs.io/en/latest/usage.html)  
+- Start with [installation and SLURM setup](installation.md), then see [usage and custom configuration](usage.md).
 - A complete list of pipeline configuration parameters can be found here: [Parameters API](https://dramit.readthedocs.io/en/latest/params_doc.html)
 
 **DRAM2 workflow**
@@ -34,7 +30,7 @@ DRAM2 annotates genes in each genome (or Metagenome Assembled Genome (MAG)) usin
 
 **3) Summarize gene annotations based on curated datasets to ascribe function to MAGs**
 
-After genes have been annotated, users can SUMMARIZE this information into a user-friendly excel workbook (metabolism_summary.xlsx), which contains consolidated gene counts for the most informative genes for specific metabolic functions (*Energy acquisition/bioenergetics, Assimilation & Cofactor Metabolism, Cellular Machinery & Environmental Interaction & Adaptation*). This information can be further refined using a user-defined ecosystem (*agriculture, engineered systems, biogeochemistry, and gut*) to provide the user with counts for a refined set of genes directly related to their ecosystem of interest. In addition to the metabolism_summary excel workbook, the SUMMARIZE contains three key files: (1) a genome statistics table which includes all statistics required to meet MIMAG criteria (genome_stats.tsv), (2) a metabolism summary sheet which contains gene counts of functional genes across a curated set of metabolisms and ecosystems (summarized_genomes.tsv), and (3) a traits table which provides users with the information on the presence and absence of environmentally relevant pathways (traits.xlsx)
+After genes have been annotated, users can SUMMARIZE this information into a user-friendly excel workbook (metabolism_summary.xlsx), which contains consolidated gene counts for the most informative genes for specific metabolic functions (*Energy acquisition/bioenergetics, Assimilation & Cofactor Metabolism, Cellular Machinery & Environmental Interaction & Adaptation*). This information can be further refined using a user-defined ecosystem (*agriculture, engineered systems, biogeochemistry, and gut*) to provide the user with counts for a refined set of genes directly related to their ecosystem of interest. In addition to the metabolism_summary excel workbook, the SUMMARIZE contains three key files: (1) a genome statistics table which includes all statistics required to meet MIMAG criteria (genome_stats.tsv), (2) a metabolism summary sheet which contains gene counts of functional genes across a curated set of metabolisms and ecosystems (summarized_genomes.tsv), and (3) separate trait outputs, generated with `--traits`, describing environmentally relevant pathways (`VISUALIZE/df_traits.tsv` and `VISUALIZE/heatmap_traits.html`)
 
 **4) Generate an interactive heatmap of ecosystem-relevant MAG level metabolic function**
 
@@ -42,15 +38,15 @@ Users can also generate an interactive heatmap depicting the presence of specifi
 
 ---
 
-### Basic usage
+## Basic usage
 
-Below is an example of basic DRAM2 usage. This code is for annotating a directory of genomes, renaming them for downstream use, calling genes and annotating them using all available databases, performing quality control, summarizing and visualizing with particular ecosystems in mind and assigning genome-level traits to the organisms. The command is submitted on the command line and will run in the background.
+Below is an example of basic DRAM2 usage. This code is for annotating a directory of genomes, renaming them for downstream use, calling genes and annotating them using all available databases, performing quality control, summarizing and visualizing with particular ecosystems in mind and assigning genome-level traits to the organisms. This example uses the DRAM2 `dev` branch and runs the driver in the background. Configure `cluster.config` for your SLURM allocation and database paths first. Use `-bg` only where your cluster permits persistent background drivers; see the [usage guide](usage.md#launching-directly-or-in-the-background).
 
 ```bash
-nextflow run BortonWrightonLabs/DRAM --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --call --annotate --anno_dbs all --qc --summarize --sum_ecos 'eng_sys,ag' --visualize --traits -profile apptainer,slurm -c cluster.config -resume -bg
+nextflow run BortonWrightonLabs/DRAM -r dev --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --call --annotate --anno_dbs all --qc --summarize --sum_ecos 'eng_sys,ag' --visualize --traits -profile apptainer,slurm -c cluster.config -resume -bg
 ```
 
-Please note that --input_fasta [INPUT_FASTA] should be a directory of genomes or MAGs in .fa or .fna format. It is also worth noting that all Nextflow options are specified with a single dash -, while all DRAM2-specific options are specified with a double dash --.
+`--input_fasta` should be a directory of genomes or MAGs in FASTA format. `--anno_dbs all` selects databases with existing configured paths and warns and skips missing paths. For reproducible analyses, pin a DRAM2 tag or commit and select databases explicitly. It is also worth noting that all Nextflow options are specified with a single dash -, while all DRAM2-specific options are specified with a double dash --.
 
 All available Nextflow options can be seen by running:
 nextflow run -help

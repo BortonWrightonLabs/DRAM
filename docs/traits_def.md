@@ -1,10 +1,12 @@
 # Traits
 
-The Traits file provides users with information on the broad, metabolic functions assigned to each MAG.
-Please note that this file (traits.xlsx) should be interpreted with caution when running DRAM2 on assemblies as this step requires additional genomic context (taxonomy, synteny etc) for the most accurate representation of organism metabolic function. Traits can be assigned via presence/absence (currently) or with the incorporation of expression or coverage data (coming soon)
+`--traits` evaluates trait rules against gene annotations and writes `VISUALIZE/df_traits.tsv` and `VISUALIZE/heatmap_traits.html`. These outputs describe broad metabolic functions assigned to each MAG.
+Interpret these outputs as metabolic potential inferred from gene annotations. Assemblies containing multiple organisms can combine evidence across genomes, so organism-level trait calls need extra care. Taxonomy, synteny, and other genomic context can support biological interpretation beyond the rule calls.
 
 
-Presence/ Absence Definitions: 
+The checked-in trait and common rule sheets are the source of truth for current calls; see the [rule parser guide](rules_parser.md) for rule syntax. The descriptions below provide biological context and should be checked against the configured rules when interpreting an individual call.
+
+Presence/Absence Definitions:
 
 - Aerobic: ≥50% of NADH dehydrogenase and at least one subunit of low affinity oxidase
 - Microaerophilic: ≥50% of NADH dehydrogenase and at least one subunit of high affinity oxidase
