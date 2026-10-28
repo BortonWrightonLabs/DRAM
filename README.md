@@ -2,7 +2,7 @@
 
 ### Welcome to the wiki for Distilled and Refined Annotation of Metabolism 2 (DRAM2)!
 
-Here you will find give you basic instructions for running DRAM2, but for full documentation, please see the official DRAM2 webpage: [Read-the-docs](https://dramit.readthedocs.io/en/latest)
+Here you will find basic instructions for running DRAM2, but for full documentation, please see the official DRAM2 webpage: [Read-the-docs](https://dramit.readthedocs.io/en/latest)
 
 <p align="center">
  <img src="assets/images/DRAM2_large.png" width="600" height="600" alt="DRAM v2 logo">
@@ -24,12 +24,12 @@ Below is an example of basic DRAM2 usage. This code is for annotating a director
 
 
 ``` bash
-nextflow run BortonWrightonLabs/DRAM --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --annotate --anno_dbs all --qc --summarize --sum_ecos 'eng_sys,ag' --visualize --traits -profile singularity,slurm -c cluster.config -resume -bg
+nextflow run BortonWrightonLabs/DRAM -r dev --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --annotate --anno_dbs all --qc --summarize --sum_ecos 'eng_sys,ag' --visualize --traits -profile singularity,slurm -c cluster.config -resume -bg
 ```
 
-Please note that '--input_fasta [INPUT_FASTA]' should be a directory of genomes or MAGs in .fa or .fna format. It is also worth noting that all Nextflow options are specified with a single dash `-`, while all DRAM2-specific options are specified with a double dash `--`.  All available Nextflow options can be seen by running:
+`--input_fasta` is a directory of assembly FASTAs. These DRAM2 examples use the `dev` branch; pin a DRAM2 tag or commit for reproducible analyses. `--anno_dbs all` enables databases whose configured paths exist and skips missing paths with a warning.
 
-`nextflow run -help`
+Prepare `cluster.config` for your SLURM partition/account and configure database paths before running. Nextflow options use one dash (`-c`, `-profile`, `-params-file`), while DRAM parameters use two (`--input_fasta`). See the [installation guide](docs/installation.md) for SLURM setup and the [usage guide](docs/usage.md#custom-configuration-and-parameters-files) for custom configs, YAML/JSON parameters files, and resource-label overrides. Keep the Nextflow driver running according to your cluster's policy; `-bg` does not submit the driver to SLURM.
 
 ## Quick Links
 - [Docs](https://dramit.readthedocs.io/en/latest)

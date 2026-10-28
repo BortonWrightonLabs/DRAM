@@ -1,46 +1,114 @@
 # DRAM Usage
 
-Here you will find give you basic instructions for running DRAM2
-> _The entire list of pipeline configuration parameters can be found here: [Parameters API](params_doc.md). Here we will give some overviews on how to use important parameters and launch DRAM_
+DRAM2 accepts assemblies, predicted protein FASTAs, or existing DRAM annotations, depending on the selected steps. See the [installation guide](installation.md) for software, databases, and initial HPC setup, and the [Parameters API](params_doc.md) for all DRAM parameters.
 
 ## Basic command
 
-Below is an example of common workflow in DRAM2. The user is calling genes from a directory of MAGs, annotating those genes using all available databases, assessing the qualtiy of each MAG. The user is then summarizing their annotations into user-friendly documents, assigning MAG-level metabolic functions, and generating an interactive heatmap of these functions per MAG. This command in being run from the command line in the background. A more detailed description of flags can be found below
+This example calls genes from assemblies, annotates against KOfam, runs QC, and produces summaries, traits, and visualizations:
 
-`nextflow run BortonWrightonLabs/DRAM --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --annotate
---anno_dbs all --qc --summarize --traits --visualize -profile singularity -bg` 
-
-## Description of command-line options:
-
-```{note}
-All command line options can also be set inside a configuration or params file for set it and forget style parameters instead of needing to be provided each time on the command line. See Nextflow or nf-core documentation for examples.
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    --input_fasta /shared/project/genomes --outdir /shared/project/dram-results \
+    --rename --annotate --anno_dbs kofam --qc --summarize --traits --visualize \
+    -profile apptainer -c databases.config
 ```
 
-The general command to run DRAM2 is:
+Set the KOfam paths in `databases.config` as described in [installation](installation.md#2-prepare-a-launch-directory-and-databases). `--anno_dbs all` enables databases with existing configured paths and warns and skips missing paths; an incomplete existing database can still fail later. Explicitly name databases to keep the annotation set predictable. Annotation from `--input_fasta` automatically calls genes; `--call` is useful when requesting gene calling on its own.
 
-`nextflow run BortonWrightonLabs/DRAM [OPTIONS]`
+Examples use `-r dev` for DRAM2. Replace it with a DRAM2 tag or commit for a reproducible run. For a local or shared checkout, replace `BortonWrightonLabs/DRAM -r dev` with `/path/to/DRAM` and select the revision with Git.
 
-If DRAM2 is installed in a shared location, then the command is:
+## Custom configuration and parameters files
 
-`nextflow run /path/to/DRAM [OPTIONS]`
+Nextflow options use a single dash, such as `-profile`, `-c`, `-params-file`, and `-resume`. DRAM parameters use a double dash, such as `--input_fasta` and `--max_memory`.
 
-If installed in a shared location, replace all example commaands below with `nextflow run /path/to/DRAM [OPTIONS]`
+| Setting | Nextflow config (`.config`) | Parameters file (`.yml` / `.json`) | Command line |
+| --- | --- | --- | --- |
+| Input directory | `params.input_fasta = '/data/genomes'` | `input_fasta: /data/genomes` | `--input_fasta /data/genomes` |
+| Per-task memory cap | `params.max_memory = '80.GB'` | `max_memory: '80.GB'` | `--max_memory '80.GB'` |
+| SLURM partition | `process.queue = 'general'` | Set in a config | Load config with `-c` |
+| Process resource overrides | `process { withLabel: ... }` | Set in a config | Load config with `-c` |
+| Runtime and workflow profiles | Define under `profiles` | Select on the command line | `-profile apptainer,slurm` |
 
-### Launching, Direct or Background
+### Loading custom configs
 
-You can launch a Nextflow pipeline, such as DRAM2, directly from the command line. This will output all process information to the current terminal window. If the user is ssh'ed into an HPC and they log out, the run will stop. This can be a fine option if the user is running DRAM2 on a local machine, they launch DRAM2 from a slurm job, or they launch the run in a terminal multiplexer such as `tmux` or `zellij`.
+A custom config adds to the pipeline configuration. Save only your overrides; the pipeline's own config and its includes are loaded automatically.
 
-Because the Nextflow scheduler itself takes of very minimal resources, you do not need to launch it from a slurm job, you can launch it in what is called "Background" mode with the `-bg` option. This will allow the user to log out of an ssh session and the DRAM2 run will continue. It will start a process with pid that can be found in a file called `.nextflow.pid` in the launch directory, and if you would like to kill the process you can do so with the command:
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile apptainer,slurm -c /shared/configs/cluster.config \
+    -params-file run.yml
+```
 
-`kill "$(cat .nextflow.pid)"`
+Normal Nextflow loading mechanisms all apply:
 
-If you would like to launch DRAM2 in a slurm job, because Nextflow uses very minimal resources, it is suggested to launch it in a small job, such as 1 CPU and 1 GB of RAM. But this job will need to stay alive for the entire duration of the DRAM2 run.
+- Save a file named `nextflow.config` in the launch directory for automatic loading. This is the directory where you issue the command, which may differ from the pipeline checkout.
+- Use `-c /path/to/custom.config` to add an explicitly named file, or `-c cluster.config,databases.config,resources.config` to combine files. Later files override earlier assignments to the same setting, subject to process-selector priority.
+- Use `includeConfig '/shared/configs/cluster.config'` in another config. Relative include paths are resolved relative to the file containing the include.
+- Use `$NXF_HOME/config` (normally `$HOME/.nextflow/config`) for user-wide defaults affecting all pipelines.
 
-### Important Command-Line Options Explained
+For assignments to the same config setting, precedence increases from user-wide config, to project config, to launch-directory config, to files passed with `-c`. Use lowercase `-c` for routine overrides. Uppercase `-C` ignores the normal config files, including DRAM's defaults and includes, so it is unsuitable for a small override file. See the [Nextflow configuration guide](https://www.nextflow.io/docs/stable/config.html#configuration-files).
+
+### YAML and JSON parameters files
+
+Save DRAM parameters as a top-level mapping without `params`, `--` prefixes, or Nextflow options. For example, `run.yml`:
+
+```yaml
+input_fasta: /shared/project/genomes
+outdir: /shared/project/dram-results
+rename: true
+annotate: true
+anno_dbs: kofam
+qc: true
+summarize: true
+traits: true
+visualize: true
+max_cpus: 12
+max_memory: '80.GB'
+max_time: '24.h'
+```
+
+The equivalent JSON file, `run.json`, is:
+
+```json
+{
+  "input_fasta": "/shared/project/genomes",
+  "outdir": "/shared/project/dram-results",
+  "rename": true,
+  "annotate": true,
+  "anno_dbs": "kofam",
+  "qc": true,
+  "summarize": true,
+  "traits": true,
+  "visualize": true,
+  "max_cpus": 12,
+  "max_memory": "80.GB",
+  "max_time": "24.h"
+}
+```
+
+Load either file with `-params-file run.yml` or `-params-file run.json`. YAML/JSON files contain literal values: Groovy expressions such as `80.GB` and `${launchDir}` are not evaluated there. Use quoted unit strings such as `'80.GB'` and absolute paths for files shared between projects. Relative input/output paths are interpreted from the launch directory, not from the parameters file's location. Comma-separated DRAM options such as `anno_dbs` should remain strings, for example `anno_dbs: 'kofam,camper'`.
+
+DRAM parameter precedence is config defaults/overrides, then `-params-file`, then explicit `--parameter value` arguments. For example, this uses the settings in `run.yml` but writes to a different output directory:
+
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile apptainer,slurm -c cluster.config,databases.config \
+    -params-file run.yml --outdir /shared/project/second-results
+```
+
+Keep `-profile`, `-c`, `-params-file`, `-work-dir`, and `-resume` on the command line. Parameters files are not loaded automatically. See the [Nextflow CLI guide](https://www.nextflow.io/docs/stable/cli.html#pipeline-parameters) for parameter-file behavior.
+
+## Launching directly or in the background
+
+The Nextflow driver must remain running while it submits and monitors tasks. Follow your cluster's policy: run it in a persistent terminal such as `tmux`, on an approved workflow host, or inside a SLURM driver job. A driver job must stay alive for the entire analysis and must be able to submit further jobs. Its resource allocation is separate from the CPU, memory, and time requested for DRAM tasks; size it for the workflow and your site's guidance rather than assuming a fixed 1 GB is sufficient.
+
+`-bg` runs the Nextflow driver in the background and records output in the Nextflow log. It does not submit the driver to SLURM or bypass login-node policies and session cleanup. When running the driver inside a batch script, keep Nextflow in the foreground so the driver job waits for it to finish.
+
+## Important Command-Line Options Explained
 
 `--input_fasta`
 
-This is the location to the input FASTA files. Can be named as such: `*.f*`. File format can be changed with `--fasta_fmt` argument. See [Parameters API](params_doc.md) for more information.
+Directory containing assembly FASTAs. The default filename pattern is `*.f*`; change it with `--fasta_fmt`, quoting wildcard patterns on the command line. See [Parameters API](params_doc.md) for more information.
 
 `--outdir`
 
@@ -48,53 +116,46 @@ This is the desired output directory.
 
 `--input_genes`
 
-If the user has already called genes they may use this option to specify the location of a directory containing `*.faa` files. It is key, and is stated in the GitHub documentation, they these files have headers which are unique to a given sample for correct downstream processes. File format can be changed with `--genes_fmt` argument. See [Parameters API](params_doc.md) for more information.
+Directory containing predicted protein FASTAs (`*.faa` by default). Gene identifiers must be unique across samples for downstream processing; use `--rename` if needed. Change the filename pattern with `--genes_fmt`. Supply matching nucleotide gene FASTAs when required by selected annotation tools; see `genes_fna_fmt` in the Parameters API. See [Parameters API](params_doc.md) for more information.
 
 
 `--annotations`
 
 If the user already has a DRAM2 annotations TSV file, in the correct format, they can provide these using this command-line option.
 
-### Running on Slurm
+## Running on SLURM
 
-Use the built-in `slurm` profile to select the Slurm executor. The profile intentionally does not choose a partition, account, QoS, node, or GPU configuration because those settings are specific to each cluster.
+Use `-profile apptainer,slurm` or `-profile singularity,slurm` and a site config defining the partition, account/QoS, and submission limits. The built-in `slurm` profile selects only the executor. Without it or an equivalent `process.executor = 'slurm'` setting, tasks use the local executor. A SLURM allocation for the driver alone does not configure task submission.
 
-Create a site-specific configuration such as `cluster.config`:
+See [SLURM setup](installation.md#5-configure-slurm-on-an-hpc-system) for a minimal `cluster.config` and shared-storage requirements. Use `process.queue` for the partition and `process.clusterOptions` for extra options such as account, QoS, node constraints, or GPU allocation. Set CPUs, memory, and time with Nextflow directives, rather than duplicating them with `--cpus-per-task`, `--mem`, or `--time` in `clusterOptions`. For clusters requiring memory per CPU, Nextflow supports `executor.perCpuMemAllocation = true`. See the [Nextflow SLURM reference](https://docs.seqera.io/nextflow/reference/executor/slurm).
 
-```groovy
-process {
-    queue = 'general'
-    clusterOptions = '--account=my_account --qos=normal'
-}
+The [CPU example](configs/slurm_cpu.config) and [CPU/GPU example](configs/slurm_gpu.config) use placeholder partition, account, and QoS values. Save copies alongside your run files and replace those values for your allocation. Both set the executor directly and can be loaded by `-c`, `includeConfig`, or as a launch-directory `nextflow.config`; their filenames have no special meaning to Nextflow.
 
-executor.queueSize = 100
-```
-
-Then compose it with a software profile and the Slurm profile:
+CPU tasks using Singularity and separately configured database paths:
 
 ```bash
-nextflow run WrightonLabCSU/DRAM \
-    -profile apptainer,slurm \
-    -c cluster.config \
-    [OPTIONS]
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile singularity -c slurm_cpu.config,databases.config \
+    -params-file run.yml -work-dir /shared/project/dram-work
 ```
 
-Site configuration files can also use `withLabel` or `withName` selectors to choose different partitions, nodes, or GPU flags for particular tasks. Search processes now live inside a workflow per database. For example, all KEGG MMseqs size buckets can be selected with:
+CPU and GPU tasks using Apptainer:
 
-```groovy
-process {
-    withName: '.*:MMSEQS_KEGG:SEARCH_.*' {
-        queue = 'large_memory'
-        clusterOptions = '--account=my_account --qos=normal'
-    }
-}
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile apptainer,gpu -c slurm_gpu.config,databases.config \
+    -params-file run.yml -work-dir /shared/project/dram-work
 ```
 
-Use `.*:HMM_KOFAM:SEARCH_.*` for KOfam HMM searches, or replace `SEARCH_.*` with `SEARCH_LARGE` for just the large class. Migrate old `MMSEQS_SEARCH_KEGG_.*` / `HMM_SEARCH_KOFAM_.*` selectors to these workflow-qualified selectors. Generic `withName: MMSEQS_SEARCH` / `withName: HMM_SEARCH` selectors and the semantic resource labels still apply. A more specific `clusterOptions` value replaces the inherited value; repeat any required account or QoS settings.
+The CPU/GPU example routes `process_gpu` tasks to `gpu_partition` with a single-GPU request; ordinary tasks use `cpu_partition`. Replace both partition names, account and QoS placeholders, and GPU allocation syntax with settings accepted by your cluster. The built-in `gpu` profile selects GPU MMseqs searches and exposes GPUs to containers. Requesting a GPU in SLURM alone does not select the GPU search implementation. GPU runs also require suitable NVIDIA nodes/drivers and GPU-formatted database paths such as `kegg_gpu_db`; a CPU-formatted MMseqs database is not interchangeable. `--mmseqs_gpu_exclude_dbs` keeps selected databases on the CPU route. Large GPU database indexes may require increasing both the process memory request and `max_memory` beyond the template's example cap.
 
-### Resource caps and job arrays
+Configure database paths in `databases.config` and choose a runtime with `-profile`. Set partitions with `process.queue`, submission limits with `executor.queueSize`, and account/QoS/GPU flags with `clusterOptions`. A selector's `clusterOptions` value replaces the inherited string, so repeat any required account flag in both CPU and GPU settings.
 
-DRAM chooses per-task CPU, memory, and time requests from fixed defaults. CALL_GENES, TRNA_SCAN, RRNA_SCAN, HMM_SEARCH, MMSEQS_SEARCH, and QUAST vary their requests according to input size. Mixed runs are separated into small (at most 200 MiB), medium (over 200 MiB through 1 GiB), and large (over 1 GiB) task classes.
+`executor.queueSize` limits the executor's submitted task queue; `executor.submitRateLimit` throttles submissions. A process-specific `maxForks` limits concurrent tasks for that process. These settings are distinct from per-task resource caps, batching, and arrays.
+
+## Resource caps and job arrays
+
+DRAM chooses first-attempt, unbatched CPU, memory, and time requests from the defaults below, subject to resource caps and overrides. CALL_GENES, TRNA_SCAN, RRNA_SCAN, HMM_SEARCH, MMSEQS_SEARCH, and QUAST vary their requests according to input size. Mixed runs are separated into small (at most 200 MiB), medium (over 200 MiB through 1 GiB), and large (over 1 GiB) task classes.
 
 Set `--resource_class_small_max_size '200.MB'` and `--resource_class_medium_max_size '1.GB'` to change the inclusive upper limits of the small and medium classes. Larger inputs use the large class. Both limits must be positive, and the medium limit must exceed the small limit. Nextflow size units are binary: `200.MB` means 200 MiB.
 
@@ -117,7 +178,98 @@ These are upper limits only; raising them does not increase a process request. A
 
 Set `--job_array_size` to enable job arrays for bucketed CALL_GENES, TRNA_SCAN, RRNA_SCAN, HMM_SEARCH, and MMSEQS_SEARCH tasks on an executor that supports arrays. Values `0` and `1` disable arrays; values of `2` or greater specify the maximum number of tasks per array. Do not enable this parameter with an unsupported executor. Gene calling, tRNA scanning, and rRNA scanning remain separate process families, so each can fail, retry, and receive site-specific overrides independently.
 
-### Optional gene-calling and RNA batching
+## Overriding labels and process resources
+
+Resource labels group tasks under the policies in `conf/base.config`. Override their directives in a custom config rather than editing the pipeline or renaming labels. The input-sensitive labels are:
+
+| Label | Processes affected |
+| --- | --- |
+| `process_call_genes` | Prodigal gene calling |
+| `process_trna_scan` | tRNAscan-SE |
+| `process_rrna_scan` | Barrnap |
+| `process_quast` | QUAST |
+| `process_hmm_search` | All HMM searches |
+| `process_mmseqs_search` | CPU and GPU MMseqs searches |
+| `process_gpu` | GPU tasks; also configures GPU/container access |
+| `process_array` | Tasks eligible for `job_array_size` |
+
+Generic labels provide fixed first-attempt defaults for other processes:
+
+| Label | CPUs | Memory | Time |
+| --- | --- | --- | --- |
+| `process_tiny` | 1 | 1 GB | 1 hour |
+| `process_single` | 1 | 12 GB | 4 hours |
+| `process_small` | 4 | 12 GB | 4 hours |
+| `process_medium` | 6 | 36 GB | 8 hours |
+| `process_big` | 12 | 72 GB | 16 hours |
+| `process_huge` | 24 | 200 GB | 168 hours |
+
+The semantic search labels apply to searches in every size class. Overriding `process_medium` does not change a search's medium class; override `process_hmm_search` or `process_mmseqs_search` instead.
+
+For example, save this as `resources.config` to set fixed requests for all MMseqs searches and larger requests for the large KEGG CPU search class:
+
+```groovy
+params {
+    max_cpus = 32
+    max_memory = '256.GB'
+    max_time = '72.h'
+}
+
+process {
+    withLabel: 'process_mmseqs_search' {
+        cpus = 8
+        memory = '64.GB'
+        time = '12.h'
+    }
+
+    withName: '.*:MMSEQS_KEGG:SEARCH_LARGE' {
+        cpus = 32
+        memory = '256.GB'
+        time = '48.h'
+        queue = 'large_memory'
+    }
+}
+```
+
+Load it after your site settings with `-c cluster.config,databases.config,resources.config`. Check that your parameters file or explicit `--max_*` arguments do not lower these caps. `max_memory`, `max_cpus`, and `max_time` cap each task; they do not limit total workflow usage. `--threads` is not a replacement for process CPU directives.
+
+To retain size-based CPU/memory requests while changing only search wall time, use a dynamic directive:
+
+```groovy
+process {
+    withLabel: 'process_mmseqs_search' {
+        time = { (resource_class == 'small' ? 12.h : resource_class == 'medium' ? 24.h : 48.h) * params.search_batch_size * task.attempt }
+    }
+}
+```
+
+Fixed overrides replace the default expressions, including their retry scaling and batching multipliers. The dynamic example preserves both for wall time. Defaults generally scale resources with `task.attempt` on retries, subject to the same caps; retries occur only when the error strategy allows them. Set requests to values supported by the chosen partition.
+
+For selector priority, `withName` overrides `withLabel`, which overrides unselected `process` defaults. An included process alias takes priority over its original name, and a fully qualified selector takes priority over either. A plain `process.memory` override therefore may not affect labeled DRAM tasks. See [Nextflow process selectors](https://www.nextflow.io/docs/stable/config.html#process-selectors).
+
+Searches run inside a workflow per database. Useful selectors include:
+
+| Selector | Scope |
+| --- | --- |
+| `withName: MMSEQS_SEARCH` | All CPU MMseqs searches |
+| `withName: MMSEQS_SEARCH_GPU` | All GPU MMseqs searches |
+| `withName: HMM_SEARCH` | All HMM searches |
+| `withName: '.*:MMSEQS_KEGG:SEARCH_.*'` | All KEGG CPU size classes |
+| `withName: '.*:HMM_KOFAM:SEARCH_LARGE'` | Large KOfam HMM tasks |
+| `withName: '.*:MMSEQS_GPU_KEGG:SEARCH_GPU_.*'` | All KEGG GPU size classes |
+
+Replace old `MMSEQS_SEARCH_KEGG_.*` / `HMM_SEARCH_KOFAM_.*` selectors with these workflow-qualified patterns. Use the task names in `.nextflow.log` or the execution trace to identify the database workflow and process alias. Keep initial scheduler directives uniform within each array-capable process when using job arrays.
+
+Inspect merged config before launching, using your local checkout or the cached pipeline directory containing the revision you pulled:
+
+```bash
+nextflow -c cluster.config,databases.config,resources.config config /path/to/DRAM \
+    -profile apptainer,slurm -flat
+```
+
+This checks config loading but does not validate every selector against running tasks or apply a run's `-params-file`. Check actual CPU/memory/time requests in the execution trace and the task's `work/.../.command.run` submission script after a small run.
+
+## Optional gene-calling and RNA batching
 
 `--call_batch_size 10` runs Prodigal sequentially for up to ten input FASTAs in one CALL_GENES task. `--rna_batch_size 10` similarly groups up to ten FASTAs per task, but tRNAscan-SE and Barrnap still run in separate tasks. Both parameters default to `1`, which preserves one task per input and streams inputs as they become ready.
 
@@ -125,7 +277,7 @@ Set `--job_array_size` to enable job arrays for bucketed CALL_GENES, TRNA_SCAN, 
 
 When either batch size is greater than one, that stage waits for all its inputs and sorts them by sample name to produce deterministic batches. Wall time is multiplied by the configured batch capacity and then limited by `max_time`; CPU and memory are not multiplied. Outputs are restored to the existing per-sample channels and filenames.
 
-### Optional search batching
+## Optional search batching
 
 `--search_batch_size 10` runs up to ten HMM or MMseqs searches sequentially against one database in a single task. The default, `1`, runs one search per input per database and streams inputs as they become ready. Each search retains its own query, search statistics, gene locations, and output filenames. Queries are not concatenated and searches do not run concurrently inside a batch.
 
@@ -138,7 +290,7 @@ CPU and memory follow the class defaults above. Search wall time is multiplied b
 Batching and arrays can be used independently or together:
 
 ```bash
-nextflow run WrightonLabCSU/DRAM \
+nextflow run BortonWrightonLabs/DRAM -r dev \
     -profile apptainer,slurm -c cluster.config \
     --search_batch_size 10 --search_batch_max_size '1.GB' \
     --job_array_size 100 [OPTIONS]
@@ -148,7 +300,7 @@ Here each array contains up to 100 tasks, and each task searches up to ten input
 
 For every batching option, Nextflow caches and retries an entire batch task. A failed member fails the task, and retrying it repeats the other members too; retries occur only when the configured error strategy permits them. Changing the input set or batching parameters can change membership and reduce cache reuse. Per-sample output channels and published filenames are preserved. Start with small batches and increase them only when scheduler overhead is a demonstrated problem.
 
-### Important Core Nextflow Options
+## Important Core Nextflow Options
 
 Nextflow provides many command-line options to control how the pipeline is run. Below are some of the most important ones for DRAM2 users. You will also notice that all Nextflow options can be seen by running:
 
@@ -158,28 +310,32 @@ It is also worth noting that all Nextflow options are specified with a single da
 
 `-bg`
 
-While the user will still see things being output to the current screen, the user can log out and the DRAM2 run will continue.
+Run the Nextflow driver in the background. Use it only where cluster policy permits persistent background processes; see [launching directly or in the background](#launching-directly-or-in-the-background).
 
 `-profile`
 
 This is the Nextflow profile to use. The profile determines how software dependencies are handled and what compute environment settings are used. Common profiles include `singularity`, `apptainer`, `docker`, `conda`, and `slurm`. Profiles can be composed as a comma-separated list.
 
-Additionally, short hand modes exist for common run modes, such as `full_mode`, which will run the entire pipeline (without rename), and with `--anno_dbs all`. See the nextflow.config file on GitHub for the full list of profiles.
+The `full_mode` profile enables annotate, QC, summarize, traits, visualize, and `anno_dbs = 'all'`. It does not enable rename. Runtime and executor profiles can be combined with it; choose one runtime. See `nextflow.config` for all built-in profiles. With the default config parser, profiles are applied in their definition order, not their order in the comma-separated list.
 
 `-resume`
 
-If the user has already run this command, or a version of it, Nextflow will look for a `work/` directory, in the current directory, to reuse previous analyses/data. If the user changes command-line options, the pipeline will attempt to resume where these changes were made.
+Reuse successfully completed tasks whose inputs, scripts, and relevant settings still match. Preserve both the launch directory's `.nextflow/cache` and the work directory selected with `-work-dir` (default `work/`). Resume from the same launch directory, using the same work directory and pipeline revision where possible. `-resume` resumes the latest run; `-resume <run_name_or_session_id>` selects a specific run. Changed inputs or settings can cause tasks to rerun; output files alone are insufficient to resume.
 
 `-with-trace`
 
-This option is a Nextflow-provided option which produces a continuously updated log of DRAM2 processes. This is a good place to check how a run is proceeding and is anything has failed.
+Write task execution details. DRAM already enables trace, report, timeline, and DAG outputs under `<outdir>/pipeline_info/`. Use `.nextflow.log` in the launch directory for driver and submission errors, and task `.command.err`, `.command.out`, and `.command.run` files in the work directory for task failures.
 
 
-#### Pipeline Steps
+## Pipeline steps
 
 `--rename`
 
-Rename the headers of the input FASTA files such that they will have a unique prefix based on the FASTA file name. This is optional.
+Prefix assembly or protein FASTA headers with the sample filename to make identifiers unique across samples. This is optional.
+
+`--call`
+
+Call genes with Prodigal without requiring annotation. Gene calling is also enabled automatically when `--annotate` is combined with `--input_fasta`.
 
 `--annotate`
 
@@ -195,51 +351,66 @@ Distill out annotations from the topic toolkit default (set of predetermined dis
 
 `--visualize`
 
-Create visualizations from the distilled annotations.
+Create interactive metabolic heatmaps from annotations produced in this run or supplied with `--annotations`.
 
 `--traits`
 
-Distill out traits from the annotated genes.
+Evaluate trait rules against gene annotations and write `df_traits.tsv` and `heatmap_traits.html` under `VISUALIZE/`.
 
-### Other Command-Line Options Notes
+## Other Command-Line Options Notes
 
 Other command-line options exist to control specific parameters of the DRAM2 pipeline. These are all described in the [Parameters API](params_doc.md) documentation page, or can be seen by running:
 
-`nextflow run BortonWrightonLabs/DRAM --help`
+`nextflow run BortonWrightonLabs/DRAM -r dev --help`
 
 ---
 
 ## DRAM2 example commands
 
-Simple run with rename, annotate, QC, summarize, and visualize:
+Annotate pre-called proteins with KOfam:
 
-```
-nextflow run BortonWrightonLabs/DRAM --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --annotate
---anno_dbs camper,kegg --qc --summarize --visualize -profile singularity
-```
-
-Add resume option and ecosystem summaries:
-
-```
-nextflow run BortonWrightonLabs/DRAM --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --annotate
---anno_dbs camper,kegg --qc --summarize --sum_ecos 'eng_sys,ag' --visualize -profile singularity -resume
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    --input_genes /shared/project/proteins --outdir /shared/project/protein-results \
+    --rename --annotate --anno_dbs kofam \
+    -profile apptainer -c databases.config
 ```
 
-Run all standard databases and launch on slurm and background:
+Summarize existing DRAM annotations without rerunning annotation:
 
-```
-nextflow run BortonWrightonLabs/DRAM --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --annotate
---anno_dbs all --qc --summarize --sum_ecos 'eng_sys,ag' --visualize -profile apptainer,slurm -c cluster.config -resume -bg
-```
-
-The same as the above command but with full_mode to simplify the command:
-
-```
-nextflow run BortonWrightonLabs/DRAM --input_fasta [INPUT_FASTA] --outdir [OUTPUT_DIR] --rename --sum_ecos 'eng_sys,ag' -profile apptainer,slurm,full_mode -c cluster.config -resume -bg
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    --annotations /shared/project/annotations.tsv --outdir /shared/project/summary-results \
+    --summarize --traits --visualize --sum_ecos 'eng_sys,ag' \
+    -profile apptainer
 ```
 
-Utilizing a custom nextflow.config file to pass specific parameters (with a custom configuration file, DRAM parameters can be set there and do not need to be specified on the command-line, but Nextflow options still do):
+Run all databases found at their configured paths on SLURM, including traits, and reuse eligible completed tasks:
 
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    --input_fasta /shared/project/genomes --outdir /shared/project/dram-results \
+    --rename --annotate --anno_dbs all --qc --summarize --traits --visualize \
+    --sum_ecos 'eng_sys,ag' \
+    -profile apptainer,slurm -c cluster.config,databases.config \
+    -work-dir /shared/project/dram-work -resume
 ```
-nextflow run BortonWrightonLabs/DRAM -c [PATH/TO/NEXTFLOW.CONFIG] -profile singularity -resume -bg
+
+The same steps through `full_mode`:
+
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    --input_fasta /shared/project/genomes --outdir /shared/project/dram-results \
+    --rename --sum_ecos 'eng_sys,ag' \
+    -profile apptainer,slurm,full_mode -c cluster.config,databases.config \
+    -work-dir /shared/project/dram-work -resume
+```
+
+Reuse saved run parameters and override resources:
+
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile apptainer,slurm \
+    -c cluster.config,databases.config,resources.config -params-file run.yml \
+    -work-dir /shared/project/dram-work -resume
 ```

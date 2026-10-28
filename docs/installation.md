@@ -2,165 +2,195 @@
 
 ## Requirements
 
-### System Requirements
+- Nextflow **25.04.0 or newer**, as required by DRAM's `nextflow.config` manifest.
+- A Java version supported by your chosen Nextflow release. See the [Nextflow installation requirements](https://www.nextflow.io/docs/stable/install.html).
+- One container runtime: **Apptainer, Singularity CE, Docker, Podman, Shifter, or Charliecloud**. Alternatively, use **Conda or Mamba** to create software environments without containers. The selected runtime or environment manager must be installed and available on the nodes that execute tasks.
+- Preformatted DRAM databases for the annotation databases you select.
+- For SLURM, access to a submission host with `sbatch`, `squeue`, and `scancel`, an allocation if required, and shared storage accessible from compute nodes.
 
-- Nextflow >= v23.04.2
-- One of the following dependency management systems:
-  - Conda
-  - A Nextflow supported Container Runtime:
-    - Apptainer
-    - Singularity CE
-    - Docker
-    - Podman
-    - Sarus
-- DRAM databases (preformatted and downloaded via Globus)
+On HPC systems, Nextflow, Java, and Apptainer or Singularity are often provided through environment modules. Follow your cluster's documentation for loading them and for where long-running workflow drivers are allowed.
 
-On many HPC systems, Nextflow, Conda, and some container runtime (usually Singularity or Apptainer) are already installed. If you are using a local system, you will need to install Nextflow and Conda or a container runtime. On an HPC system, these tools are often loaded with modules. Refer to your HPC system's documentation for instructions on how to load modules.
+## Installation steps
 
-## Installation Steps
+### 1. Install Nextflow and a dependency runtime
 
-### 1. Install Nextflow
-
-If you do not have Nextflow installed, you have two options:
-
-#### Option A: Direct Installation
-
-Follow the instructions from the [Nextflow documentation page](https://www.nextflow.io/docs/stable/install.html).
-
-#### Option B: Conda Installation (Recommended)
-
-Install Nextflow within a conda environment to ensure all dependencies (including Java) are properly installed:
+Use your cluster's Nextflow module or follow the [Nextflow installation instructions](https://www.nextflow.io/docs/stable/install.html). Alternatively, install Nextflow through Conda:
 
 ```bash
-conda create --name env_nf nextflow -c bioconda
+conda create --name env_nf -c conda-forge -c bioconda 'nextflow>=25.04.0'
 conda activate env_nf
+nextflow -version
 ```
 
-### 2. Install Container Runtime (Optional)
+#### Available container runtimes
 
-If you choose to use a container runtime, make sure you have it installed, working, and available in your PATH. You can verify the installation by running:
+DRAM includes the following container profiles in its `nextflow.config`. Install or load the runtime available on your system, then select its matching profile when launching DRAM:
+
+| Container runtime | Nextflow option |
+| --- | --- |
+| Apptainer | `-profile apptainer` |
+| Singularity CE | `-profile singularity` |
+| Docker | `-profile docker` |
+| Podman | `-profile podman` |
+| Shifter | `-profile shifter` |
+| Charliecloud | `-profile charliecloud` |
+
+Choose one container runtime profile per run. A profile configures Nextflow to use that runtime; it does not install the runtime itself. On an HPC system, use a runtime supported by your administrators and available on the compute nodes. Selecting SLURM is separate: for example, `-profile apptainer,slurm` uses Apptainer for software and SLURM for task submission.
+
+Check that your chosen runtime is available, for example:
 
 ```bash
-# For Apptainer
 apptainer --version
-
-# For Singularity
-singularity --version
-
-# For Docker
-docker --version
-
-# For Podman
-podman --version
-
-# For Sarus
-sarus --version
 ```
 
-If you do not have a container runtime installed, see the [nf-core documentation](https://nf-co.re/docs/usage/getting_started/installation#pipeline-software) for installation instructions.
+#### Conda and Mamba alternatives
 
-### 3. Setup DRAM
+Conda and Mamba are environment managers, not container runtimes. Use `-profile conda` to create task environments with Conda, or `-profile mamba` to create them using Mamba. The latter requires Mamba to be installed. Choose one of these profiles instead of a container runtime profile. Installing Nextflow in a Conda environment does not require using the `conda` execution profile.
 
-1. Create a DRAM directory:
+### 2. Prepare a launch directory and databases
+
+Create a directory from which to launch your analyses:
 
 ```bash
-mkdir DRAM
-cd DRAM
+mkdir -p dram-runs/databases
+cd dram-runs
 ```
 
-2. Download the DRAM databases:
+Download the preformatted databases you need through [Globus](https://app.globus.org/file-manager?origin_id=97ed64b9-dea0-4eb5-a7e0-0b50ac94e889) (collection UUID: `97ed64b9-dea0-4eb5-a7e0-0b50ac94e889`). You need a Globus account. Use the web interface for individual transfers or [Globus Connect Personal](https://docs.globus.org/globus-connect-personal/install/) for bulk transfers. Disk requirements depend on the databases selected. KEGG data must be obtained under the applicable KEGG access terms.
 
-   - You only need to download the databases you plan to use
-   - Access the databases through [Globus](https://app.globus.org/file-manager?origin_id=97ed64b9-dea0-4eb5-a7e0-0b50ac94e889) (UUID: 97ed64b9-dea0-4eb5-a7e0-0b50ac94e889)
-   - You will need a Globus account to access and download the data
-   - Two options for downloading:
-     - Using Globus Web UI: Download databases individually
-     - Using [Globus Connect Personal](https://docs.globus.org/globus-connect-personal/install/): Transfer whole folders at once (recommended for bulk transfers)
-   - The disk space required depends on which databases you choose to download
-   - The download consists of a database folder containing all preformatted databases with the description database
+By default, database paths point into `databases/` under the **launch directory**, the directory where you start Nextflow. Shared databases can stay elsewhere: set their individual DRAM parameters in a config or parameters file. There is no single database-root parameter. For example, save this as `databases.config` and replace the paths:
 
-3. Configure DRAM:
-   - Download the default configuration file:
-   ```bash
-   curl -o nextflow.config https://raw.githubusercontent.com/BortonWrightonLabs/DRAM/refs/heads/dev/nextflow.config
-   ```
-   - This file can be customized to change:
-     - Database locations
-     - Container runtime settings
-     - SLURM options
-     - Other profile options
+```groovy
+params {
+    kegg_db = '/shared/DRAM/databases/kegg/'
+    kofam_db = '/shared/DRAM/databases/kofam/'
+    kofam_list = '/shared/DRAM/databases/kofam/kofam_ko_list.tsv'
+}
+```
 
-### 4. Install and Update DRAM
+Configure every database you enable, including any associated score/list/version files. See the [Parameters API](params_doc.md) for the full set of database paths. `--anno_dbs all` enables databases whose configured paths exist and warns and skips missing paths. An existing but incomplete database directory can still fail later. Explicit selections such as `--anno_dbs kofam` make the intended database set clear and require those databases to be available.
 
-#### Initial Installation
+### 3. Download DRAM2
 
-Install DRAM using Nextflow:
+These examples use the `dev` branch for DRAM2:
 
 ```bash
 nextflow pull BortonWrightonLabs/DRAM -r dev
 ```
 
-Note: Once DRAM v2 is out of development, the `-r dev` flag will be removed and the command will be simply:
+Use the same revision when launching:
 
 ```bash
-nextflow pull BortonWrightonLabs/DRAM
+nextflow run BortonWrightonLabs/DRAM -r dev --help
 ```
 
-#### Updating DRAM
+Update that branch with `nextflow pull BortonWrightonLabs/DRAM -r dev`. For reproducible analyses, replace `dev` with a DRAM2 release tag or commit in both commands. DRAM1 releases predate this Nextflow pipeline; do not use a DRAM1 revision with these instructions. Omitting `-r` uses the repository's default branch, which may differ from the DRAM2 development branch.
 
-To update DRAM, rerun the pull command:
+Nextflow caches the pipeline under `$NXF_HOME/assets/` (normally `$HOME/.nextflow/assets/`). You do not need to copy the pipeline's `nextflow.config` into your launch directory: it includes other repository files and is loaded automatically. Create a small custom file containing your overrides instead.
+
+For a shared source installation, clone DRAM2 and run the checkout directly:
 
 ```bash
-nextflow pull BortonWrightonLabs/DRAM
+git clone --branch dev --recurse-submodules https://github.com/BortonWrightonLabs/DRAM.git /shared/software/DRAM
+nextflow run /shared/software/DRAM --help
 ```
 
-To pull a specific branch or version tag:
+Replace `/shared/software/DRAM` with a writable installation path. When using a local checkout, select the branch/tag with Git and replace the remote repository and `-r dev` in subsequent examples with the checkout path.
+
+### 4. Save site configuration and run parameters
+
+Nextflow config files hold executor, runtime, cache, and process-resource settings, and can also hold DRAM parameters in a `params` block. YAML or JSON parameters files hold DRAM parameters only. A reusable setup can have:
+
+| File | Purpose | How to load |
+| --- | --- | --- |
+| `cluster.config` | SLURM partitions, account, QoS, task resources, runtime caches | `-c cluster.config` |
+| `databases.config` | Shared database paths in a `params` block | `-c cluster.config,databases.config` |
+| `run.yml` | Inputs, outputs, selected steps and databases | `-params-file run.yml` |
+
+Save a run as `run.yml`, using paths valid on your system:
+
+```yaml
+input_fasta: /shared/project/genomes
+outdir: /shared/project/dram-results
+rename: true
+annotate: true
+anno_dbs: kofam
+qc: true
+summarize: true
+traits: true
+visualize: true
+```
+
+Run locally with:
 
 ```bash
-nextflow pull BortonWrightonLabs/DRAM -r <branch_or_tag>
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile apptainer -c databases.config -params-file run.yml
 ```
 
-Note: Only version tags >= 2 are supported. Pre-version 2 releases were before Nextflow was used.
+You can also place overrides in `nextflow.config` in the launch directory for automatic loading, or use `includeConfig` to load other config files. See [custom configuration and parameters files](usage.md#custom-configuration-and-parameters-files) for precedence, JSON examples, and combining files.
 
-### Dependency Management
+### 5. Configure SLURM on an HPC system
 
-DRAM uses Nextflow to handle all dependency management automatically. When you first run DRAM, it will:
+The built-in `slurm` profile selects the SLURM executor. Add a custom site config to choose the partition, account, QoS, and submission limits for your allocation. Save this as `cluster.config`, replacing the example values:
 
-1. Download all required dependencies based on your chosen profile (conda, singularity, docker, etc.)
-2. Cache these dependencies for future use
-3. No additional Python packages or environment setup is needed
+```groovy
+process {
+    queue = 'general'
+    clusterOptions = '--account=my_account --qos=normal'
+}
 
-## Important Notes
+executor.queueSize = 16
 
-### Installation Location
+params {
+    max_cpus = 24
+    max_memory = '200.GB'
+    max_time = '48.h'
+}
+```
 
-Nextflow installs all pipeline scripts by default in `$HOME/.nextflow/assets/BortonWrightonLabs/DRAM`. If you're running DRAM on a shared system, you may want to install it in a shared directory. See the "Custom Installation Location" section below.
+Remove account or QoS flags if your cluster does not require them. Set resource caps to match the selected partition's limits. The caps limit each task's request; they do not reserve resources for the whole workflow or increase task requests.
 
-### Custom Installation Location
-
-To install DRAM in a custom location:
-
-1. Clone the DRAM repository to your desired location
-2. Run the pipeline by specifying the path:
+Launch with a runtime profile, the SLURM profile, your configs, and a parameters file:
 
 ```bash
-nextflow run <path/to/DRAM> <options>
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile apptainer,slurm \
+    -c cluster.config,databases.config -params-file run.yml \
+    -work-dir /shared/project/dram-work
 ```
 
-### Custom Configuration
+A custom config can alternatively set `process.executor = 'slurm'` itself, in which case the `slurm` profile is optional. These configs work through the normal Nextflow loading mechanisms, including a launch-directory `nextflow.config`, `-c`, or `includeConfig`.
 
-To use a custom nextflow.config file:
+The launch host and compute nodes must be able to access the work directory, inputs, databases, and required software/container caches. Use durable shared storage for work files and outputs; check scratch cleanup policies before long runs. For shared container caches, create a writable directory and set `apptainer.cacheDir` or `singularity.cacheDir` in your site config, for example:
+
+```groovy
+apptainer.cacheDir = '/shared/project/caches/apptainer'
+```
+
+Nextflow downloads container images or creates Conda environments as needed and reuses them. Allow access to the required repositories/registries and Nextflow plugins, or arrange pre-staged caches with your administrators. DRAM's task dependencies do not need to be installed individually in your login environment.
+
+Generic SLURM examples are available here:
+
+- [CPU SLURM config](configs/slurm_cpu.config): CPU task submission with placeholder partition, account, and QoS values.
+- [CPU/GPU SLURM config](configs/slurm_gpu.config): separate CPU/GPU partitions and QoS, a generic single-GPU request, and example per-task resource caps.
+
+These are templates, not built-in profiles or ready-to-run cluster configurations. Replace `cpu_partition`, `gpu_partition`, `my_account`, `cpu_qos`, and `gpu_qos` with values provided by your cluster, or remove flags your site does not require. Adjust resource caps and GPU allocation syntax for your allocation, and set database and cache paths separately. See [running on SLURM](usage.md#running-on-slurm) for commands using these files and GPU requirements.
+
+## Verify the setup
+
+Check that the selected configs merge as expected, without submitting analysis tasks. Replace `/path/to/DRAM` with your checkout or cached pipeline directory containing the revision you pulled (normally `$HOME/.nextflow/assets/BortonWrightonLabs/DRAM`):
 
 ```bash
-nextflow run <path/to/DRAM>/main.nf -c <path/to/custom/nextflow.config> <options>
+nextflow -c cluster.config,databases.config config /path/to/DRAM \
+    -profile apptainer,slurm -flat
 ```
 
-## Verification
-
-To verify your installation, you can run a test command:
+Then verify that DRAM can display its help:
 
 ```bash
-nextflow run DRAM --help
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    -profile apptainer,slurm -c cluster.config,databases.config --help
 ```
 
-This should display the help message with all available options.
+Config inspection and help do not test database contents, compute-node access, or scheduler submission. Verify those with a small run using your own input and one configured database before scaling up. See [usage](usage.md) for resource overrides, batching, arrays, and resuming a run.
