@@ -42,6 +42,84 @@ Blank lines are allowed in rule sheets. A rule may also span physical lines
 when the complete TSV field is enclosed in double quotes. For portability,
 prefer one rule per physical line unless a long expression needs formatting.
 
+### Passing a Custom Sheet to DRAM
+
+Use `--trait_rules_tsv` with `--traits`, or `--viz_rules_tsv` with
+`--visualize`. Each custom sheet replaces the default sheet for that step;
+the common alias sheet is still loaded separately. You can supply an existing
+DRAM annotations TSV with `--annotations` to evaluate new rules without
+repeating gene calling or database searches.
+
+For example, save this small sheet as `my_rules.tsv`, using actual tabs
+between columns:
+
+```text
+name	rule	long_name	group
+nitrate-reducer	[K00370 & K00371] | [K02567 & K02568]	Nitrate reduction	Nitrogen
+nitrite-reducer	K00362 | K03385	Nitrite reduction	Nitrogen
+```
+
+Evaluate it as a custom traits sheet:
+
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    --annotations /path/to/raw-annotations.tsv \
+    --traits --trait_rules_tsv /path/to/my_rules.tsv \
+    --outdir /path/to/rule-test-traits \
+    -profile apptainer
+```
+
+Or evaluate it as a custom visualization sheet:
+
+```bash
+nextflow run BortonWrightonLabs/DRAM -r dev \
+    --annotations /path/to/raw-annotations.tsv \
+    --visualize --viz_rules_tsv /path/to/my_rules.tsv \
+    --outdir /path/to/rule-test-visualization \
+    -profile apptainer
+```
+
+Replace the paths and select your installed runtime. For SLURM, add the
+`slurm` profile and your site config, for example
+`-profile apptainer,slurm -c cluster.config`. For a local checkout, replace
+`BortonWrightonLabs/DRAM -r dev` with `/path/to/DRAM`. See the
+[usage guide](usage.md) for custom configs and parameters files. Avoid
+`full_mode` for these focused tests because it enables other pipeline steps.
+When using `--viz_rules_tsv`, leave `--viz_rules_system` and `--sum_ecos`
+unset so ecosystem selections do not also select a built-in visualization
+system.
+
+If your sheet needs a custom common alias sheet, add
+`--trait_common_rules_tsv /path/to/my_common_rules.tsv` for traits, or
+`--viz_common_rules_tsv /path/to/my_common_rules.tsv` for visualization.
+These options replace the corresponding default common sheet. Include every
+alias definition your custom rules depend on, including any built-in aliases
+you still use. The [common alias sheet example](#common-alias-sheet-example)
+below shows the format.
+
+### Testing Rule Syntax and Results
+
+The commands above parse and evaluate the supplied sheet as part of the
+`TRAITS` or `PRODUCT_HEATMAP` task. They are actual evaluation runs, not a
+syntax-only check. Start with a small, valid DRAM annotations TSV containing
+the columns and representative samples your rules need.
+
+Malformed expressions and alias-resolution errors stop the task. Inspect the
+error shown by Nextflow and the failed task's `.command.err` and
+`.command.out` files in its `work/` directory. The launch directory's
+`.nextflow.log` includes the task failure and work-directory path. Fix the
+reported rule, then repeat the command with `-resume` to reuse eligible
+completed tasks while rerunning tasks affected by the edited sheet.
+
+A successful run confirms that the evaluated rules can be parsed and run
+against that input. It does not establish that they express the intended
+biology. Check the generated heatmaps and TSV results under `VISUALIZE/`;
+traits produce `df_traits.tsv` and `heatmap_traits.html`. Include samples
+expected to satisfy each rule and samples expected to fail it. Missing feature
+hits can yield a false result even when syntax is valid, and rules excluded
+by `rule_options` are omitted from results. See
+[troubleshooting](#troubleshooting) for common expression and input errors.
+
 ### Common Alias Sheet Example
 
 ```text
