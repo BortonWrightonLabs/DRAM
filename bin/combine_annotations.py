@@ -179,7 +179,8 @@ def organize_columns(df: pl.DataFrame, special_columns=None) -> pl.DataFrame:
     help="Directory of run_dbcan hmm_results.tsv and sub_hmm_results.tsv",
 )
 @click.option("--output", help="Output file path for the combined annotations.")
-def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output):
+@click.option("--rgi_dir", help="Directory of RGI TSV results (.txt files)")
+def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output, rgi_dir=None):
     """Combine annotation files with ranks and avoid duplicating specific columns."""
     annotations = sorted(Path(annotations_dir).glob("*")) if annotations_dir else []
     genes_faa = sorted(Path(genes_dir).glob("*")) if genes_dir else []
@@ -189,6 +190,7 @@ def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output):
     dbcan_sub_paths = (
         sorted(Path(dbcan_dir).glob("*dbCANsub_hmm_results.tsv")) if dbcan_dir else []
     )
+    rgi_paths = sorted(Path(rgi_dir).glob("*.txt")) if rgi_dir else []
     annotation_frames = [
         frame
         for frame in (
@@ -290,6 +292,37 @@ def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output):
             .otherwise(pl.col(FASTA_COLUMN + "_right"))
             .alias(FASTA_COLUMN)
         ).drop(FASTA_COLUMN + "_right", strict=False)
+
+    if rgi_paths:
+        rgi_columns = [
+            "Best_Hit_Bitscore",
+            "Best_Hit_ARO",
+            "ARO",
+            "Drug Class",
+            "Resistance Mechanism",
+            "AMR Gene Family",
+        ]
+        rgi_lf = pl.concat(
+            [
+                pl.scan_csv(path, separator="\t", infer_schema=False).select(
+                    pl.lit(path.stem).alias(FASTA_COLUMN),
+                    pl.col("Contig").alias("query_id"),
+                    *[
+                        (
+                            pl.col(column).cast(pl.Float64, strict=False)
+                            if column == "Best_Hit_Bitscore"
+                            else pl.col(column)
+                        ).alias(f"rgi_{column.lower().replace(' ', '_')}")
+                        for column in rgi_columns
+                    ],
+                )
+                for path in rgi_paths
+            ],
+            how="vertical",
+        )
+        combined_data_lf = combined_data_lf.join(
+            rgi_lf, how="full", on=["query_id", FASTA_COLUMN], coalesce=True
+        )
 
     combined_data_lf = convert_bit_scores_to_numeric(combined_data_lf)
     all_columns = combined_data_lf.collect_schema().names()
