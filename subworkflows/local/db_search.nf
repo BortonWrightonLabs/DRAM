@@ -136,6 +136,7 @@ workflow DB_SEARCH {
 
     def formattedOutputChannels = channel.of()
     def dbcanOutputChannels = channel.of()
+    def rgiOutputChannels = channel.of()
     use_mmseqs_gpu = workflow.profile.contains('gpu')
     mmseqs_gpu_excluded_dbs = (params.mmseqs_gpu_exclude_dbs?.tokenize(',')?.collect { db -> db.trim().toLowerCase() } ?: []).findAll { db -> db && db != 'none' }
     use_gpu_kegg = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('kegg')
@@ -345,6 +346,7 @@ workflow DB_SEARCH {
             DB_CHANNEL_SETUP.out.ch_card_db,
             []
         )
+        rgiOutputChannels = rgiOutputChannels.mix(RGI_MAIN.out.tsv)
     }
     // CARD annotation
     if (use_card) {
@@ -396,10 +398,12 @@ workflow DB_SEARCH {
     fastas = formattedOutputChannels.map { it[1] }.toList()
     genes = ch_called_proteins.map { it[1] }.toList()
     dbcan_output = dbcanOutputChannels.map { it[1] }.toList()
+    rgi_output = rgiOutputChannels.map { it[1] }.toList()
     COMBINE_ANNOTATIONS(
         fastas,
         genes,
-        dbcan_output
+        dbcan_output,
+        rgi_output
     )
     ch_combined_annotations = COMBINE_ANNOTATIONS.out.combined_annotations_out
 

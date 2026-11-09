@@ -10,6 +10,7 @@ process COMBINE_ANNOTATIONS {
     path(fastas, stageAs: "annotations/*" )
     path(genes, stageAs: "genes/*" )
     path(dbcan_output, stageAs: "dbcan/*")
+    path(rgi_output, stageAs: "rgi/*")
 
     output:
     path "raw-annotations.tsv", emit: combined_annotations_out
@@ -23,6 +24,7 @@ process COMBINE_ANNOTATIONS {
         --annotations_dir annotations \\
         --genes_dir genes \\
         --dbcan_dir dbcan \\
+        --rgi_dir rgi \\
         --output raw-annotations.tsv
 
     """

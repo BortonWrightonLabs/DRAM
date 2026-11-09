@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0-beta41 - 2026-11-08
+
+[ebe8f31](https://github.com/BortonWrightonLabs/DRAM/commit/ebe8f31505be6bf6937923e6dc5a7670451681fe)...[b9e85ed](https://github.com/BortonWrightonLabs/DRAM/commit/b9e85edd2a10d3dd825918eb15dae7d616944763)
+
+### Documentation
+
+- Update install and usage instructions ([675d03f](https://github.com/BortonWrightonLabs/DRAM/commit/675d03f700fd59e927b031b41ac33e8230e41672))
+
+
+
+### Features
+
+- Parse RGI output ([b9e85ed](https://github.com/BortonWrightonLabs/DRAM/commit/b9e85edd2a10d3dd825918eb15dae7d616944763))
+
+  -Parse RGI output to raw annotations file
+  -Update rules submodule to newest version
+    -Add RGI annotations parsing to rules so rules can use RGI
+    -Also newest version includes heatmap hover showing which gene_ids are present for for each rule
+
+
+
 ## 2.0.0-beta40 - 2026-10-27
 
 [c9018fc](https://github.com/BortonWrightonLabs/DRAM/commit/c9018fc6fc57e5fb6f317370d4fb43e1a98e3d82)...[a962b41](https://github.com/BortonWrightonLabs/DRAM/commit/a962b4120c94d8279991086725362f1444f3b09d)
