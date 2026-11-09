@@ -13,7 +13,7 @@ process TRAITS {
 
     output:
     path("heatmap_traits.html"), emit: traits_html
-    path("df_traits.tsv"), emit: traits_df
+    path("df_*.tsv"), emit: traits_df
 
     script:
     def args = task.ext.args ?: ""
@@ -28,6 +28,5 @@ process TRAITS {
         $args
 
     mv heatmap_*.html heatmap_traits.html
-    mv df_*.tsv df_traits.tsv
     """
 }
