@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0-beta42 - 2026-11-09
+
+[ebe8f31](https://github.com/BortonWrightonLabs/DRAM/commit/ebe8f31505be6bf6937923e6dc5a7670451681fe)...[9070261](https://github.com/BortonWrightonLabs/DRAM/commit/9070261c37c6ceab75d976acb29382e197e3b3da)
+
+### Bug Fixes
+
+- Traits bash glob problem fix with mv ([f9b04e6](https://github.com/BortonWrightonLabs/DRAM/commit/f9b04e69226e20e7dd73813f020e4d884c610ed4))
+
+
+
+### Documentation
+
+- Update install and usage instructions ([675d03f](https://github.com/BortonWrightonLabs/DRAM/commit/675d03f700fd59e927b031b41ac33e8230e41672))
+
+
+
+### Features
+
+- Parse RGI output ([b9e85ed](https://github.com/BortonWrightonLabs/DRAM/commit/b9e85edd2a10d3dd825918eb15dae7d616944763))
+
+  -Parse RGI output to raw annotations file
+  -Update rules submodule to newest version
+    -Add RGI annotations parsing to rules so rules can use RGI
+    -Also newest version includes heatmap hover showing which gene_ids are present for for each rule
+
+
+- Update rules to include new features and fixes ([9070261](https://github.com/BortonWrightonLabs/DRAM/commit/9070261c37c6ceab75d976acb29382e197e3b3da))
+- fix:Match EC nums with/without EC: prefix
+- fix:Raise error if no group or backup group defined on row
+  If no group entry or backup group entry defined, raise error instead of silently eating the row
+- feat:allow use of brack or parenthesis for grouping
+- fix:check what group col is before filling in backup group columns
+- feat(viz): show rule name in heatmap
+- fix:backup group check fix part 2, electric boogaloo
+
+
+
 ## 2.0.0-beta41 - 2026-11-08
 
 [ebe8f31](https://github.com/BortonWrightonLabs/DRAM/commit/ebe8f31505be6bf6937923e6dc5a7670451681fe)...[b9e85ed](https://github.com/BortonWrightonLabs/DRAM/commit/b9e85edd2a10d3dd825918eb15dae7d616944763)
