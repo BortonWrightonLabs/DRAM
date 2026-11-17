@@ -62,26 +62,15 @@ jobs:
         if: matrix.engine == 'apptainer'
         uses: eWaterCycle/setup-apptainer@v3.0.0
       - uses: ./.github/actions/kofam-mini-db
-      # Nextflow doesn't retry a failed apptainer image download, and gives each nf-test its own
-      # image cache; pull every image once, with retries, into one cache all tests share.
-      # (Docker pulls inside the task, so conf/base.config retries those on exit 125.)
-      - name: Pull apptainer images
-        if: matrix.engine == 'apptainer'
-        run: |
-          echo "NXF_APPTAINER_CACHEDIR=$RUNNER_TEMP/apptainer" >> "$GITHUB_ENV"
-          pixi run nextflow -q inspect main.nf -profile test,apptainer -c tests/nextflow.config -c tests/pr.config \
-            --outdir "$RUNNER_TEMP/inspect" --summarize --traits --visualize --qc \
-            > "$RUNNER_TEMP/images.json"
-          pixi run python tests/scripts/pull_images.py "$RUNNER_TEMP/images.json" "$RUNNER_TEMP/apptainer" \
-            tests/pr_processes.txt
-          ls "$RUNNER_TEMP/apptainer" > "$RUNNER_TEMP/pulled.txt"
       - name: Run PR-gate tests
-        run: pixi run test
-      # A process missing from tests/pr_processes.txt still works, but its image is pulled without retries
-      - name: Check every image was pre-pulled
-        if: matrix.engine == 'apptainer'
+        shell: bash
+        env:
+          # One image cache for all tests; by default each nf-test gets its own and re-downloads
+          NXF_APPTAINER_CACHEDIR: ${{ runner.temp }}/apptainer
         run: |
-          extra=$(ls "$RUNNER_TEMP/apptainer" | grep -vxFf "$RUNNER_TEMP/pulled.txt" | grep -v '\.pulling' || true)
-          if [ -n "$extra" ]; then
-            echo "::warning::images pulled during tests; add their processes to tests/pr_processes.txt: $extra"
-          fi
+          pixi run test 2>&1 | tee "$RUNNER_TEMP/test.log" && exit 0
+          # Nextflow doesn't retry a failed apptainer image download (docker's are retried by
+          # conf/base.config on exit 125), so rerun once if that is what failed; cached images stay
+          grep -q "Failed to pull singularity image" "$RUNNER_TEMP/test.log" || exit 1
+          echo "::warning::an image download failed; running the nf-tests again"
+          pixi run test-nf
