@@ -23,12 +23,12 @@ with `traits_rules.tsv` at `bin/rules` `1b098eb`.
 | `D00014;CarE` | CAMPER, mmseqs form | summarize `D00014` | — | **0** (see below) |
 | `AhyA` (A), `AlkB` (B) | CANT-HYD, HMM form | summarize `AhyA`, `AlkB`, `AlkB\|AlmA_GroupI\|…` | 1, 1, 2 | 0 |
 | `BAC0604` | CANT-HYD, mmseqs form | no rule names BAC IDs | — | 0 |
-| `ExtA`–`ExtD` (`_pcc_cyt`, `_porin`, …) | FeGenie | summarize each; trait `iron-reduction` via `@ExtABCD` (any one) | all; trait ✔ | `ExtA` only; trait ✔ |
+| `ExtA`–`ExtD` (`_pcc_cyt`, `_porin`, …) | FeGenie | summarize each; trait `iron-reduction` via `@ExtABCD` (`ExtB` plus a cytochrome since `c816c1c`) | all; trait ✔ | `ExtA` only; trait ✘ (✔ at `1b098eb`) |
 | `FoxE`, `FoxY`, `FoxZ` | FeGenie | `@foxEYZ` = `FoxE & FoxY & FoxZ` | all three | `FoxE` only |
-| `Cyc2_repCluster1`, `Cyc2_repCluster2` | FeGenie | `@Cyc2` = `at_least(2, COUNTS, …)`; trait `iron-oxidation` | two; trait ✔ | one; trait ✘ |
+| `Cyc2_repCluster1`, `Cyc2_repCluster2` | FeGenie | summarize `@Cyc2`; trait `iron-oxidation` (`@Cyc2` = any one since `c816c1c`, `at_least(2, …)` at `1b098eb`) | two; trait ✔ | one; trait ✔ (✘ at `1b098eb`) |
 | `MtrB_TIGR03509` | FeGenie | summarize `MtrB_TIGR03509` (`@mtoAB`) | 1 | 0 |
 | `dsrA`, `dsrB` | sulfur | summarize `dsrA`, `dsrB`, `HMM@dsrA`, `K11180 \| dsrA`, … | 1 each | `dsrA` only |
-| `SoxY`, `SoxZ`, `sqr_alignment` | sulfur | summarize each; trait `sulfur-oxidizer` via `@SoxYZ`, `@Sqr` | trait ✔ | trait ✘ |
+| `SoxY`, `SoxZ`, `sqr_alignment` | sulfur | summarize each; trait `sulfur-oxidizer` via `@SoxYZ`, `@Sqr` at `1b098eb`; since `c816c1c` it needs `@SoxCore` (`K17224` …), which no gene has | trait ✘ (✔ at `1b098eb`) | trait ✘ |
 | `GH1`, `GH5`, `GH9` in `dbcan_id`, with `dbcan_sub_id` (dbCAN-sub clusters such as `GH5_e40`) and `dbcan_sub_ec` | dbCAN | summarize `GH1`, `GH5`, `GH9` | 1 each | `GH9` only (`dbcan_sub_ec` = `-`) |
 | `AA3_1` as the `dbcan_id` best hit, no `AA3` gene | dbCAN | summarize `AA3_1` counts; family `AA3` doesn't (see below) | `AA3_1` 1, `AA3` **0** | 0 |
 | `dbcan_EC` `EC:6.2.1.27; EC:6.2.1.25` (family `CBM50`, which no rule names) | dbCAN | summarize `EC:6.2.1.27`, `EC:6.2.1.25` | **0** (see below) | 0 |
@@ -36,8 +36,8 @@ with `traits_rules.tsv` at `bin/rules` `1b098eb`.
 | `METHYL_0016` | methyl | no rule references methyl IDs at `1b098eb`; checks the column is read | — | — |
 | one gene with no annotations | — | must not count anywhere | — | — |
 
-Traits present: `synthetic_01`: aerobic, iron-reduction, iron-oxidation, sulfur-oxidizer;
-`synthetic_02`: aerobic, iron-reduction.
+Traits present at `c816c1c`: `synthetic_01`: aerobic, iron-reduction, iron-oxidation;
+`synthetic_02`: aerobic, iron-oxidation. The baseline (`1b098eb`) differs as allowlisted in `tests/data/allowlist.tsv`.
 
 The CAMPER and CANT-HYD rank columns (`camper_score_rank`, `cant_hyd_rank`) hold A/B
 values but nothing in summarize or traits reads them at `1b098eb`; ranks are applied

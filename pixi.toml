@@ -17,10 +17,6 @@ pyhmmer = "*"
 mmseqs2 = "18.8cc5c.*"
 # tests/scripts/anonymize_dram1.py rewrites DRAM1 metabolism_summary.xlsx
 openpyxl = "*"
-# tests/python/test_distill.py runs bin/distill.py (modules/local/distill/environment.yml)
-xlsxwriter = "*"
-networkx = ">=3,<4"
-lark = "*"
 
 # Container engine: singularity by default (apptainer's `singularity` shim satisfies it);
 # set DRAM_ENGINE=docker or apptainer to switch.

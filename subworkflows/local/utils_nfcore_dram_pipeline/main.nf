@@ -88,6 +88,9 @@ workflow PIPELINE_INITIALISATION {
     if (params.visualize && (!params.annotate && !params.annotations)) {
         error("--visualize must be used with --annotate or --annotations.")
     }
+    if (params.refine && (!params.annotate && !params.annotations)) {
+        error("--refine must be used with --annotate or --annotations.")
+    }
 
     if (params.input_genes) {
         if (params.call) {

@@ -27,17 +27,21 @@
                     "type": "boolean",
                     "description": "Run quality control steps. With --input_fasta, DRAM scans for rRNA and tRNA; without FASTA, optional precomputed --rrnas and --trnas tables can be collected. QC can enrich generated or supplied annotations with bin quality and taxonomy."
                 },
+                "refine": {
+                    "type": "boolean",
+                    "description": "Run every Refinement: summarize, visualize and traits. Same as --summarize --visualize --traits."
+                },
                 "summarize": {
                     "type": "boolean",
-                    "description": "Summarize annotations into a distilled output file. Will use all available topic distillate forms. Ecosystem"
+                    "description": "Summarize: count, per genome, the genes matching each rule of the Summarize Sheets (topics, ecosystems and custom sheets). Writes SUMMARIZE/."
                 },
                 "visualize": {
                     "type": "boolean",
-                    "description": "Generate a product visualization of the annotations and save the output to the output directory."
+                    "description": "Visualize: heatmaps and tables of each rule's Presence or Coverage per genome. Writes VISUALIZE/<sheet>/."
                 },
                 "traits": {
                     "type": "boolean",
-                    "description": "Using a DRAM annotations file, make a table of adjectives. Still in development, but can still be used."
+                    "description": "Traits: Visualize run on the built-in traits sheet. Writes TRAITS/."
                 },
                 "merge_annotations": {
                     "type": "string",
@@ -285,22 +289,43 @@
             }
         },
         "distill_options": {
-            "title": "Summarize Options",
+            "title": "Refine Options",
             "type": "object",
             "fa_icon": "fas fa-dna",
-            "description": "The purpose of DRAM summarize is to distill down annotations based on curated distillation summary form(s). It can be ran with either just --sumarize, or currated sheets with --distill_topic, --distill_ecosystem, or --distill_custom (or some combination). User's may also provide a custom distillate via --distill_custom <path/to/file> (TSV forms). Summarize can be ran independent of --annotate however, annotations must be provided (--annotations <path/to/annotations.tsv>). Optional tRNA, rRNA and bin quality may also be provided. When using distll, you also must use kegg, ko, dbcan, or merops when you do your annotation. To get the full results, you need to use kegg or ko and dbcan and merops.",
+            "description": "Options for the Refinements (--summarize, --visualize, --traits, or --refine for all three), which run as one dram-rules command on the annotations (--annotate or --annotations). Summarize needs annotations from kegg, kofam, dbcan or merops.",
             "properties": {
-                "sum_ecos": {
+                "ecos": {
                     "type": "string",
-                    "description": "Ecosystem to distill. Options: <eng_sys|ag|aquatic|gut|bgc> If more than one ecosystem included, they must be seperated by a comma (--sum_ecos eng_sys,ag or --sum_ecos 'eng_sys,ag')."
+                    "description": "Built-in ecosystem sheets for visualize and summarize, comma separated: ag, aquatic, bgc, eng_sys, gut (also legacy and default, visualize only), or none. When left out, visualize uses default (gut) and summarize all five."
                 },
-                "sum_topics": {
+                "topics": {
                     "type": "string",
-                    "description": "A way to specify a subset of topics instead of all topics. By default, if `--sumarize` is specified, all topics are included. Options:  <assim|cell|energy|env|none> OR <default = assim,cell,energy,env>. If more than one topic included, they must be seperated by a comma (--sum_topics assim,energy or --distill_topic 'assim,energy'). Use `none` to skip topic distillation."
+                    "description": "Built-in topic Summarize Sheets, comma separated: assim, cell, energy, env, default (all four, the default) or none."
                 },
                 "sum_custom": {
                     "type": "string",
-                    "description": "<path/to/custom_distillate.tsv>  Custom distill file to use. The custom distill file must be in TSV format with the first column being the gene ID and the second column being the distillate value."
+                    "description": "Custom Summarize Sheets (TSV). Comma separated; custom sheets add to the built-in ones."
+                },
+                "viz_custom": {
+                    "type": "string",
+                    "description": "Custom visualize rule sheets (TSV). Comma separated; custom sheets add to the built-in ones."
+                },
+                "traits_custom": {
+                    "type": "string",
+                    "description": "Custom traits rule sheets (TSV). Comma separated; custom sheets add to the built-in ones."
+                },
+                "mapping": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "Gene or genome abundances per sample for visualize and traits: a gene (matching query_id) or genome column, then one column per sample."
+                },
+                "common_rules_tsv": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "hidden": true,
+                    "description": "Replaces dram-rules' Common Alias Sheet (aliases every rule sheet can use)."
                 },
                 "annotations": {
                     "type": "string",
@@ -324,57 +349,6 @@
                     "type": "string",
                     "hidden": true,
                     "description": "File path to distill dummy sheet."
-                }
-            }
-        },
-        "product_options": {
-            "title": "Visualization Options",
-            "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "The purpose of DRAM --visualize is to generate a product visualization of the annotations and save the output to the output directory.",
-            "properties": {
-                "viz_rules_tsv": {
-                    "type": "string",
-                    "format": "file-path",
-                    "description": "This is an optional path to a custom rules file with strict formatting. It will over write the default rules file. This option cannot be specified if `viz_rules_system` is specified.",
-                    "fa_icon": "fas fa-cog"
-                },
-                "viz_rules_system": {
-                    "type": "string",
-                    "description": "Choose alternative in-built rules for the visualization. This option cannot be specified if `viz_rules_tsv` is specified. comma seperated list with the same options as `sum_ecos`. (ex. `--viz_rules_system ag,bgc`)",
-                    "default": ""
-                },
-                "viz_mapping_file": {
-                    "type": "string",
-                    "format": "file-path",
-                    "description": "Path to metaT mapping file of gene abundances in samples. Must have a column named 'Geneid' that matches the query_id column in the annotations file.",
-                    "fa_icon": "fas fa-cog"
-                },
-                "viz_common_rules_tsv": {
-                    "type": "string",
-                    "format": "file-path",
-                    "description": "Path to common rules file of aliases used throughout the visualizations",
-                    "hidden": true,
-                    "fa_icon": "fas fa-cog"
-                }
-            }
-        },
-        "adjectives_options": {
-            "title": "Trait Options",
-            "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "The purpose of DRAM --traits is to use the outputted DRAM annotations file to make a table of adjectives. You need to use the Kegg, FeGenie, and Sulfur Databases.",
-            "properties": {
-                "trait_rules_tsv": {
-                    "type": "string",
-                    "description": "This is an optional path to a rules file with strict formatting. It will take the place of the original rules file that is stored with the script. For formatting, see the original rules.tsv sheet stored with the script in the repo."
-                },
-                "trait_common_rules_tsv": {
-                    "type": "string",
-                    "format": "file-path",
-                    "description": "Path to common rules file of aliases used throughout the visualizations",
-                    "hidden": true,
-                    "fa_icon": "fas fa-cog"
                 }
             }
         },
@@ -802,17 +776,58 @@
                 "distill_topic": {
                     "type": "string",
                     "hidden": true,
-                    "description": "alias for sum_topics"
+                    "description": "alias for topics."
                 },
                 "distill_ecosystem": {
                     "type": "string",
                     "hidden": true,
-                    "description": "alias for sum_ecos."
+                    "description": "alias for ecos."
                 },
                 "distill_custom": {
                     "type": "string",
                     "hidden": true,
                     "description": "alias for sum_custom."
+                },
+                "sum_topics": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for topics."
+                },
+                "sum_ecos": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for ecos."
+                },
+                "viz_rules_system": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for ecos.",
+                    "default": ""
+                },
+                "viz_rules_tsv": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for viz_custom."
+                },
+                "viz_mapping_file": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for mapping."
+                },
+                "viz_common_rules_tsv": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for common_rules_tsv."
+                },
+                "trait_rules_tsv": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for traits_custom."
+                },
+                "trait_common_rules_tsv": {
+                    "type": "string",
+                    "hidden": true,
+                    "description": "Deprecated alias for common_rules_tsv."
                 }
             }
         },
@@ -1000,12 +1015,6 @@
         },
         {
             "$ref": "#/$defs/distill_options"
-        },
-        {
-            "$ref": "#/$defs/product_options"
-        },
-        {
-            "$ref": "#/$defs/adjectives_options"
         },
         {
             "$ref": "#/$defs/aliased_options"

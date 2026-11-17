@@ -20,3 +20,18 @@ dram1_summarize	gene_count||Gly (CCC)|genome_01	tRNAscan-SE calls it pseudo; DRA
 dram1_summarize	gene_count||Gly (GCC)|genome_01	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
 dram1_summarize	gene_count||Undet (NNN)|genome_04	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
 dram1_summarize	gene_count||Undet (NNN)|genome_05	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
+dram1_values	presence|traits|probable-iron-reduction|genome_02	dram-rules 474c660: the rule needs kegg_description and heme_regulatory_motif_count columns; the DRAM1 fixture drops kegg_description
+synthetic_values	gene_count||@Cyc2|synthetic_01	dram-rules 8fdc3c6: Summarize label Cyc2 (no such Gene ID) became the @Cyc2 alias, which counts each Cyc2_repCluster gene
+synthetic_values	gene_count||@Cyc2|synthetic_02	dram-rules 8fdc3c6: Summarize label Cyc2 (no such Gene ID) became the @Cyc2 alias, which counts each Cyc2_repCluster gene
+synthetic_values	presence|traits|iron-oxidation|synthetic_02	dram-rules ebae146: @Cyc2 needs any one Cyc2 cluster, not at_least(2)
+synthetic_values	presence|visualize/ag|Iron Oxidation|synthetic_02	dram-rules ebae146: @Cyc2 needs any one Cyc2 cluster, not at_least(2)
+synthetic_values	presence|visualize/bgc|Iron Oxidation|synthetic_02	dram-rules ebae146: @Cyc2 needs any one Cyc2 cluster, not at_least(2)
+synthetic_values	presence|visualize/eng_sys|Iron Oxidation|synthetic_02	dram-rules ebae146: @Cyc2 needs any one Cyc2 cluster, not at_least(2)
+synthetic_values	presence|traits|iron-reduction|synthetic_02	dram-rules ebae146: @ExtABCD needs ExtB_porin plus a cytochrome; synthetic_02 has ExtA only
+synthetic_values	presence|visualize/ag|Iron Reduction|synthetic_02	dram-rules ebae146: @ExtABCD needs ExtB_porin plus a cytochrome; synthetic_02 has ExtA only
+synthetic_values	presence|visualize/bgc|Iron Reduction|synthetic_02	dram-rules ebae146: @ExtABCD needs ExtB_porin plus a cytochrome; synthetic_02 has ExtA only
+synthetic_values	presence|visualize/eng_sys|Iron/Manganese/Selenium-Reduction|synthetic_02	dram-rules ebae146: @ExtABCD needs ExtB_porin plus a cytochrome; synthetic_02 has ExtA only
+synthetic_values	presence|traits|sulfur-oxidizer|synthetic_01	dram-rules ebae146: sulfur oxidation needs @SoxCore (K17224 and two more Sox genes); SoxY, SoxZ and sqr no longer suffice
+synthetic_values	presence|visualize/ag|Sulfur Oxidation|synthetic_01	dram-rules ebae146: sulfur oxidation needs @SoxCore (K17224 and two more Sox genes); SoxY, SoxZ and sqr no longer suffice
+synthetic_values	presence|visualize/bgc|Sulfur Oxidation|synthetic_01	dram-rules ebae146: sulfur oxidation needs @SoxCore (K17224 and two more Sox genes); SoxY, SoxZ and sqr no longer suffice
+synthetic_values	presence|visualize/eng_sys|Sulfur Oxidation|synthetic_01	dram-rules ebae146: sulfur oxidation needs @SoxCore (K17224 and two more Sox genes); SoxY, SoxZ and sqr no longer suffice

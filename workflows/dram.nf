@@ -12,8 +12,7 @@ include { methodsDescriptionText  } from '../subworkflows/local/utils_nfcore_dra
 include { getDBFlag               } from '../subworkflows/local/utils_pipeline_setup.nf'
 
 // Pipeline steps
-include { TRAITS             } from "../modules/local/product/traits.nf"
-include { PRODUCT_HEATMAP        } from "../modules/local/product/product_heatmap.nf"
+include { REFINE                 } from "../modules/local/refine/refine.nf"
 include { CAT_KEGG_PEP           } from "../modules/local/database/cat_kegg_pep.nf"
 include { FORMAT_KEGG_DB         } from "../modules/local/database/format_kegg_db.nf"
 include { MMSEQS_GPU_DATABASE    } from "../modules/local/database/mmseqs_gpu_database.nf"
@@ -21,7 +20,6 @@ include { MERGE                  } from "../subworkflows/local/merge.nf"
 include { ANNOTATE               } from "../subworkflows/local/annotate.nf"
 include { QC                     } from "../subworkflows/local/qc.nf"
 include { ADD_ANNOTATIONS        } from "../modules/local/add_and_combine/add_annotations.nf"
-include { SUMMARIZE              } from "../modules/local/distill/distill.nf"
 include { DECOMPRESS_FASTA       } from "../modules/local/rename/decompress_fasta.nf"
 include { RENAME_FASTA           } from "../modules/local/rename/rename_fasta.nf"
 include { resourceBytes          } from '../subworkflows/local/utils_resource_classes.nf'
@@ -47,21 +45,24 @@ workflow DRAM {
     ch_fasta = channel.empty()
 
     default_sheet = file(params.distill_dummy_sheet)
-    distill_flag = (params.summarize || params.sum_topics != "" || params.distill_topic != "" || params.distill_ecosystem != "" || params.distill_custom != "" || params.sum_ecos != "")
+
+    // Deprecated params: warn, and return the first one given
+    def deprecated = { List names, String now ->
+        def given = names.findAll { params[it] }
+        given.each { log.warn("--${it} is deprecated; use --${now}") }
+        given ? params[given[0]] : null
+    }
+    // The old Summarize params turned on Summarize on their own, so they still do
+    summarize = params.refine || params.summarize || params.sum_custom ||
+        ['sum_topics', 'sum_ecos', 'distill_topic', 'distill_ecosystem', 'distill_custom'].any { params[it] }
+    visualize = params.refine || params.visualize || deprecated(['product'], 'visualize')
+    traits = params.refine || params.traits || deprecated(['adjectives'], 'traits')
 
     // if annotate with raw fasta but no call, we can infer we need to call genes, so set call to true
     // Also, if call is specified, set call to true
     call = false
     if ((params.annotate && params.input_fasta) || params.call) {
         call = true
-    }
-    visualize = false
-    if (params.product || params.visualize) {
-        visualize = true
-    }
-    traits = false
-    if (params.adjectives || params.traits) {
-        traits = true
     }
 
     if (params.input_fasta && (params.rename || call || params.qc)) {
@@ -93,8 +94,6 @@ workflow DRAM {
 
         ch_fasta = ch_fasta.map { name, fasta -> tuple(name, fasta, resourceBytes(fasta)) }
     }
-    viz_rules_system = params.viz_rules_system
-
     use_kegg = params.use_kegg
     use_kofam = params.use_kofam
     use_dbcan = params.use_dbcan
@@ -139,85 +138,8 @@ workflow DRAM {
 
 
 
-    distill_ecosystem = params.sum_ecos
-    if (distill_ecosystem == "") {
-        distill_ecosystem = params.distill_ecosystem
-    }
-    if (params.sum_custom != "") {
-        distill_custom = file(params.sum_custom)
-    }
-    else if (params.distill_custom != "") {
-        distill_custom = file(params.distill_custom)
-    }
-    else {
-        distill_custom = ""
-    }
-    distill_topic = params.sum_topics
-    if (distill_topic == "") {
-        distill_topic = params.distill_topic
-    }
-    if (distill_flag) {
-        log.info("distill topic: ${distill_topic}")
-        if (distill_topic != "") {
-            def validTopics = ['default', 'assim', 'cell', 'energy', 'env', 'none']
-            def topics = distill_topic.split(',')
-
-            topics.each { topic ->
-                if (!validTopics.contains(topic)) {
-                    error("Invalid distill topic: $topic. Valid values are ${validTopics.join(',')}. If you included those, try comma separating them without spaces.")
-                }
-
-                // Handle the 'default' case by setting all default topics to "1"
-            }
-        }
-
-        if (distill_ecosystem != "") {
-            def validEcos = ['eng_sys', 'ag', 'bgc', 'gut', 'aquatic']
-            def distillEcosystemList = distill_ecosystem.split(',')
-            def vizRulesSystemList = viz_rules_system ?
-                viz_rules_system.split(',').collect { it.trim() } :
-                []
-
-            distillEcosystemList.each { ecosysItem ->
-                if (!validEcos.contains(ecosysItem)) {
-                    error("Invalid distill ecosystem: $ecosysItem. Valid values are ${validEcos.join(',')}. If you included those, try comma separating them without spaces.")
-                }
-                // if (ecosysItem == "ag") {
-                //     if (!((use_kegg || use_kofam) && use_metals && use_dbcan)) {
-                //         error("When sum_ecos ag, you must include (kegg or kofam), metals, and dbcan databases")
-                //     }
-                // }
-                if (!vizRulesSystemList.contains(ecosysItem)) {
-                    vizRulesSystemList << ecosysItem
-                }
-
-            }
-            viz_rules_system = vizRulesSystemList.join(',')
-        }
-
-        if (distill_custom != "") {
-            // Verify the directory exists
-            def custom_distill_dir = file(distill_custom)
-            if (!custom_distill_dir.exists()) {
-                error "Error: The specified custom_distill sheet (--sum_custom or --distill_custom) does not exist: ${distill_custom}"
-            }
-        }
-
-        if (params.summarize){
-            if (distill_topic == "") {
-                distill_topic = "default"
-            }
-        }
-
-        if (distill_topic == "none") {
-            distill_topic = ""
-        }
-
-        if (!use_kegg && !use_kofam && !use_dbcan && !use_merops) {
-            if (!params.annotations) {
-                error("Error: If you are using summarize, you must also use --use_kegg, --use_kofam, --use_dbcan, or --use_merops.")
-            }
-        }
+    if (summarize && !use_kegg && !use_kofam && !use_dbcan && !use_merops && !params.annotations) {
+        error("Error: If you are using summarize, you must also use --use_kegg, --use_kofam, --use_dbcan, or --use_merops.")
     }
 
 
@@ -333,42 +255,31 @@ workflow DRAM {
             ch_final_annots = ADD_ANNOTATIONS.out.combined_annots_out
         }
 
-        if (distill_flag) {
-            SUMMARIZE(
+        if (summarize || visualize || traits) {
+            // Old --sum_ecos and --viz_rules_system both become dram-rules' shared --ecos
+            def old_ecos = ['sum_ecos', 'distill_ecosystem', 'viz_rules_system'].findAll { params[it] }
+            old_ecos.each { log.warn("--${it} is deprecated; use --ecos") }
+            def ecos = params.ecos ?: old_ecos.collectMany { params[it].tokenize(',') }.unique().join(',')
+            def topics = params.topics ?: deprecated(['sum_topics', 'distill_topic'], 'topics')
+            def options = [
+                summarize ? '--summarize' : '',
+                visualize ? '--visualize' : '',
+                traits ? '--traits' : '',
+                ecos ? "--ecos ${ecos}" : '',
+                topics ? "--topics ${topics}" : '',
+            ].findAll().join(' ')
+            // Optional files: an empty list when not given
+            def files = { value -> value ? value.tokenize(',').collect { file(it, checkIfExists: true) } : [] }
+            REFINE(
                 ch_final_annots,
                 ch_trna_combined,
-                distill_topic,
-                distill_ecosystem,
-                distill_custom
+                options,
+                files(params.viz_custom ?: deprecated(['viz_rules_tsv'], 'viz_custom')),
+                files(params.traits_custom ?: deprecated(['trait_rules_tsv'], 'traits_custom')),
+                files(params.sum_custom ?: deprecated(['distill_custom'], 'sum_custom')),
+                files(params.mapping ?: deprecated(['viz_mapping_file'], 'mapping')),
+                files(params.common_rules_tsv ?: deprecated(['viz_common_rules_tsv', 'trait_common_rules_tsv'], 'common_rules_tsv')),
             )
-
-
-        }
-
-        if (visualize) {  // If the user has specified --product after annotate or distill, generate the product heatmap
-            if (!ch_final_annots) {
-                error("Error: If you specify --product, you must also specify --annotate or --distill_<topic|ecosystem|custom> to generate the product heatmap or provide an annotations TSV file (--annotations <path>).")
-            }
-            ch_viz_rules_tsv = params.viz_rules_tsv ?
-                channel.fromPath(params.viz_rules_tsv, checkIfExists: true) :
-                channel.empty()
-            ch_viz_common_rules_tsv = params.viz_common_rules_tsv ?
-                channel.fromPath(params.viz_common_rules_tsv, checkIfExists: true) :
-                channel.empty()
-            ch_viz_mapping_file = params.viz_mapping_file ?
-                channel.fromPath(params.viz_mapping_file, checkIfExists: true) :
-                channel.empty()
-            PRODUCT_HEATMAP( ch_final_annots, params.CONSTANTS.FASTA_COLUMN, ch_viz_rules_tsv.toList(), ch_viz_common_rules_tsv.toList(), ch_viz_mapping_file.toList(), viz_rules_system )
-        }
-        //
-        // TRAITS
-        //
-
-        if( traits ){
-            if (!ch_final_annots) {
-                error("Error: If you specify --product, you must also specify --annotate or --distill_<topic|ecosystem|custom> to generate the product heatmap or provide an annotations TSV file (--annotations <path>).")
-            }
-            TRAITS( ch_final_annots, file(params.trait_rules_tsv), file(params.trait_common_rules_tsv))
         }
     }
 

@@ -26,10 +26,8 @@ nextflow_pipeline {
                 anno_dbs = ""
                 annotations = "${projectDir}/tests/data/dram1/annotations.tsv"
                 trnas = "${projectDir}/tests/data/dram1/trnas"
-                summarize = true
-                sum_ecos = "eng_sys,ag,bgc,gut,aquatic"  // all Summarize sheets, not only the topics
-                traits = true
-                visualize = true
+                refine = true
+                ecos = "eng_sys,ag,bgc,gut,aquatic"  // visualize every ecosystem sheet, not only gut
             }
         }
 
@@ -56,8 +54,9 @@ nextflow_pipeline {
                 qc = false
                 anno_dbs = ""
                 annotations = "${projectDir}/tests/data/synthetic/annotations.tsv"
+                // each refinement's own flag, where the DRAM1 test uses --refine
                 summarize = true
-                sum_ecos = "eng_sys,ag,bgc,gut,aquatic"  // all Summarize sheets, not only the topics
+                ecos = "eng_sys,ag,bgc,gut,aquatic"  // visualize every ecosystem sheet, not only gut
                 traits = true
                 visualize = true
             }

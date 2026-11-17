@@ -17,26 +17,8 @@ nextflow_pipeline {
 
         then {
             assert workflow.success
-            def actual = path("${params.outdir}/SUMMARIZE/summarized_genomes.tsv").csv(sep: "\t").sort()
-            def expected = path("${projectDir}/tests/data/owc/summarize/summarized_genomes.tsv").csv(sep: "\t")
-
-            assert actual.columns["gene_id"] == expected.columns["gene_id"]
-            assert actual.columns["gene_description"] == expected.columns["gene_description"]
-            assert actual.columns["OWC_0000"] == expected.columns["OWC_0000"]
-            assert actual.columns["OWC_0001"] == expected.columns["OWC_0001"]
-            assert actual.columns["topic_ecosystem"] == expected.columns["topic_ecosystem"]
-            assert actual.columns["category"] == expected.columns["category"]
-            assert actual.columns["subcategory"] == expected.columns["subcategory"]
-
-            def genome_stats_actual = path("${params.outdir}/SUMMARIZE/genome_stats.tsv").csv(sep: "\t").sort()
-            def genome_stats_expected = path("${projectDir}/tests/data/owc/summarize/genome_stats.tsv").csv(sep: "\t")
-
-            assert genome_stats_actual.columns["genome"] == genome_stats_expected.columns["genome"]
-            assert genome_stats_actual.columns["number of scaffolds"] == genome_stats_expected.columns["number of scaffolds"]
-            assert genome_stats_actual.columns["assembly size"] == genome_stats_expected.columns["assembly size"]
-            assert genome_stats_actual.columns["largest contig"] == genome_stats_expected.columns["largest contig"]
-            assert genome_stats_actual.columns["N50"] == genome_stats_expected.columns["N50"]
-            assert genome_stats_actual.columns["L50"] == genome_stats_expected.columns["L50"]
+            // Gene Count values are checked in the PR tier (owc_pr, refine_values)
+            assert path("${params.outdir}/SUMMARIZE/topic_summary.tsv").exists()
         }
     }
 
@@ -57,7 +39,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.success
-            assert path("${params.outdir}/SUMMARIZE/summarized_genomes.tsv").exists()
+            assert path("${params.outdir}/SUMMARIZE/topic_summary.tsv").exists()
         }
     }
 
@@ -80,7 +62,7 @@ nextflow_pipeline {
 
         then {
             assert workflow.success
-            assert path("${params.outdir}/SUMMARIZE/summarized_genomes.tsv").exists()
+            assert path("${params.outdir}/SUMMARIZE/topic_summary.tsv").exists()
             assert path("${params.outdir}/ANNOTATE/raw_rrna_scan.tsv").exists()
             assert path("${params.outdir}/ANNOTATE/raw_trna_scan.tsv").exists()
         }

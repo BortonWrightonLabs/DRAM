@@ -316,7 +316,7 @@ Run the Nextflow driver in the background. Use it only where cluster policy perm
 
 This is the Nextflow profile to use. The profile determines how software dependencies are handled and what compute environment settings are used. Common profiles include `singularity`, `apptainer`, `docker`, `conda`, and `slurm`. Profiles can be composed as a comma-separated list.
 
-The `full_mode` profile enables annotate, QC, summarize, traits, visualize, and `anno_dbs = 'all'`. It does not enable rename. Runtime and executor profiles can be combined with it; choose one runtime. See `nextflow.config` for all built-in profiles. With the default config parser, profiles are applied in their definition order, not their order in the comma-separated list.
+The `full_mode` profile enables annotate, QC, refine (summarize, traits, visualize), and `anno_dbs = 'all'`. It does not enable rename. Runtime and executor profiles can be combined with it; choose one runtime. See `nextflow.config` for all built-in profiles. With the default config parser, profiles are applied in their definition order, not their order in the comma-separated list.
 
 `-resume`
 
@@ -345,17 +345,17 @@ Annotate called genes. You will need to specify what databases to annotate again
 
 Run quality control options for the DRAM workflow. With `--input_fasta`, QC scans for rRNA and tRNA using Barrnap and tRNAscan-SE. Without raw FASTA, QC can collect precomputed `--rrnas` and `--trnas` tables. It can also add `--bin_quality` and `--taxa` data to annotations produced by `--annotate` or supplied with `--annotations`. QC outputs remain under the `ANNOTATE` output directory.
 
-`--summarize`
+`--summarize`, `--visualize`, `--traits`, `--refine`
 
-Distill out annotations from the topic toolkit default (set of predetermined distill topics). You can also specify additional ecosystem toolkits with `--sum_ecos [OPTIONS]` or custom distill sheets. To summarize without running `--annotate`, provide an existing DRAM annotations TSV with `--annotations`. QC remains optional in either mode. See the Parameters API documentation for more details, or `--help`.
+The Refinements, run together as one [dram-rules](https://github.com/BortonWrightonLabs/dram-rules) command on the annotations from this run or from `--annotations`. Each has its own flag; `--refine` runs all three.
 
-`--visualize`
+- `--summarize` counts, per genome, the genes matching each rule of the Summarize Sheets and writes `SUMMARIZE/{topic,ecosystem,custom}_summary.{xlsx,tsv}`.
+- `--visualize` writes heatmaps and tables of each rule's Presence or Coverage to `VISUALIZE/<sheet>/`.
+- `--traits` does the same for the built-in traits sheet, in `TRAITS/`.
 
-Create interactive metabolic heatmaps from annotations produced in this run or supplied with `--annotations`.
+Sheets: `--ecos` picks built-in ecosystem sheets (`ag`, `aquatic`, `bgc`, `eng_sys`, `gut`, or `none`) for both visualize and summarize; when left out, visualize uses gut and summarize all five. `--topics` picks topic Summarize Sheets (`assim`, `cell`, `energy`, `env`, `default` for all four, or `none`). `--sum_custom`, `--viz_custom` and `--traits_custom` add your own sheets, comma separated. `--mapping` adds per-sample abundances to visualize and traits. tRNAs from `--qc` count as genes in every Refinement.
 
-`--traits`
-
-Evaluate trait rules against gene annotations and write `df_traits.tsv` and `heatmap_traits.html` under `VISUALIZE/`.
+`--sum_ecos`, `--sum_topics`, `--viz_rules_system`, `--viz_rules_tsv`, `--viz_mapping_file`, `--trait_rules_tsv`, `--product`, `--adjectives` and `--distill_*` still work but are deprecated.
 
 ## Other Command-Line Options Notes
 
@@ -381,7 +381,7 @@ Summarize existing DRAM annotations without rerunning annotation:
 ```bash
 nextflow run BortonWrightonLabs/DRAM -r dev \
     --annotations /shared/project/annotations.tsv --outdir /shared/project/summary-results \
-    --summarize --traits --visualize --sum_ecos 'eng_sys,ag' \
+    --refine --ecos 'eng_sys,ag' \
     -profile apptainer
 ```
 
@@ -390,8 +390,8 @@ Run all databases found at their configured paths on SLURM, including traits, an
 ```bash
 nextflow run BortonWrightonLabs/DRAM -r dev \
     --input_fasta /shared/project/genomes --outdir /shared/project/dram-results \
-    --rename --annotate --anno_dbs all --qc --summarize --traits --visualize \
-    --sum_ecos 'eng_sys,ag' \
+    --rename --annotate --anno_dbs all --qc --refine \
+    --ecos 'eng_sys,ag' \
     -profile apptainer,slurm -c cluster.config,databases.config \
     -work-dir /shared/project/dram-work -resume
 ```
@@ -401,7 +401,7 @@ The same steps through `full_mode`:
 ```bash
 nextflow run BortonWrightonLabs/DRAM -r dev \
     --input_fasta /shared/project/genomes --outdir /shared/project/dram-results \
-    --rename --sum_ecos 'eng_sys,ag' \
+    --rename --ecos 'eng_sys,ag' \
     -profile apptainer,slurm,full_mode -c cluster.config,databases.config \
     -work-dir /shared/project/dram-work -resume
 ```
