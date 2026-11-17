@@ -1,0 +1,22 @@
+check	id	reason
+owc_dram1_kofam	OWC_0000_k121_43717_1	DRAM1's K03388 came from KEGG; KOfam scores it 170.9, below the 568.03 threshold
+owc_dram1_kofam	OWC_0000_k121_43717_2	DRAM1's K03388 came from KEGG; KOfam scores it 442.5, below the 568.03 threshold
+owc_dram1_kofam	OWC_0001_k121_21365628_6	DRAM1's K01992 came from KEGG; KOfam has no K01992 hit at E <= 1e-5
+owc_dram1_kofam	OWC_0001_k121_21365628_8	KOfam calls K05770; DRAM1's KEGG search found no KO
+owc_dram1_kofam	OWC_0001_k121_21365628_13	DRAM1's K03800 came from KEGG; KOfam scores it 219.2, below the 251.17 threshold
+dram1_summarize	gene_count||Ala (GGC)|genome_01	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
+dram1_summarize	gene_count||Arg (CCT)|genome_02	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
+dram1_summarize	gene_count||Arg (TCG)|genome_05	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
+dram1_summarize	gene_count||CBM67|genome_02	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||CE4|genome_01	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||CE4|genome_02	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||GH13|genome_01	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||GH13|genome_02	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||GH139|genome_02	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||GH18|genome_02	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||GH28|genome_02	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||GT4|genome_01	DRAM1 counts only each gene's best CAZy hit (subfamily rolled up to family); DRAM2 counts every family in dbcan_id
+dram1_summarize	gene_count||Gly (CCC)|genome_01	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
+dram1_summarize	gene_count||Gly (GCC)|genome_01	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
+dram1_summarize	gene_count||Undet (NNN)|genome_04	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them
+dram1_summarize	gene_count||Undet (NNN)|genome_05	tRNAscan-SE calls it pseudo; DRAM1 drops pseudo tRNAs, DRAM2 counts them

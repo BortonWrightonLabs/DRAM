@@ -31,6 +31,14 @@ Carry logical workload bytes with a sample's channel tuple once an artifact is f
 
 To make the DRAM code and processing logic more understandable for new contributors and to ensure quality, we semi-standardise the way the code and other contributions are written.
 
+### Prefer what can't go stale
+
+Rely on things that stay correct on their own over things someone has to remember to update. Hand-kept lists of process names, image tags, file paths or versions, or copies of another tool's internal rules, quietly drift when code, people or tools change. When they do, someone loses time working out why the thing exists, what it should now say and how to fix it.
+
+- Derive values from the source of truth (the code, the config, the tool's own output) at the point of use, instead of keeping a copy.
+- Prefer the tool's own behaviour (a cache directory, a retry setting) over a script that re-implements part of it.
+- If a hand-kept piece is unavoidable, make drift fail loudly with a clear message, and say in a comment what it must match and why it exists.
+
 ### Adding a new step
 
 1. Write up your main script or script code in whatever language and place it in the bin folder.

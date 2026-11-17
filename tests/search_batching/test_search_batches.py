@@ -12,6 +12,10 @@ import subprocess
 import tempfile
 import unittest
 
+import pytest
+
+pytestmark = pytest.mark.pipeline
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 

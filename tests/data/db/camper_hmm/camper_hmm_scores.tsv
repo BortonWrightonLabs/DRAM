@@ -1,0 +1,7 @@
+hmm_name	A_rank	B_rank	score_type	definition
+D00009	225	200	full	FLR; Flavone/flavonol reductase 
+D00003	380		full	CHI; Chalcone isomerase
+D00001	780	550	full	FCR; Flavanone/flavanonol-cleaving reductase
+D00002	800	450	full	DZR;daidzein reductase
+D00005	330	300	full	DDR;dihydrodaidzein reductase
+D00004	1000	300	full	TDR;tetrahydrodaidzein reductase

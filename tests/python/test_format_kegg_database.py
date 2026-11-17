@@ -1,4 +1,4 @@
-"""Run with python -m unittest discover -s tests/kegg_formatting -v."""
+"""Run with pytest tests/python/test_format_kegg_database.py."""
 
 import gzip
 import importlib.util
@@ -9,6 +9,8 @@ from unittest.mock import patch
 import os
 import shutil
 import subprocess
+
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -93,6 +95,7 @@ class KeggFormattingTests(unittest.TestCase):
             )
             self.assertIn("[EC:4.2.1.106]", (output / "kegg.mod.fa").read_text())
 
+    @pytest.mark.pipeline
     @unittest.skipUnless(shutil.which("nextflow"), "Nextflow is not installed")
     def test_nextflow_modules_with_directory_and_explicit_files(self):
         # Run real Nextflow modules and the real formatter; mock only expensive

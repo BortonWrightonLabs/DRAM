@@ -6,6 +6,7 @@ import click
 import polars as pl
 from skbio.io import read as read_sequence
 
+from utils.columns import order_columns
 from utils.logger import get_logger
 
 FASTA_COLUMN = os.getenv("FASTA_COLUMN", "input_fasta")
@@ -129,46 +130,6 @@ def genes_dict_to_frame(genes_faa_dict: dict) -> pl.DataFrame:
         row.update(values)
         rows.append(row)
     return pl.DataFrame(rows) if rows else pl.DataFrame(schema={"query_id": pl.String})
-
-
-def organize_columns(df: pl.DataFrame, special_columns=None) -> pl.DataFrame:
-    if special_columns is None:
-        special_columns = []
-    base_columns = [
-        "query_id",
-        FASTA_COLUMN,
-        "scaffold",
-        "gene_number",
-        "start_position",
-        "stop_position",
-        "strandedness",
-        "rank",
-    ]
-    base_columns = [col for col in base_columns if col in df.columns]
-
-    kegg_columns = sorted(
-        [col for col in df.columns if col.startswith("kegg_")],
-        key=lambda x: (x != "kegg_id", x),
-    )
-    other_columns = [
-        col
-        for col in df.columns
-        if col not in base_columns + kegg_columns + special_columns
-    ]
-
-    db_prefixes = sorted(set(col.split("_")[0] for col in other_columns))
-    sorted_other_columns = []
-    for prefix in db_prefixes:
-        prefixed_columns = sorted(
-            [col for col in other_columns if col.startswith(prefix + "_")],
-            key=lambda x: (x != f"{prefix}_id", x),
-        )
-        sorted_other_columns.extend(prefixed_columns)
-
-    final_columns_order = (
-        base_columns + kegg_columns + sorted_other_columns + special_columns
-    )
-    return df.select(final_columns_order)
 
 
 @click.command()
@@ -342,9 +303,7 @@ def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output, rgi_dir=N
     )
     combined_data = combined_data_lf.collect()
 
-    special_columns = ["Completeness", "Contamination", "taxonomy"]
-    special_columns = [col for col in special_columns if col in combined_data.columns]
-    combined_data = organize_columns(combined_data, special_columns=special_columns)
+    combined_data = combined_data.select(order_columns(combined_data.columns))
 
     sort_columns = [
         col

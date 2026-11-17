@@ -1,0 +1,7 @@
+query_id	A_rank	B_rank	score_type	description	blast_name
+D00014	200	120	full	CarE;electron transfer flavoprotein B	D00014;CarE
+D00018	200	120	full	CarA;hydrocaffeyl-CoA:caffeate CoA transferase	D00018;CarA
+D00035	200	120	full	FdeE;naringenin hydroxylase	D00035;FdeE_ADJ62524.1
+D00039	200	120	full	sam5;flavonoid hydroxylase	D00039;Sam5_ABC88666.1
+D00040	200	120	full	quercetin-2,3-dioxygenase	D00040;QueD_A2VA43_9ACTN
+D00040	200	120	full	quercetin-2,3-dioxygenase	D00040;QueD_QDOI

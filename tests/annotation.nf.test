@@ -2,7 +2,7 @@ nextflow_pipeline {
 
     name "Test annotation step"
     script "../main.nf"
-    tag "pipeline"
+    tag "full"
 
     test("Test ANNOTATE") {
 
@@ -24,6 +24,15 @@ nextflow_pipeline {
             assert actual.columns["stop_position"] == expected.columns["end_position"]
             assert actual.columns["strandedness"] == expected.columns["strandedness"]
             assert actual.columns["heme_regulatory_motif_count"] == expected.columns["heme_regulatory_motif_count"]
+            def koSets = { rows, col -> rows.collectEntries { r -> [(r.query_id): ((r[col] ?: "") as String).tokenize(",")*.trim() as Set] } }
+            // DRAM1's ko_id came from KEGG, which the full tier doesn't run (too large);
+            // genes where KOfam differs from it are allowlisted
+            def allowed = path("${projectDir}/tests/data/allowlist.tsv").csv(sep: "\t").rows
+                .findAll { it.check == "owc_dram1_kofam" }*.id as Set
+            def kofam = koSets(actual.rows, "kofam_id")
+            def dram1 = koSets(expected.rows, "ko_id")
+            assert kofam.findAll { !(it.key in allowed) } == dram1.findAll { !(it.key in allowed) }
+            assert allowed.findAll { kofam[it] == dram1[it] } == [] as Set  // stale allowlist entries
             // assertTableEquals actual, expected
         }
     }
