@@ -1,0 +1,77 @@
+nextflow_pipeline {
+
+    name "OWC end-to-end on the mini databases"
+    script "../main.nf"
+    config "./pr.config"
+    tag "pr"
+
+    test("OWC") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                anno_dbs = "kofam,uniref,vog,fegenie,camper,canthyd,dram_db"
+                visualize = true
+                traits = true
+            }
+        }
+
+        then {
+            assert workflow.success
+            def out = file(params.outdir).toPath()
+            def published = []
+            out.eachFileRecurse(groovy.io.FileType.FILES) { f ->
+                def name = out.relativize(f).toString()
+                if (!name.startsWith("pipeline_info/") && !name.startsWith("multiqc/")) published << name
+            }
+            published = published.sort()
+
+            // Tables: parsed, rows sorted, e-values dropped (mmseqs e-values depend on database size)
+            def table = { name ->
+                def rows = path("${out}/${name}").csv(sep: name.endsWith(".csv") ? "," : "\t").rows
+                rows.collect { r -> r.findAll { k, v -> !k.toLowerCase().contains("evalue") }.sort().toString() }.sort()
+            }
+            // summarized_genomes.tsv is ~7000 rows of mostly zero counts: keep the row count and non-zero rows
+            def summary = { name ->
+                def rows = path("${out}/${name}").csv(sep: "\t").rows
+                def genomes = ["OWC_0000", "OWC_0001"]
+                [rows: rows.size(), counted: rows.findAll { r -> genomes.any { (r[it] ?: 0) != 0 } }
+                    .collect { r -> ([r.gene_id] + genomes.collect { r[it] }).join("\t") }.sort()]
+            }
+            // xlsx: per sheet, row count and a checksum of the rows sorted (sheet and row order vary run to run)
+            def xlsx = { name ->
+                def zip = new java.util.zip.ZipFile(file("${out}/${name}"))
+                def xml = { entry -> new groovy.xml.XmlSlurper(false, false).parseText(zip.getInputStream(zip.getEntry(entry)).text) }
+                def shared = zip.getEntry("xl/sharedStrings.xml") ? xml("xl/sharedStrings.xml").si*.text() : []
+                def targets = xml("xl/_rels/workbook.xml.rels").Relationship.collectEntries { [(it.@Id.toString()): it.@Target.toString()] }
+                def sheets = xml("xl/workbook.xml").sheets.sheet.collectEntries { sheet ->
+                    def cells = xml("xl/" + targets[sheet.@'r:id'.toString()]).sheetData.row.collect { row ->
+                        row.c.collectEntries { c ->
+                            def value = c.@t == "s" ? shared[c.v.text() as int] : (c.@t == "inlineStr" ? c.is.text() : c.v.text())
+                            [(c.@r.toString().replaceAll(/\d/, "")): value]
+                        }
+                    }
+                    // key cells by header (row 1), not column letter: column order also varies
+                    def header = cells ? cells[0] : [:]
+                    def rows = cells.drop(1).collect { row ->
+                        row.collect { col, value -> "${header[col]}=${value}" }.sort().join("\t")
+                    }.sort()
+                    [(sheet.@name.toString()): [columns: header.values().sort(), rows: rows.size(), md5: rows.join("\n").md5()]]
+                }
+                zip.close()
+                sheets.sort()
+            }
+
+            assert path("${out}/multiqc/multiqc_report.html").toFile().length() > 0
+            def html = published.findAll { it.endsWith(".html") }
+            assert html  // Visualize writes HTML; exists and non-empty, contents not snapshotted
+            html.each { assert path("${out}/${it}").toFile().length() > 0 }
+            assert snapshot(
+                published,
+                published.findAll { it ==~ /.*\.(tsv|csv)/ }.collectEntries { [(it): it.endsWith("summarized_genomes.tsv") ? summary(it) : table(it)] },
+                published.findAll { it.endsWith(".xlsx") }.collectEntries { [(it): xlsx(it)] },
+                published.findAll { it ==~ /.*\.(fa|faa|fna|gff)/ }.collectEntries { [(it): path("${out}/${it}").md5] },
+            ).match()
+        }
+    }
+}

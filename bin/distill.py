@@ -330,8 +330,13 @@ def distill(
         annotations = pl.concat(
             [
                 annotations,
+                # query_id is the scaffold; make it one per tRNA so each counts once
                 trna_frame.select(
-                    ["input_fasta", "query_id", pl.col("gene_id").alias("trna_id")]
+                    "input_fasta",
+                    pl.concat_str(
+                        "query_id", pl.lit("_tRNA_"), pl.col("tRNA #").cast(pl.String)
+                    ).alias("query_id"),
+                    pl.col("gene_id").alias("trna_id"),
                 ),
             ],
             how="diagonal",

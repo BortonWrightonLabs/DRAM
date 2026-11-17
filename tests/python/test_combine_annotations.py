@@ -1,4 +1,6 @@
+import contextlib
 import csv
+import shutil
 from pathlib import Path
 import sys
 import tempfile
@@ -7,9 +9,13 @@ import unittest
 from click.testing import CliRunner
 import polars as pl
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "bin"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "bin"))
 
-from combine_annotations import combine_annotations
+# Importing opens combine_annotations.log in the cwd (the pipeline publishes it),
+# so import from a temp dir to keep the log out of the repo.
+_log_dir = tempfile.TemporaryDirectory()
+with contextlib.chdir(_log_dir.name):
+    from combine_annotations import combine_annotations
 
 
 class RgiAnnotationTests(unittest.TestCase):
@@ -97,6 +103,47 @@ class RgiAnnotationTests(unittest.TestCase):
                     self.assertEqual(frame.height, 2)
                     if "rgi_aro" in frame.columns:
                         self.assertEqual(frame["rgi_aro"].null_count(), 2)
+
+
+def test_owc_hits_join_called_genes(tmp_path, kofam_hits, vogdb_hits):
+    from conftest import OWC
+    from utils.columns import order_columns
+
+    annotations = tmp_path / "annotations"
+    annotations.mkdir()
+    for hits in kofam_hits + vogdb_hits:
+        shutil.copy(hits, annotations)
+    output = tmp_path / "raw-annotations.tsv"
+    result = CliRunner().invoke(
+        combine_annotations,
+        ["--annotations_dir", str(annotations)]
+        + ["--genes_dir", str(OWC / "called_genes"), "--output", str(output)],
+    )
+    assert result.exit_code == 0, result.output
+    with open(output) as handle:
+        reader = csv.DictReader(handle, delimiter="\t")
+        assert reader.fieldnames == order_columns(reader.fieldnames)
+        combined = {r["query_id"]: r for r in reader}
+
+    with open(OWC / "annotation/dram1_informed_annotations.tsv") as handle:
+        dram1 = {r["query_id"]: r for r in csv.DictReader(handle, delimiter="\t")}
+    assert combined.keys() == dram1.keys()  # every called gene, hit or not
+    for gene, r in combined.items():
+        assert (r["start_position"], r["stop_position"], r["strandedness"]) == (
+            dram1[gene]["start_position"],
+            dram1[gene]["end_position"],
+            dram1[gene]["strandedness"],
+        )
+
+    for db, paths in [("kofam", kofam_hits), ("vogdb", vogdb_hits)]:
+        expected = {
+            r["query_id"]: r[f"{db}_id"]
+            for path in paths
+            for r in csv.DictReader(open(path))
+        }
+        assert {g: r[f"{db}_id"] for g, r in combined.items() if r[f"{db}_id"]} == (
+            expected
+        )
 
 
 if __name__ == "__main__":

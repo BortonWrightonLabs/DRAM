@@ -1,0 +1,7 @@
+# pytest config only; DRAM is not a Python package.
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["data", ".nf-test", "work"]
+markers = [
+    "pipeline: runs Nextflow workflows (with mock tools, no containers)",
+]

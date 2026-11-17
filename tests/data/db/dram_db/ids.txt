@@ -1,0 +1,6 @@
+amoa_crenarchaea
+pmoa_alpha_1
+pmoa_crenothrix
+FeFe_groupA
+FeFe_groupB
+FeFe_groupC

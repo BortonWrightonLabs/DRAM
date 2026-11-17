@@ -10,7 +10,7 @@ import pandas as pd
 
 spec = importlib.util.spec_from_file_location(
     "mmseqs_add_descriptions",
-    Path(__file__).resolve().parents[1] / "bin/mmseqs_add_descriptions.py",
+    Path(__file__).resolve().parents[2] / "bin/mmseqs_add_descriptions.py",
 )
 descriptions = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(descriptions)

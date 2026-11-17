@@ -2,7 +2,7 @@ nextflow_pipeline {
 
     name "Test summarize"
     script "../main.nf"
-    tag "pipeline"
+    tag "full"
 
     test("Test SUMMARIZE") {
 

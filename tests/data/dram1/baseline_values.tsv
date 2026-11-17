@@ -1,0 +1,2693 @@
+kind	sheet	label	genome	value
+gene_count		A08	genome_01	1
+gene_count		A08	genome_02	1
+gene_count		A24A	genome_01	1
+gene_count		A24A	genome_02	1
+gene_count		A25	genome_01	1
+gene_count		A31	genome_01	1
+gene_count		A31	genome_02	2
+gene_count		A36	genome_01	1
+gene_count		AA2	genome_02	1
+gene_count		AA3	genome_02	1
+gene_count		AA3	genome_03	1
+gene_count		AA3	genome_05	1
+gene_count		AA3	genome_06	1
+gene_count		AA3_2	genome_02	1
+gene_count		AA4	genome_01	1
+gene_count		Ala (CGC)	genome_01	2
+gene_count		Ala (CGC)	genome_02	1
+gene_count		Ala (CGC)	genome_03	2
+gene_count		Ala (CGC)	genome_04	1
+gene_count		Ala (CGC)	genome_05	2
+gene_count		Ala (CGC)	genome_06	2
+gene_count		Ala (GGC)	genome_01	2
+gene_count		Ala (GGC)	genome_03	1
+gene_count		Ala (GGC)	genome_05	1
+gene_count		Ala (GGC)	genome_06	2
+gene_count		Ala (TGC)	genome_01	1
+gene_count		Arg (ACG)	genome_01	4
+gene_count		Arg (ACG)	genome_02	1
+gene_count		Arg (ACG)	genome_03	1
+gene_count		Arg (ACG)	genome_04	2
+gene_count		Arg (ACG)	genome_05	1
+gene_count		Arg (ACG)	genome_06	1
+gene_count		Arg (CCG)	genome_01	2
+gene_count		Arg (CCG)	genome_02	1
+gene_count		Arg (CCG)	genome_06	1
+gene_count		Arg (CCT)	genome_01	1
+gene_count		Arg (CCT)	genome_02	2
+gene_count		Arg (CCT)	genome_03	1
+gene_count		Arg (CCT)	genome_04	1
+gene_count		Arg (CCT)	genome_05	1
+gene_count		Arg (CCT)	genome_06	1
+gene_count		Arg (TCG)	genome_01	1
+gene_count		Arg (TCG)	genome_04	1
+gene_count		Arg (TCG)	genome_05	2
+gene_count		Arg (TCG)	genome_06	1
+gene_count		Arg (TCT)	genome_01	1
+gene_count		Arg (TCT)	genome_03	1
+gene_count		Arg (TCT)	genome_05	1
+gene_count		Arg (TCT)	genome_06	1
+gene_count		Asn (GTT)	genome_01	5
+gene_count		Asn (GTT)	genome_02	1
+gene_count		Asn (GTT)	genome_03	1
+gene_count		Asn (GTT)	genome_04	4
+gene_count		Asp (GTC)	genome_01	5
+gene_count		Asp (GTC)	genome_03	1
+gene_count		Asp (GTC)	genome_04	2
+gene_count		Asp (GTC)	genome_05	1
+gene_count		Asp (GTC)	genome_06	2
+gene_count		C01A	genome_01	1
+gene_count		C108	genome_01	1
+gene_count		C110	genome_02	1
+gene_count		C110	genome_03	1
+gene_count		C110	genome_05	1
+gene_count		C110	genome_06	1
+gene_count		C26	genome_01	12
+gene_count		C26	genome_02	11
+gene_count		C39	genome_06	1
+gene_count		C40	genome_01	4
+gene_count		C44	genome_01	4
+gene_count		C44	genome_02	4
+gene_count		C50	genome_03	1
+gene_count		C50	genome_05	1
+gene_count		C50	genome_06	1
+gene_count		C56	genome_01	4
+gene_count		C56	genome_02	1
+gene_count		C56	genome_03	1
+gene_count		C56	genome_05	2
+gene_count		C56	genome_06	2
+gene_count		C60A	genome_03	2
+gene_count		C60A	genome_05	2
+gene_count		C60A	genome_06	2
+gene_count		C82A	genome_01	6
+gene_count		CBM67	genome_02	2
+gene_count		CE1	genome_02	4
+gene_count		CE12	genome_02	1
+gene_count		CE4	genome_01	19
+gene_count		CE4	genome_02	3
+gene_count		CE8	genome_02	2
+gene_count		Cys (GCA)	genome_01	3
+gene_count		Cys (GCA)	genome_02	1
+gene_count		Cys (GCA)	genome_03	3
+gene_count		Cys (GCA)	genome_04	1
+gene_count		Cys (GCA)	genome_05	5
+gene_count		Cys (GCA)	genome_06	5
+gene_count		D00006|K22906	genome_01	1
+gene_count		D00040|K07155|K06911	genome_01	1
+gene_count		D00040|K07155|K06911	genome_02	1
+gene_count		EC:1.1.1.35	genome_02	1
+gene_count		EC:1.1.1.37	genome_01	1
+gene_count		EC:1.1.1.37	genome_02	1
+gene_count		EC:1.1.1.41	genome_02	1
+gene_count		EC:1.1.1.42	genome_02	1
+gene_count		EC:1.17.1.10	genome_04	1
+gene_count		EC:1.18.6.1	genome_01	17
+gene_count		EC:1.2.1.12	genome_01	1
+gene_count		EC:1.2.1.12	genome_02	1
+gene_count		EC:1.2.7.1	genome_01	8
+gene_count		EC:1.2.7.1	genome_02	1
+gene_count		EC:1.2.7.3	genome_01	14
+gene_count		EC:1.2.7.3	genome_02	2
+gene_count		EC:1.2.7.4	genome_01	1
+gene_count		EC:1.20.4.1	genome_01	2
+gene_count		EC:1.3.5.1	genome_01	2
+gene_count		EC:1.3.5.1	genome_02	2
+gene_count		EC:1.3.5.4	genome_01	2
+gene_count		EC:1.3.5.4	genome_02	2
+gene_count		EC:1.3.5.4	genome_04	1
+gene_count		EC:1.5.1.5	genome_01	1
+gene_count		EC:1.5.1.5	genome_02	1
+gene_count		EC:2.2.1.1	genome_01	7
+gene_count		EC:2.2.1.1	genome_02	1
+gene_count		EC:2.3.1.9	genome_01	1
+gene_count		EC:2.5.1.15	genome_01	1
+gene_count		EC:2.5.1.15	genome_02	1
+gene_count		EC:2.7.2.3	genome_01	1
+gene_count		EC:2.7.2.3	genome_02	1
+gene_count		EC:3.1.2.32	genome_01	2
+gene_count		EC:3.1.3.11	genome_01	1
+gene_count		EC:3.1.3.11	genome_03	1
+gene_count		EC:3.1.3.11	genome_05	1
+gene_count		EC:3.1.3.11	genome_06	1
+gene_count		EC:3.1.3.37	genome_03	1
+gene_count		EC:3.1.3.37	genome_05	1
+gene_count		EC:3.1.3.37	genome_06	1
+gene_count		EC:3.5.2.6	genome_01	3
+gene_count		EC:3.5.4.9	genome_01	1
+gene_count		EC:3.5.4.9	genome_02	1
+gene_count		EC:3.7.1.4	genome_01	1
+gene_count		EC:4.1.1.31	genome_02	1
+gene_count		EC:4.1.2.13	genome_01	4
+gene_count		EC:4.1.2.13	genome_02	2
+gene_count		EC:4.1.3.34	genome_01	3
+gene_count		EC:4.2.1.17	genome_02	1
+gene_count		EC:4.2.1.2	genome_01	3
+gene_count		EC:4.2.1.2	genome_03	1
+gene_count		EC:4.2.1.2	genome_05	1
+gene_count		EC:4.2.1.2	genome_06	1
+gene_count		EC:4.2.1.3	genome_02	1
+gene_count		EC:5.1.99.1	genome_01	1
+gene_count		EC:5.3.1.6	genome_01	4
+gene_count		EC:5.3.1.6	genome_02	2
+gene_count		EC:5.4.99.2	genome_01	4
+gene_count		EC:6.2.1.5	genome_03	2
+gene_count		EC:6.2.1.5	genome_06	2
+gene_count		EC:6.3.4.3	genome_02	1
+gene_count		EC:6.4.1.2	genome_01	1
+gene_count		EC:6.4.1.2	genome_02	6
+gene_count		GH1	genome_01	3
+gene_count		GH1	genome_03	1
+gene_count		GH1	genome_05	1
+gene_count		GH1	genome_06	1
+gene_count		GH10	genome_01	1
+gene_count		GH105	genome_02	4
+gene_count		GH106	genome_02	2
+gene_count		GH116	genome_02	1
+gene_count		GH13	genome_01	4
+gene_count		GH13	genome_02	4
+gene_count		GH13	genome_03	4
+gene_count		GH13	genome_05	3
+gene_count		GH13	genome_06	3
+gene_count		GH130	genome_01	1
+gene_count		GH130	genome_02	2
+gene_count		GH139	genome_02	1
+gene_count		GH15	genome_05	1
+gene_count		GH15	genome_06	1
+gene_count		GH16	genome_02	1
+gene_count		GH18	genome_01	2
+gene_count		GH18	genome_02	2
+gene_count		GH2	genome_02	5
+gene_count		GH20	genome_02	1
+gene_count		GH26	genome_02	1
+gene_count		GH27	genome_02	3
+gene_count		GH28	genome_02	4
+gene_count		GH29	genome_02	5
+gene_count		GH3	genome_01	1
+gene_count		GH3	genome_02	14
+gene_count		GH31	genome_02	5
+gene_count		GH32	genome_01	1
+gene_count		GH32	genome_04	4
+gene_count		GH32	genome_06	1
+gene_count		GH35	genome_02	1
+gene_count		GH4	genome_01	1
+gene_count		GH42	genome_02	1
+gene_count		GH43	genome_02	3
+gene_count		GH44	genome_02	1
+gene_count		GH5	genome_02	1
+gene_count		GH5	genome_04	2
+gene_count		GH51	genome_02	2
+gene_count		GH57	genome_02	1
+gene_count		GH74	genome_02	1
+gene_count		GH77	genome_01	1
+gene_count		GH77	genome_02	2
+gene_count		GH78	genome_02	2
+gene_count		GH8	genome_02	1
+gene_count		GH9	genome_02	3
+gene_count		GH94	genome_02	3
+gene_count		GH95	genome_02	3
+gene_count		GT1	genome_01	1
+gene_count		GT1	genome_02	1
+gene_count		GT20	genome_02	1
+gene_count		GT4	genome_01	5
+gene_count		GT4	genome_02	5
+gene_count		GT4	genome_03	1
+gene_count		GT4	genome_05	2
+gene_count		GT4	genome_06	1
+gene_count		GT83	genome_01	6
+gene_count		GT83	genome_02	5
+gene_count		Gln (CTG)	genome_01	1
+gene_count		Gln (CTG)	genome_03	1
+gene_count		Gln (CTG)	genome_04	1
+gene_count		Gln (CTG)	genome_05	1
+gene_count		Gln (CTG)	genome_06	1
+gene_count		Gln (TTG)	genome_01	2
+gene_count		Gln (TTG)	genome_02	2
+gene_count		Gln (TTG)	genome_03	1
+gene_count		Gln (TTG)	genome_04	2
+gene_count		Gln (TTG)	genome_05	1
+gene_count		Gln (TTG)	genome_06	1
+gene_count		Glu (CTC)	genome_01	1
+gene_count		Glu (CTC)	genome_03	1
+gene_count		Glu (CTC)	genome_04	1
+gene_count		Glu (CTC)	genome_06	1
+gene_count		Glu (TTC)	genome_01	4
+gene_count		Glu (TTC)	genome_02	1
+gene_count		Glu (TTC)	genome_04	4
+gene_count		Glu (TTC)	genome_06	1
+gene_count		Gly (CCC)	genome_01	2
+gene_count		Gly (CCC)	genome_02	1
+gene_count		Gly (CCC)	genome_03	1
+gene_count		Gly (CCC)	genome_05	1
+gene_count		Gly (GCC)	genome_01	7
+gene_count		Gly (GCC)	genome_02	1
+gene_count		Gly (GCC)	genome_03	1
+gene_count		Gly (GCC)	genome_04	2
+gene_count		Gly (GCC)	genome_05	1
+gene_count		Gly (GCC)	genome_06	1
+gene_count		Gly (TCC)	genome_01	2
+gene_count		Gly (TCC)	genome_03	1
+gene_count		Gly (TCC)	genome_05	1
+gene_count		Gly (TCC)	genome_06	2
+gene_count		His (GTG)	genome_01	1
+gene_count		His (GTG)	genome_02	1
+gene_count		His (GTG)	genome_03	1
+gene_count		His (GTG)	genome_04	1
+gene_count		His (GTG)	genome_05	2
+gene_count		His (GTG)	genome_06	1
+gene_count		I04	genome_05	1
+gene_count		I04	genome_06	1
+gene_count		I39	genome_01	5
+gene_count		I39	genome_02	1
+gene_count		I39	genome_03	1
+gene_count		I39	genome_04	1
+gene_count		I39	genome_05	1
+gene_count		I39	genome_06	1
+gene_count		I42	genome_02	1
+gene_count		I87	genome_02	3
+gene_count		I87	genome_03	1
+gene_count		I87	genome_05	1
+gene_count		I87	genome_06	1
+gene_count		K00002	genome_02	1
+gene_count		K00003	genome_01	1
+gene_count		K00003	genome_02	1
+gene_count		K00005	genome_01	1
+gene_count		K00008	genome_01	9
+gene_count		K00008	genome_02	3
+gene_count		K00009	genome_01	2
+gene_count		K00012	genome_01	2
+gene_count		K00012	genome_02	1
+gene_count		K00013	genome_01	1
+gene_count		K00013	genome_02	1
+gene_count		K00014	genome_01	1
+gene_count		K00014	genome_02	1
+gene_count		K00018	genome_01	1
+gene_count		K00024	genome_01	1
+gene_count		K00024	genome_02	1
+gene_count		K00027	genome_01	3
+gene_count		K00030	genome_02	1
+gene_count		K00031	genome_02	1
+gene_count		K00033	genome_01	2
+gene_count		K00033	genome_02	1
+gene_count		K00036	genome_01	1
+gene_count		K00036	genome_02	1
+gene_count		K00041	genome_01	2
+gene_count		K00052	genome_01	1
+gene_count		K00052	genome_02	1
+gene_count		K00053	genome_01	1
+gene_count		K00055|AA3_2	genome_02	1
+gene_count		K00058	genome_01	2
+gene_count		K00058	genome_02	2
+gene_count		K00059	genome_01	2
+gene_count		K00059	genome_02	4
+gene_count		K00074	genome_02	2
+gene_count		K00077	genome_01	1
+gene_count		K00077	genome_02	1
+gene_count		K00088	genome_01	2
+gene_count		K00088	genome_02	1
+gene_count		K00097	genome_04	1
+gene_count		K00111	genome_01	3
+gene_count		K00111	genome_02	1
+gene_count		K00124	genome_01	1
+gene_count		K00125	genome_05	1
+gene_count		K00125	genome_06	1
+gene_count		K00133	genome_01	1
+gene_count		K00133	genome_02	2
+gene_count		K00134	genome_01	1
+gene_count		K00134	genome_02	1
+gene_count		K00135	genome_02	1
+gene_count		K00145	genome_01	1
+gene_count		K00145	genome_02	1
+gene_count		K00147	genome_01	1
+gene_count		K00161	genome_02	1
+gene_count		K00163	genome_03	1
+gene_count		K00163	genome_05	1
+gene_count		K00163	genome_06	1
+gene_count		K00164	genome_03	1
+gene_count		K00164	genome_05	1
+gene_count		K00164	genome_06	1
+gene_count		K00174	genome_01	4
+gene_count		K00174	genome_02	1
+gene_count		K00175	genome_01	4
+gene_count		K00175	genome_02	1
+gene_count		K00176	genome_01	3
+gene_count		K00177	genome_01	3
+gene_count		K00198	genome_01	1
+gene_count		K00208	genome_02	2
+gene_count		K00209	genome_01	1
+gene_count		K00215	genome_01	3
+gene_count		K00215	genome_02	1
+gene_count		K00226	genome_02	1
+gene_count		K00231	genome_02	2
+gene_count		K00239	genome_01	1
+gene_count		K00239	genome_02	1
+gene_count		K00240	genome_01	1
+gene_count		K00240	genome_02	1
+gene_count		K00241	genome_01	1
+gene_count		K00241	genome_02	1
+gene_count		K00244	genome_04	1
+gene_count		K00249	genome_03	1
+gene_count		K00249	genome_05	1
+gene_count		K00249	genome_06	1
+gene_count		K00252	genome_03	1
+gene_count		K00252	genome_05	1
+gene_count		K00252	genome_06	1
+gene_count		K00261	genome_02	1
+gene_count		K00266	genome_01	3
+gene_count		K00266	genome_02	3
+gene_count		K00275	genome_01	1
+gene_count		K00278	genome_01	1
+gene_count		K00278	genome_02	1
+gene_count		K00282	genome_01	1
+gene_count		K00282	genome_02	1
+gene_count		K00283	genome_01	1
+gene_count		K00283	genome_02	1
+gene_count		K00286	genome_01	1
+gene_count		K00286	genome_02	1
+gene_count		K00287	genome_01	1
+gene_count		K00297	genome_02	1
+gene_count		K00324	genome_03	2
+gene_count		K00324	genome_05	2
+gene_count		K00324	genome_06	2
+gene_count		K00325	genome_03	1
+gene_count		K00325	genome_05	2
+gene_count		K00325	genome_06	1
+gene_count		K00330	genome_02	2
+gene_count		K00331	genome_02	3
+gene_count		K00332	genome_02	5
+gene_count		K00333	genome_02	3
+gene_count		K00334	genome_02	2
+gene_count		K00335	genome_02	2
+gene_count		K00336	genome_01	1
+gene_count		K00337	genome_02	5
+gene_count		K00338	genome_02	3
+gene_count		K00339	genome_03	1
+gene_count		K00339	genome_05	1
+gene_count		K00339	genome_06	1
+gene_count		K00340	genome_03	1
+gene_count		K00340	genome_05	1
+gene_count		K00340	genome_06	1
+gene_count		K00341	genome_02	1
+gene_count		K00342	genome_02	4
+gene_count		K00343	genome_02	3
+gene_count		K00366	genome_01	1
+gene_count		K00370	genome_01	2
+gene_count		K00371	genome_01	1
+gene_count		K00374	genome_01	1
+gene_count		K00374	genome_02	1
+gene_count		K00380	genome_05	1
+gene_count		K00380	genome_06	1
+gene_count		K00381	genome_05	1
+gene_count		K00381	genome_06	1
+gene_count		K00382	genome_01	2
+gene_count		K00384	genome_01	2
+gene_count		K00384	genome_02	2
+gene_count		K00385	genome_01	1
+gene_count		K00390	genome_02	1
+gene_count		K00392	genome_01	1
+gene_count		K00392	genome_02	1
+gene_count		K00394	genome_01	1
+gene_count		K00395	genome_01	1
+gene_count		K00425	genome_01	1
+gene_count		K00425	genome_02	2
+gene_count		K00426	genome_01	1
+gene_count		K00426	genome_02	1
+gene_count		K00435	genome_03	1
+gene_count		K00435	genome_05	1
+gene_count		K00435	genome_06	1
+gene_count		K00436	genome_02	3
+gene_count		K00451	genome_03	1
+gene_count		K00451	genome_05	1
+gene_count		K00451	genome_06	1
+gene_count		K00455	genome_01	2
+gene_count		K00457	genome_03	1
+gene_count		K00457	genome_05	1
+gene_count		K00457	genome_06	1
+gene_count		K00525	genome_02	2
+gene_count		K00531	genome_01	1
+gene_count		K00537	genome_01	2
+gene_count		K00548	genome_01	1
+gene_count		K00548	genome_02	2
+gene_count		K00549	genome_01	1
+gene_count		K00558	genome_05	1
+gene_count		K00560	genome_01	1
+gene_count		K00600	genome_01	1
+gene_count		K00600	genome_02	1
+gene_count		K00602	genome_01	1
+gene_count		K00602	genome_02	1
+gene_count		K00603	genome_02	1
+gene_count		K00605	genome_01	1
+gene_count		K00605	genome_02	1
+gene_count		K00606	genome_01	1
+gene_count		K00606	genome_02	1
+gene_count		K00609	genome_01	1
+gene_count		K00609	genome_02	1
+gene_count		K00611	genome_01	1
+gene_count		K00611	genome_02	1
+gene_count		K00615	genome_01	7
+gene_count		K00615	genome_02	1
+gene_count		K00616	genome_01	1
+gene_count		K00616	genome_02	1
+gene_count		K00619	genome_01	1
+gene_count		K00620	genome_01	1
+gene_count		K00620	genome_02	1
+gene_count		K00625	genome_01	1
+gene_count		K00625	genome_02	1
+gene_count		K00626	genome_01	1
+gene_count		K00627	genome_01	2
+gene_count		K00627	genome_02	1
+gene_count		K00632	genome_02	1
+gene_count		K00634	genome_01	1
+gene_count		K00634	genome_02	1
+gene_count		K00640	genome_01	2
+gene_count		K00640	genome_02	1
+gene_count		K00641	genome_02	2
+gene_count		K00651	genome_01	2
+gene_count		K00656	genome_01	1
+gene_count		K00674	genome_02	1
+gene_count		K00690	genome_02	1
+gene_count		K00705	genome_02	2
+gene_count		K00762	genome_01	1
+gene_count		K00762	genome_02	1
+gene_count		K00764	genome_01	1
+gene_count		K00764	genome_02	1
+gene_count		K00765	genome_01	1
+gene_count		K00765	genome_02	1
+gene_count		K00766	genome_01	1
+gene_count		K00766	genome_02	1
+gene_count		K00767	genome_01	1
+gene_count		K00767	genome_02	1
+gene_count		K00768	genome_01	3
+gene_count		K00788	genome_01	1
+gene_count		K00788	genome_02	2
+gene_count		K00789	genome_01	1
+gene_count		K00789	genome_02	1
+gene_count		K00793	genome_01	1
+gene_count		K00793	genome_02	1
+gene_count		K00794	genome_01	1
+gene_count		K00794	genome_02	1
+gene_count		K00796	genome_01	1
+gene_count		K00796	genome_02	1
+gene_count		K00798	genome_01	2
+gene_count		K00800	genome_01	1
+gene_count		K00800	genome_02	2
+gene_count		K00817	genome_01	1
+gene_count		K00817	genome_02	1
+gene_count		K00821	genome_01	1
+gene_count		K00821	genome_02	1
+gene_count		K00823	genome_01	1
+gene_count		K00823	genome_02	1
+gene_count		K00826	genome_02	1
+gene_count		K00830	genome_03	1
+gene_count		K00830	genome_05	1
+gene_count		K00830	genome_06	1
+gene_count		K00831	genome_01	1
+gene_count		K00832	genome_01	1
+gene_count		K00833	genome_01	1
+gene_count		K00844	genome_01	2
+gene_count		K00845	genome_02	1
+gene_count		K00847	genome_01	1
+gene_count		K00847	genome_02	1
+gene_count		K00849	genome_01	1
+gene_count		K00849	genome_02	1
+gene_count		K00850	genome_01	4
+gene_count		K00850	genome_02	1
+gene_count		K00852	genome_01	1
+gene_count		K00852	genome_02	1
+gene_count		K00854	genome_01	2
+gene_count		K00854	genome_02	1
+gene_count		K00859	genome_01	1
+gene_count		K00859	genome_02	1
+gene_count		K00864	genome_01	1
+gene_count		K00864	genome_02	1
+gene_count		K00867	genome_03	1
+gene_count		K00867	genome_05	2
+gene_count		K00867	genome_06	1
+gene_count		K00872	genome_01	1
+gene_count		K00872	genome_02	1
+gene_count		K00873	genome_01	1
+gene_count		K00873	genome_02	1
+gene_count		K00874	genome_01	4
+gene_count		K00874	genome_02	2
+gene_count		K00891	genome_01	2
+gene_count		K00891	genome_02	1
+gene_count		K00925	genome_01	1
+gene_count		K00925	genome_02	2
+gene_count		K00927	genome_01	1
+gene_count		K00927	genome_02	1
+gene_count		K00928	genome_01	2
+gene_count		K00928	genome_02	1
+gene_count		K00929	genome_01	1
+gene_count		K00929	genome_02	2
+gene_count		K00930	genome_01	1
+gene_count		K00930	genome_02	1
+gene_count		K00931	genome_01	2
+gene_count		K00937	genome_01	2
+gene_count		K00937	genome_02	1
+gene_count		K00939	genome_02	1
+gene_count		K00940	genome_01	1
+gene_count		K00940	genome_02	1
+gene_count		K00941	genome_04	1
+gene_count		K00942	genome_01	2
+gene_count		K00942	genome_02	1
+gene_count		K00943	genome_02	1
+gene_count		K00945	genome_01	1
+gene_count		K00945	genome_02	1
+gene_count		K00946	genome_01	1
+gene_count		K00946	genome_02	2
+gene_count		K00948	genome_01	1
+gene_count		K00948	genome_02	2
+gene_count		K00950	genome_01	1
+gene_count		K00950	genome_02	1
+gene_count		K00954	genome_01	1
+gene_count		K00954	genome_02	1
+gene_count		K00955	genome_05	1
+gene_count		K00955	genome_06	1
+gene_count		K00956	genome_02	1
+gene_count		K00957	genome_01	1
+gene_count		K00957	genome_02	1
+gene_count		K00963	genome_01	1
+gene_count		K00965	genome_01	1
+gene_count		K00965	genome_02	1
+gene_count		K00966	genome_01	1
+gene_count		K00966	genome_02	2
+gene_count		K00969	genome_01	2
+gene_count		K00969	genome_02	1
+gene_count		K00971	genome_02	1
+gene_count		K00982	genome_03	1
+gene_count		K00982	genome_05	1
+gene_count		K00982	genome_06	1
+gene_count		K01006	genome_02	2
+gene_count		K01011 | Rhodanese	genome_02	1
+gene_count		K01012	genome_01	3
+gene_count		K01026	genome_02	1
+gene_count		K01035	genome_02	1
+gene_count		K01057	genome_01	1
+gene_count		K01057	genome_02	1
+gene_count		K01069	genome_01	2
+gene_count		K01069	genome_02	1
+gene_count		K01077	genome_01	1
+gene_count		K01087	genome_02	2
+gene_count		K01114	genome_01	1
+gene_count		K01142	genome_01	2
+gene_count		K01151	genome_01	2
+gene_count		K01151	genome_02	1
+gene_count		K01182	genome_02	1
+gene_count		K01183	genome_02	1
+gene_count		K01187	genome_02	3
+gene_count		K01190	genome_02	4
+gene_count		K01193	genome_01	1
+gene_count		K01193	genome_04	1
+gene_count		K01194	genome_02	1
+gene_count		K01198	genome_05	1
+gene_count		K01198	genome_06	1
+gene_count		K01206	genome_02	5
+gene_count		K01207	genome_01	1
+gene_count		K01207	genome_02	1
+gene_count		K01218	genome_02	1
+gene_count		K01222	genome_01	1
+gene_count		K01223	genome_01	3
+gene_count		K01236	genome_03	1
+gene_count		K01236	genome_05	1
+gene_count		K01236	genome_06	1
+gene_count		K01243	genome_03	1
+gene_count		K01243	genome_05	1
+gene_count		K01243	genome_06	1
+gene_count		K01251	genome_01	1
+gene_count		K01251	genome_02	1
+gene_count		K01255	genome_01	2
+gene_count		K01255	genome_02	1
+gene_count		K01338	genome_01	3
+gene_count		K01338	genome_02	1
+gene_count		K01419	genome_01	1
+gene_count		K01426	genome_02	1
+gene_count		K01438	genome_02	1
+gene_count		K01464	genome_01	1
+gene_count		K01465	genome_01	1
+gene_count		K01465	genome_02	1
+gene_count		K01468	genome_03	1
+gene_count		K01468	genome_04	1
+gene_count		K01476	genome_01	1
+gene_count		K01476	genome_02	1
+gene_count		K01491	genome_01	1
+gene_count		K01491	genome_02	1
+gene_count		K01496	genome_03	1
+gene_count		K01496	genome_05	1
+gene_count		K01496	genome_06	1
+gene_count		K01507	genome_02	1
+gene_count		K01512	genome_02	1
+gene_count		K01520	genome_01	1
+gene_count		K01520	genome_02	1
+gene_count		K01531	genome_05	1
+gene_count		K01531	genome_06	1
+gene_count		K01534	genome_01	2
+gene_count		K01546	genome_01	1
+gene_count		K01546	genome_02	1
+gene_count		K01547	genome_01	1
+gene_count		K01547	genome_02	1
+gene_count		K01548	genome_01	1
+gene_count		K01548	genome_02	1
+gene_count		K01551	genome_01	1
+gene_count		K01555	genome_03	1
+gene_count		K01555	genome_05	1
+gene_count		K01555	genome_06	2
+gene_count		K01579	genome_01	1
+gene_count		K01586	genome_01	2
+gene_count		K01588	genome_01	1
+gene_count		K01588	genome_02	1
+gene_count		K01591	genome_01	1
+gene_count		K01591	genome_02	1
+gene_count		K01595	genome_02	1
+gene_count		K01599	genome_01	1
+gene_count		K01599	genome_02	1
+gene_count		K01609	genome_02	1
+gene_count		K01610	genome_01	2
+gene_count		K01610	genome_02	1
+gene_count		K01623	genome_02	1
+gene_count		K01624	genome_01	4
+gene_count		K01624	genome_02	1
+gene_count		K01625	genome_01	3
+gene_count		K01625	genome_02	2
+gene_count		K01626	genome_03	1
+gene_count		K01626	genome_05	1
+gene_count		K01626	genome_06	1
+gene_count		K01628	genome_01	1
+gene_count		K01628	genome_02	2
+gene_count		K01633	genome_01	1
+gene_count		K01635	genome_02	1
+gene_count		K01637	genome_03	1
+gene_count		K01637	genome_05	1
+gene_count		K01637	genome_06	1
+gene_count		K01638	genome_03	1
+gene_count		K01638	genome_05	1
+gene_count		K01638	genome_06	2
+gene_count		K01640	genome_03	1
+gene_count		K01640	genome_05	1
+gene_count		K01640	genome_06	1
+gene_count		K01647	genome_02	1
+gene_count		K01649	genome_01	1
+gene_count		K01649	genome_02	3
+gene_count		K01652	genome_01	2
+gene_count		K01653	genome_01	2
+gene_count		K01657	genome_01	1
+gene_count		K01657	genome_02	1
+gene_count		K01658	genome_01	1
+gene_count		K01664	genome_02	1
+gene_count		K01676	genome_03	1
+gene_count		K01676	genome_05	1
+gene_count		K01676	genome_06	1
+gene_count		K01677	genome_01	1
+gene_count		K01678	genome_01	1
+gene_count		K01679	genome_01	1
+gene_count		K01681	genome_02	1
+gene_count		K01685	genome_01	2
+gene_count		K01687	genome_01	2
+gene_count		K01689	genome_01	1
+gene_count		K01689	genome_02	1
+gene_count		K01693	genome_01	1
+gene_count		K01693	genome_02	1
+gene_count		K01695	genome_02	1
+gene_count		K01696	genome_02	1
+gene_count		K01697	genome_05	1
+gene_count		K01697	genome_06	1
+gene_count		K01698	genome_01	1
+gene_count		K01698	genome_02	1
+gene_count		K01699	genome_01	1
+gene_count		K01703	genome_01	2
+gene_count		K01703	genome_02	1
+gene_count		K01704	genome_01	3
+gene_count		K01712	genome_01	1
+gene_count		K01712	genome_02	1
+gene_count		K01714	genome_01	5
+gene_count		K01714	genome_02	1
+gene_count		K01715	genome_02	1
+gene_count		K01719	genome_02	1
+gene_count		K01733	genome_01	1
+gene_count		K01733	genome_02	1
+gene_count		K01735	genome_01	1
+gene_count		K01735	genome_02	1
+gene_count		K01736	genome_01	2
+gene_count		K01736	genome_02	1
+gene_count		K01737	genome_01	1
+gene_count		K01737	genome_02	3
+gene_count		K01738	genome_01	5
+gene_count		K01738	genome_02	1
+gene_count		K01739	genome_01	2
+gene_count		K01745	genome_01	2
+gene_count		K01745	genome_02	1
+gene_count		K01749	genome_01	1
+gene_count		K01749	genome_02	1
+gene_count		K01752	genome_04	2
+gene_count		K01754	genome_01	2
+gene_count		K01754	genome_02	1
+gene_count		K01755	genome_03	1
+gene_count		K01755	genome_04	1
+gene_count		K01756	genome_01	1
+gene_count		K01756	genome_02	2
+gene_count		K01758	genome_02	1
+gene_count		K01759	genome_01	3
+gene_count		K01760	genome_03	1
+gene_count		K01760	genome_05	3
+gene_count		K01760	genome_06	3
+gene_count		K01768	genome_04	1
+gene_count		K01772	genome_03	3
+gene_count		K01772	genome_05	2
+gene_count		K01772	genome_06	2
+gene_count		K01778	genome_01	2
+gene_count		K01778	genome_02	2
+gene_count		K01783	genome_01	6
+gene_count		K01783	genome_02	1
+gene_count		K01784	genome_01	3
+gene_count		K01784	genome_02	2
+gene_count		K01785	genome_01	4
+gene_count		K01785	genome_02	2
+gene_count		K01803	genome_01	1
+gene_count		K01803	genome_02	1
+gene_count		K01804	genome_01	1
+gene_count		K01805	genome_01	1
+gene_count		K01808	genome_01	4
+gene_count		K01808	genome_02	2
+gene_count		K01809	genome_01	2
+gene_count		K01809	genome_02	2
+gene_count		K01810	genome_01	1
+gene_count		K01810	genome_02	1
+gene_count		K01812	genome_01	1
+gene_count		K01812	genome_02	1
+gene_count		K01813	genome_01	1
+gene_count		K01814	genome_01	1
+gene_count		K01814	genome_02	1
+gene_count		K01817	genome_01	1
+gene_count		K01817	genome_02	1
+gene_count		K01821	genome_01	1
+gene_count		K01835	genome_01	1
+gene_count		K01845	genome_01	2
+gene_count		K01845	genome_02	1
+gene_count		K01848	genome_01	2
+gene_count		K01849	genome_01	2
+gene_count		K01885	genome_01	1
+gene_count		K01885	genome_02	1
+gene_count		K01895	genome_02	1
+gene_count		K01897	genome_01	2
+gene_count		K01897	genome_02	2
+gene_count		K01902	genome_03	1
+gene_count		K01902	genome_06	1
+gene_count		K01903	genome_03	1
+gene_count		K01903	genome_06	1
+gene_count		K01906	genome_01	1
+gene_count		K01912	genome_01	2
+gene_count		K01912	genome_02	2
+gene_count		K01915	genome_01	2
+gene_count		K01915	genome_02	4
+gene_count		K01918	genome_01	1
+gene_count		K01918	genome_02	1
+gene_count		K01921	genome_01	2
+gene_count		K01921	genome_02	2
+gene_count		K01923	genome_01	1
+gene_count		K01923	genome_02	2
+gene_count		K01933	genome_01	1
+gene_count		K01933	genome_02	1
+gene_count		K01935	genome_01	1
+gene_count		K01937	genome_01	1
+gene_count		K01937	genome_02	1
+gene_count		K01938	genome_02	1
+gene_count		K01939	genome_01	1
+gene_count		K01939	genome_02	1
+gene_count		K01940	genome_03	2
+gene_count		K01940	genome_04	1
+gene_count		K01940	genome_06	1
+gene_count		K01945	genome_01	1
+gene_count		K01945	genome_02	1
+gene_count		K01950	genome_01	2
+gene_count		K01950	genome_02	2
+gene_count		K01951	genome_01	1
+gene_count		K01951	genome_02	1
+gene_count		K01952	genome_01	1
+gene_count		K01953	genome_01	1
+gene_count		K01953	genome_02	1
+gene_count		K01955	genome_01	1
+gene_count		K01955	genome_02	1
+gene_count		K01956	genome_01	1
+gene_count		K01956	genome_02	1
+gene_count		K01958	genome_03	1
+gene_count		K01958	genome_05	1
+gene_count		K01958	genome_06	1
+gene_count		K01961	genome_01	1
+gene_count		K01961	genome_02	3
+gene_count		K01962	genome_02	2
+gene_count		K01963	genome_02	1
+gene_count		K01969	genome_05	1
+gene_count		K01989 | 3.A.1.34.1_Q99ZY6	genome_01	1
+gene_count		K01990 | 3.A.1.105.17_P36879 | 3.A.1.132.1_O30489 | 3.A.1.142.1_Q8DNB9 | 3.A.1.143.1_P55339	genome_01	3
+gene_count		K01990 | 3.A.1.105.17_P36879 | 3.A.1.132.1_O30489 | 3.A.1.142.1_Q8DNB9 | 3.A.1.143.1_P55339	genome_02	3
+gene_count		K01991 | 1.B.18.2.2_Q27SU9 | 1.B.18.3.2_Q45407 | 1.B.18.3.4_F8KVN6 | 1.B.18.3.5_K9TEU5 | 1.B.18.3.7_B0RRH7	genome_01	2
+gene_count		K01991 | 1.B.18.2.2_Q27SU9 | 1.B.18.3.2_Q45407 | 1.B.18.3.4_F8KVN6 | 1.B.18.3.5_K9TEU5 | 1.B.18.3.7_B0RRH7	genome_02	1
+gene_count		K01992 | 3.A.1.105.17_P0AFN6 | 3.A.1.132.1_Q93LN1 | 3.A.1.142.1_Q8DNC0 | 3.A.1.143.1_P55340	genome_01	2
+gene_count		K01992 | 3.A.1.105.17_P0AFN6 | 3.A.1.132.1_Q93LN1 | 3.A.1.142.1_Q8DNC0 | 3.A.1.143.1_P55340	genome_02	5
+gene_count		K01995 | 3.A.1.4.10_Q8DQH7 | 3.A.1.4.10_Q8DQH8 | 3.A.1.4.1_P0A9S7 | 3.A.1.4.3_Q8VM83 | 3.A.1.4.8_P21629	genome_04	1
+gene_count		K01996 | 3.A.1.4.10_Q8DQH7 | 3.A.1.4.11_Q6N8W2 | 3.A.1.4.1_P22731 | 3.A.1.4.8_P21630	genome_01	2
+gene_count		K01997	genome_01	1
+gene_count		K01997 | 3.A.1.4.10_Q8DQI0 | 3.A.1.4.11_Q6N8W0 | 3.A.1.4.1_P0AEX7 | 3.A.1.4.3_Q8VM85 | 3.A.1.4.8_P21627	genome_01	1
+gene_count		K01998	genome_01	1
+gene_count		K01998 | 3.A.1.4.10_Q8DQH9 | 3.A.1.4.11_Q6N8W1 | 3.A.1.4.1_P22729 | 3.A.1.4.3_Q8VM84 | 3.A.1.4.8_P21628	genome_01	1
+gene_count		K01999	genome_01	9
+gene_count		K01999	genome_02	1
+gene_count		K01999 | 3.A.1.4.10_Q8DQI1 | 3.A.1.4.11_Q6N8W4 | 3.A.1.4.1_P04816 | 3.A.1.4.1_P0AD96 | 3.A.1.4.3_Q9L3M3 | 3.A.1.4.8_P21175	genome_01	9
+gene_count		K01999 | 3.A.1.4.10_Q8DQI1 | 3.A.1.4.11_Q6N8W4 | 3.A.1.4.1_P04816 | 3.A.1.4.1_P0AD96 | 3.A.1.4.3_Q9L3M3 | 3.A.1.4.8_P21175	genome_02	1
+gene_count		K02003 | 3.A.1.114.1_O50296	genome_01	4
+gene_count		K02003 | 3.A.1.114.1_O50296	genome_02	4
+gene_count		K02004 | 3.A.1.114.1_O50295	genome_01	5
+gene_count		K02004 | 3.A.1.114.1_O50295	genome_02	12
+gene_count		K02005 | 3.A.1.114.1_Q7A2B0	genome_01	2
+gene_count		K02005 | 3.A.1.114.1_Q7A2B0	genome_02	6
+gene_count		K02006 | 3.A.1.18 | 3.A.1.22 | 3.A.1.23	genome_01	2
+gene_count		K02007 | 3.A.1.18 | 3.A.1.22 | 3.A.1.23	genome_01	2
+gene_count		K02008 | 3.A.1.18 | 3.A.1.22 | 3.A.1.23	genome_01	2
+gene_count		K02009 | 3.A.1.18	genome_01	2
+gene_count		K02010	genome_01	1
+gene_count		K02010 | 3.A.1.1.14_Q97UF2 | 3.A.1.20.2_Q9KLQ5 | 3.A.1.10.4_Q82VN5 | 3.A.1.10.5_A1JLH0 | 3.A.1.19.2_Q73RE4	genome_01	1
+gene_count		K02011	genome_01	1
+gene_count		K02011 | 3.A.1.20.2_Q9KLQ6 | 3.A.1.10.4_Q82VN6 | 3.A.1.10.5_Q56926	genome_01	1
+gene_count		K02012	genome_01	2
+gene_count		K02012 | 3.A.1.20.2_Q9KLQ7 | 3.A.1.10.4_Q82VN7 | 3.A.1.10.5_Q56925	genome_01	2
+gene_count		K02013 | 3.A.1.13.2_A9WCZ7 | 3.A.1.14.13_Q9RK11 | 3.A.1.14.14_Q9A197 | 3.A.1.14.1_P15031 | 3.A.1.14.2_P23878 | 3.A.1.14.3_P07821 | 3.A.1.14.4_Q47087 | 3.A.1.14.6_Q9RCF3 | 3.A.1.14.7_Q9X665 | 3.A.1.14.8_Q8GRB0	genome_01	2
+gene_count		K02014	genome_01	1
+gene_count		K02014	genome_02	3
+gene_count		K02014 | 1.B.14.12.1_Q9A608 | 1.B.14.12.2_Q9AAZ6 | 1.B.14.6.1_Q45780 | 1.B.14.1.10_Q82VI7 | 1.B.14.1.11_P11461 | 1.B.14.1.12_Q9HXB2 | 1.B.14.1.15_Q05202 | 1.B.14.1.17_Q01674 | 1.B.14.1.21_B6R297 | 1.B.14.1.26_Q8G8W9 | 1.B.14.1.7_A4LBD1 | 1.B.14.14.1_Q8A552 | 1.B.14.8.2_Q2M5P4 | 1.B.14.9.3_Q7CGN6	genome_01	1
+gene_count		K02014 | 1.B.14.12.1_Q9A608 | 1.B.14.12.2_Q9AAZ6 | 1.B.14.6.1_Q45780 | 1.B.14.1.10_Q82VI7 | 1.B.14.1.11_P11461 | 1.B.14.1.12_Q9HXB2 | 1.B.14.1.15_Q05202 | 1.B.14.1.17_Q01674 | 1.B.14.1.21_B6R297 | 1.B.14.1.26_Q8G8W9 | 1.B.14.1.7_A4LBD1 | 1.B.14.14.1_Q8A552 | 1.B.14.8.2_Q2M5P4 | 1.B.14.9.3_Q7CGN6	genome_02	3
+gene_count		K02015 | 3.A.1.13.2_A9WCZ6 | 3.A.1.14.13_Q9RK09 | 3.A.1.14.13_Q9RK10 | 3.A.1.14.14_Q06A41 | 3.A.1.14.14_Q9A199 | 3.A.1.14.15_P40410 | 3.A.1.14.15_P40411 | 3.A.1.14.1_P15029 | 3.A.1.14.1_P15030 | 3.A.1.14.2_P23876 | 3.A.1.14.2_P23877 | 3.A.1.14.3_P06972 | 3.A.1.14.4_Q47085 | 3.A.1.14.4_Q47086 | 3.A.1.14.6_Q9RCF4 | 3.A.1.14.6_Q9RCF5 | 3.A.1.14.7_Q9X664 | 3.A.1.14.8_Q8GRB1 | 3.A.1.14.8_Q8GRB2	genome_01	2
+gene_count		K02016 | 3.A.1.13.2_A9WCZ4 | 3.A.1.14.13_Q9RK12 | 3.A.1.14.14_Q9A198 | 3.A.1.14.15_P40409 | 3.A.1.14.1_P15028 | 3.A.1.14.2_C8U2V6 | 3.A.1.14.3_P07822 | 3.A.1.14.4_Q47084 | 3.A.1.14.6_Q9RCF6 | 3.A.1.14.7_Q93PN3 | 3.A.1.14.7_Q99RY8 | 3.A.1.14.8_Q8GRB3	genome_01	2
+gene_count		K02017 | 3.A.1.8	genome_01	1
+gene_count		K02017 | 3.A.1.8	genome_02	1
+gene_count		K02018 | 3.A.1.8	genome_01	1
+gene_count		K02018 | 3.A.1.8	genome_02	1
+gene_count		K02020 | 3.A.1.8	genome_01	1
+gene_count		K02020 | 3.A.1.8	genome_02	2
+gene_count		K02025 | 3.A.1.1.31_O50452 | 3.A.1.1.37_Q9WYB4 | 3.A.1.1.41_G4FGN7 | 3.A.1.1.42_Q9FBS6 | 3.A.1.1.43_Q9FBS6 | 3.A.1.1.46_P0AFR7 | 3.A.1.1.48_D6ZW63 | 3.A.1.1.7_O51924	genome_04	1
+gene_count		K02026 | 3.A.1.1.31_O50453 | 3.A.1.1.41_G4FGN6 | 3.A.1.1.46_P77716 | 3.A.1.1.48_D6ZW62 | 3.A.1.1.7_O51925	genome_04	1
+gene_count		K02027 | 3.A.1.1.31_Q7D8J9 | 3.A.1.1.41_G4FGN8 | 3.A.1.1.42_Q9FBS5 | 3.A.1.1.43_Q9FBS5 | 3.A.1.1.46_P76042 | 3.A.1.1.48_D6ZW64 | 3.A.1.1.7_O51923	genome_01	1
+gene_count		K02028	genome_01	2
+gene_count		K02028 | 3.A.1.3.15_P54537 | 3.A.1.3.23_Q9HU32 | 3.A.1.3.24_Q9F3K7 | 3.A.1.3.25_Q9CES4	genome_01	2
+gene_count		K02029	genome_01	4
+gene_count		K02029 | 3.A.1.3.15_P54536 | 3.A.1.3.23_Q9HU29 | 3.A.1.3.23_Q9HU30 | 3.A.1.3.24_Q9F3K6	genome_01	4
+gene_count		K02030	genome_01	3
+gene_count		K02030 | 2.A.56.3.1_P74223 | 3.A.1.3.15_P54535 | 3.A.1.3.15_P54536 | 3.A.1.3.23_Q9HU31 | 3.A.1.3.24_Q9F3K5 | 3.A.1.3.25_Q9CES5 | 3.A.1.3.27_Q8RCC4	genome_01	3
+gene_count		K02031	genome_02	2
+gene_count		K02032	genome_01	1
+gene_count		K02032	genome_02	1
+gene_count		K02033	genome_01	1
+gene_count		K02033	genome_02	1
+gene_count		K02034	genome_01	1
+gene_count		K02034	genome_02	2
+gene_count		K02035	genome_01	3
+gene_count		K02035	genome_02	2
+gene_count		K02036 | 3.A.1.7	genome_01	1
+gene_count		K02036 | 3.A.1.7	genome_02	1
+gene_count		K02037 | 3.A.1.7	genome_01	1
+gene_count		K02037 | 3.A.1.7	genome_02	1
+gene_count		K02038 | 3.A.1.7	genome_01	1
+gene_count		K02038 | 3.A.1.7	genome_02	1
+gene_count		K02039	genome_01	1
+gene_count		K02039	genome_02	1
+gene_count		K02040 | 3.A.1.7	genome_01	2
+gene_count		K02040 | 3.A.1.7	genome_02	1
+gene_count		K02044 | 3.A.1.9	genome_01	1
+gene_count		K02045 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_05	1
+gene_count		K02045 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_06	1
+gene_count		K02046 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_05	1
+gene_count		K02046 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_06	1
+gene_count		K02047 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_05	1
+gene_count		K02047 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_06	1
+gene_count		K02049	genome_01	5
+gene_count		K02049	genome_02	1
+gene_count		K02050	genome_01	9
+gene_count		K02050	genome_02	1
+gene_count		K02050 | 3.A.1.17.11_D1CEG9 | 3.A.1.17.14_A9WGD1 | 3.A.1.17.7_A7NLS3	genome_01	9
+gene_count		K02050 | 3.A.1.17.11_D1CEG9 | 3.A.1.17.14_A9WGD1 | 3.A.1.17.7_A7NLS3	genome_02	1
+gene_count		K02051	genome_01	2
+gene_count		K02051 | 3.A.1.17.11_D1CEG8 | 3.A.1.17.14_A9WGD2 | 3.A.1.17.7_A7NLS2	genome_01	2
+gene_count		K02056 | 3.A.1.2.14_Q0HIQ7 | 3.A.1.2.20_G4FGN3 | 3.A.1.2.23_Q8G847 | 3.A.1.2.25_Q6BEX0 | 3.A.1.2.27_P77509 | 3.A.1.2.10_O83341 | 3.A.1.2.12_Q8DU37 | 3.A.1.2.17_A2RKA7 | 3.A.1.2.28_R9USS2	genome_01	2
+gene_count		K02057 | 3.A.1.2.14_Q0HIQ5 | 3.A.1.2.14_Q0HIQ6 | 3.A.1.2.18_Q9WXW0 | 3.A.1.2.23_Q8G845 | 3.A.1.2.23_Q8G846 | 3.A.1.2.25_P37772 | 3.A.1.2.25_P39328 | 3.A.1.2.27_P77315 | 3.A.1.2.10_O83342 | 3.A.1.2.10_O83343 | 3.A.1.2.12_Q8DU38 | 3.A.1.2.12_Q8DU39 | 3.A.1.2.17_A2RKA5 | 3.A.1.2.17_A2RKA6 | 3.A.1.2.28_O83323 | 3.A.1.2.28_O83324	genome_01	3
+gene_count		K02058 | 3.A.1.2.14_Q0HIQ8 | 3.A.1.2.23_Q8G848 | 3.A.1.2.25_P39325 | 3.A.1.2.27_P77269 | 3.A.1.2.28_R9UW99	genome_01	2
+gene_count		K02065 | 3.A.1.27.3_P63386	genome_01	1
+gene_count		K02065 | 3.A.1.27.3_P63386	genome_02	3
+gene_count		K02066 | 3.A.1.27.3_P64606	genome_01	1
+gene_count		K02066 | 3.A.1.27.3_P64606	genome_02	1
+gene_count		K02067 | 3.A.1.27.3_P64604	genome_01	1
+gene_count		K02067 | 3.A.1.27.3_P64604	genome_02	1
+gene_count		K02068	genome_03	1
+gene_count		K02068	genome_04	1
+gene_count		K02069	genome_03	1
+gene_count		K02069	genome_04	1
+gene_count		K02071 | 3.A.1.24.1_P30750 | 3.A.1.24.2_O32169 | 3.A.1.24.3_Q8K8K8 | 3.A.1.24.4_Q8NSN2 | 3.A.1.24.5_Q9HT70	genome_01	2
+gene_count		K02072 | 3.A.1.24.1_P31547 | 3.A.1.24.2_O32168 | 3.A.1.24.3_Q8K8K7 | 3.A.1.24.4_Q8NSN3 | 3.A.1.24.5_Q9HT69	genome_01	2
+gene_count		K02073 | 3.A.1.24.1_P28635 | 3.A.1.24.2_O32167 | 3.A.1.24.3_Q8K8K9 | 3.A.1.24.4_Q8NSN1 | 3.A.1.24.5_Q9HT68	genome_01	4
+gene_count		K02077	genome_01	1
+gene_count		K02077 | 3.A.1.15	genome_01	1
+gene_count		K02078	genome_01	1
+gene_count		K02078	genome_02	1
+gene_count		K02108	genome_01	1
+gene_count		K02108	genome_02	3
+gene_count		K02109	genome_01	1
+gene_count		K02109	genome_02	5
+gene_count		K02110	genome_01	1
+gene_count		K02110	genome_02	2
+gene_count		K02111	genome_01	1
+gene_count		K02111	genome_02	1
+gene_count		K02112	genome_01	1
+gene_count		K02112	genome_02	4
+gene_count		K02113	genome_01	1
+gene_count		K02113	genome_02	2
+gene_count		K02114	genome_01	1
+gene_count		K02114	genome_02	4
+gene_count		K02115	genome_01	1
+gene_count		K02115	genome_02	1
+gene_count		K02160	genome_02	2
+gene_count		K02188	genome_01	1
+gene_count		K02189	genome_01	1
+gene_count		K02190	genome_01	2
+gene_count		K02191	genome_01	1
+gene_count		K02194 | 3.A.1.107	genome_02	2
+gene_count		K02195 | 3.A.1.107	genome_02	1
+gene_count		K02205 | 2.A.3.1.11_P39137	genome_01	1
+gene_count		K02217	genome_01	1
+gene_count		K02224	genome_01	1
+gene_count		K02224	genome_02	1
+gene_count		K02226	genome_01	1
+gene_count		K02227	genome_01	1
+gene_count		K02231	genome_01	1
+gene_count		K02232	genome_01	1
+gene_count		K02233	genome_01	2
+gene_count		K02257	genome_02	1
+gene_count		K02259	genome_02	2
+gene_count		K02274	genome_02	1
+gene_count		K02275	genome_03	1
+gene_count		K02275	genome_05	1
+gene_count		K02275	genome_06	1
+gene_count		K02276	genome_02	2
+gene_count		K02277	genome_02	1
+gene_count		K02302	genome_02	3
+gene_count		K02303	genome_03	1
+gene_count		K02303	genome_06	1
+gene_count		K02337	genome_01	1
+gene_count		K02337	genome_02	2
+gene_count		K02338	genome_01	2
+gene_count		K02338	genome_02	1
+gene_count		K02340	genome_01	1
+gene_count		K02340	genome_02	1
+gene_count		K02341	genome_01	1
+gene_count		K02341	genome_02	1
+gene_count		K02342	genome_01	2
+gene_count		K02342	genome_02	1
+gene_count		K02343	genome_01	1
+gene_count		K02343	genome_02	1
+gene_count		K02371	genome_01	2
+gene_count		K02372	genome_01	2
+gene_count		K02372	genome_02	1
+gene_count		K02386	genome_01	1
+gene_count		K02387	genome_01	1
+gene_count		K02387	genome_02	1
+gene_count		K02388	genome_01	1
+gene_count		K02388	genome_02	1
+gene_count		K02389	genome_02	1
+gene_count		K02390	genome_01	1
+gene_count		K02390	genome_02	1
+gene_count		K02391	genome_01	1
+gene_count		K02392	genome_01	1
+gene_count		K02393	genome_01	1
+gene_count		K02394	genome_01	1
+gene_count		K02395	genome_01	1
+gene_count		K02396	genome_01	1
+gene_count		K02397	genome_01	1
+gene_count		K02400	genome_01	1
+gene_count		K02400	genome_02	2
+gene_count		K02401	genome_01	1
+gene_count		K02401	genome_02	1
+gene_count		K02404	genome_01	1
+gene_count		K02405	genome_01	1
+gene_count		K02405	genome_02	1
+gene_count		K02406	genome_01	1
+gene_count		K02406	genome_02	2
+gene_count		K02407	genome_01	1
+gene_count		K02407	genome_02	1
+gene_count		K02408	genome_01	1
+gene_count		K02408	genome_02	1
+gene_count		K02409	genome_01	1
+gene_count		K02409	genome_02	1
+gene_count		K02410	genome_01	1
+gene_count		K02410	genome_02	1
+gene_count		K02411	genome_02	1
+gene_count		K02412	genome_02	1
+gene_count		K02413	genome_04	1
+gene_count		K02414	genome_04	1
+gene_count		K02415	genome_01	1
+gene_count		K02416	genome_01	1
+gene_count		K02416	genome_02	1
+gene_count		K02417	genome_01	1
+gene_count		K02417	genome_02	2
+gene_count		K02418	genome_01	1
+gene_count		K02419	genome_01	1
+gene_count		K02419	genome_02	1
+gene_count		K02420	genome_01	1
+gene_count		K02420	genome_02	1
+gene_count		K02421	genome_01	1
+gene_count		K02421	genome_02	1
+gene_count		K02422	genome_01	1
+gene_count		K02422	genome_02	1
+gene_count		K02424 | 3.A.1.3.28_B8F896	genome_01	1
+gene_count		K02426	genome_02	1
+gene_count		K02429 | 2.A.1.7.10_A1S5F4 | 2.A.1.7.11_A1S297 | 2.A.1.7.1_P11551 | 2.A.1.7.2_P0C105 | 2.A.1.7.5_Q8XEV7 | 2.A.1.7.7_O25788	genome_02	5
+gene_count		K02437	genome_01	1
+gene_count		K02437	genome_02	1
+gene_count		K02440 | 1.A.8.1.1_P0AER0 | 1.A.8.13.2_Q9C4Z5 | 1.A.8.2.1_P18156 | 1.A.8.2.2_P22094 | 1.A.8.2.3_P52280 | 1.A.8.2.4_C6VJ63 | 1.A.8.2.5_D7V7W8 | 1.A.8.2.6_D7V8E7 | 1.A.8.2.7_D7VEY8 | 1.A.8.2.8_D7VC84 | 1.A.8.2.9_D0JBC9	genome_01	2
+gene_count		K02440 | 1.A.8.1.1_P0AER0 | 1.A.8.13.2_Q9C4Z5 | 1.A.8.2.1_P18156 | 1.A.8.2.2_P22094 | 1.A.8.2.3_P52280 | 1.A.8.2.4_C6VJ63 | 1.A.8.2.5_D7V7W8 | 1.A.8.2.6_D7V8E7 | 1.A.8.2.7_D7VEY8 | 1.A.8.2.8_D7VC84 | 1.A.8.2.9_D0JBC9	genome_02	1
+gene_count		K02445 | 2.A.1.4.6_Q9Z7N9	genome_06	1
+gene_count		K02483	genome_01	1
+gene_count		K02495	genome_02	1
+gene_count		K02500	genome_01	1
+gene_count		K02500	genome_02	1
+gene_count		K02501	genome_01	1
+gene_count		K02501	genome_02	1
+gene_count		K02502	genome_01	1
+gene_count		K02548	genome_01	1
+gene_count		K02549	genome_02	1
+gene_count		K02556	genome_01	1
+gene_count		K02556	genome_02	2
+gene_count		K02556 | 1.A.30.1	genome_01	1
+gene_count		K02556 | 1.A.30.1	genome_02	2
+gene_count		K02557	genome_01	1
+gene_count		K02557	genome_02	2
+gene_count		K02557 | 1.A.30.1	genome_01	1
+gene_count		K02557 | 1.A.30.1	genome_02	2
+gene_count		K02575	genome_01	1
+gene_count		K02586	genome_01	8
+gene_count		K02588	genome_01	6
+gene_count		K02591	genome_01	8
+gene_count		K02650	genome_03	1
+gene_count		K02650	genome_05	3
+gene_count		K02650	genome_06	2
+gene_count		K02658	genome_05	1
+gene_count		K02660	genome_03	1
+gene_count		K02660	genome_05	2
+gene_count		K02660	genome_06	1
+gene_count		K02662	genome_01	1
+gene_count		K02662	genome_02	3
+gene_count		K02663	genome_01	1
+gene_count		K02663	genome_02	1
+gene_count		K02664	genome_02	1
+gene_count		K02666	genome_01	1
+gene_count		K02666	genome_02	1
+gene_count		K02667	genome_03	1
+gene_count		K02667	genome_05	1
+gene_count		K02667	genome_06	1
+gene_count		K02668	genome_03	1
+gene_count		K02668	genome_05	1
+gene_count		K02668	genome_06	1
+gene_count		K02669	genome_01	1
+gene_count		K02757 | 4.A.1.2.11_P40739 | 4.A.1.2.14_ART98499 | 4.A.1.2.15_ART98417 | 4.A.1.2.2_P08722 | 4.A.1.2.5_Q8GGK3	genome_01	1
+gene_count		K02759 | 4.A.3.2.1_P69791 | 4.A.3.2.3_O50981 | 4.A.3.2.6_Q9KSH3 | 4.A.3.2.7_C4X746 | 4.A.3.2.9_U5MLJ3 | 4.A.3.2.2_P46319	genome_01	2
+gene_count		K02760 | 4.A.3.2.1_P69795 | 4.A.3.2.3_O50982 | 4.A.3.2.5_Q8L3C3 | 4.A.3.2.6_Q9KSH5 | 4.A.3.2.7_C4X744 | 4.A.3.2.9_U5MIE1 | 4.A.3.2.2_P46318	genome_01	2
+gene_count		K02761 | 4.A.3.2.1_P17334 | 4.A.3.2.3_O50980 | 4.A.3.2.5_Q8L3C2 | 4.A.3.2.6_Q9KSH4 | 4.A.3.2.7_C4X745 | 4.A.3.2.9_U5MFA1 | 4.A.3.2.2_P46317	genome_01	2
+gene_count		K02768	genome_01	2
+gene_count		K02768 | 4.A.2.1.14_D2RXA7 | 4.A.2.1.15_D4GYE4 | 4.A.2.1.20_Q3K0G6 | 4.A.2.1.21_F8Y3B4 | 4.A.2.1.22_Q3JZE3 | 4.A.2.1.23_T5HNP5 | 4.A.2.1.25_P32155 | 4.A.2.1.26_Q5V5X4 | 4.A.2.1.7_Q1LZ59 | 4.A.2.1.8_Q1LZ68 | 4.A.2.1.9_Q1R4S9	genome_01	2
+gene_count		K02769	genome_01	1
+gene_count		K02769 | 4.A.2.1.14_D2RXA4 | 4.A.2.1.15_D4GYE1 | 4.A.2.1.22_Q3JZE2 | 4.A.2.1.26_Q5V5X1 | 4.A.2.1.7_Q1LZ59 | 4.A.2.1.9_Q8FC73	genome_01	1
+gene_count		K02770	genome_01	2
+gene_count		K02770 | 4.A.2.1.13_Q0S1N2 | 4.A.2.1.14_D2RXA8 | 4.A.2.1.15_D4GYE5 | 4.A.2.1.16_Q9RMF5 | 4.A.2.1.17_Q9HY57 | 4.A.2.1.18_Q9RZP7 | 4.A.2.1.19_M7PF02 | 4.A.2.1.1_P20966 | 4.A.2.1.20_Q3K0G6 | 4.A.2.1.21_F8Y3B5 | 4.A.2.1.22_Q3JZE4 | 4.A.2.1.23_T5HN74 | 4.A.2.1.26_q5v5x5 | 4.A.2.1.4_P71012 | 4.A.2.1.6_O31645 | 4.A.2.1.7_Q1LZ59 | 4.A.2.1.8_Q8DWE7 | 4.A.2.1.9_Q1R4T1	genome_01	2
+gene_count		K02773 | 4.A.5.1.1_P69828 | 4.A.5.1.2_Q71WA4 | 4.A.5.1.4_Q8FCM6 | 4.A.5.1.5_D4GUP9 | 4.A.5.1.6_C9MZ76	genome_01	7
+gene_count		K02774 | 4.A.5.1.1_P37188 | 4.A.5.1.2_Q71WA5 | 4.A.5.1.4_Q8FCM5 | 4.A.5.1.5_D4GUQ1 | 4.A.5.1.6_C9MZ78	genome_01	7
+gene_count		K02775 | 4.A.5.1.1_P69831 | 4.A.5.1.2_Q71WA6 | 4.A.5.1.4_Q8FCM4 | 4.A.5.1.5_D4GUQ0 | 4.A.5.1.6_C9MZ79	genome_01	9
+gene_count		K02777	genome_04	1
+gene_count		K02777 | 4.A.1.1.1_P69783 | 4.A.3.2.5_Q8L3C4	genome_04	1
+gene_count		K02781	genome_01	2
+gene_count		K02781 | 4.A.4.1.1_P05706 | 4.A.4.1.2_O32334	genome_01	2
+gene_count		K02782	genome_01	4
+gene_count		K02782 | 4.A.4.1	genome_01	4
+gene_count		K02783	genome_01	4
+gene_count		K02783 | 4.A.4.1.1_P56579 | 4.A.4.1.1_P56580 | 4.A.4.1.2_O32332 | 4.A.4.1.2_O32333	genome_01	4
+gene_count		K02784 | 8.A.8.1.1	genome_01	4
+gene_count		K02793	genome_01	2
+gene_count		K02793 | 4.A.6.1.12_Q1CY66 | 4.A.6.1.14_Q8DR78 | 4.A.6.1.16_Q8Y8V8 | 4.A.6.1.18_B3W757 | 4.A.6.1.21_Q1K314 | 4.A.6.1.24_A1RZ67 | 4.A.6.1.25_CAQ67974.1 | 4.A.6.1.2_P26379 | 4.A.6.1.9_Q97N91 | 4.A.6.2.2_C8X384	genome_01	2
+gene_count		K02795	genome_01	1
+gene_count		K02795 | 4.A.6.1.10_Q04GK0 | 4.A.6.1.11_D2BKY8 | 4.A.6.1.12_Q1CY68 | 4.A.6.1.13_B3WB10 | 4.A.6.1.15_E1UCI1 | 4.A.6.1.16_Q8Y8W0 | 4.A.6.1.18_B3W755 | 4.A.6.1.1_P69801 | 4.A.6.1.21_Q1K316 | 4.A.6.1.23_C1A8G2 | 4.A.6.1.25_CAQ67972.1 | 4.A.6.1.2_P26381 | 4.A.6.1.6_Q2QKM3 | 4.A.6.1.7_Q5M5W7 | 4.A.6.1.9_Q97N93 | 4.A.6.2.2_C8X382 | 4.A.6.4.1_D9QU69	genome_01	1
+gene_count		K02796	genome_01	2
+gene_count		K02796 | 4.A.6.1.10_Q04GJ9 | 4.A.6.1.11_D2BKY9 | 4.A.6.1.12_Q1CY69 | 4.A.6.1.13_B3WB11 | 4.A.6.1.15_E1UCI2 | 4.A.6.1.16_Q8Y8W1 | 4.A.6.1.18_B3W756 | 4.A.6.1.1_P69805 | 4.A.6.1.21_Q1K317 | 4.A.6.1.23_C1A8G3 | 4.A.6.1.24_A1RZ69 | 4.A.6.1.25_CAQ67971.1 | 4.A.6.1.25_CAQ67972.1 | 4.A.6.1.6_Q2QKM2 | 4.A.6.1.7_Q5M5W8 | 4.A.6.1.9_Q97N94 | 4.A.6.2.2_C8X4S8	genome_01	2
+gene_count		K02798	genome_01	1
+gene_count		K02798 | 4.A.2.1.24_P69824 | 4.A.2.1.5_C0H3V2	genome_01	1
+gene_count		K02800 | 4.A.2.1.12_Q9KKQ7 | 4.A.2.1.24_P69826 | 4.A.2.1.2_P00550 | 4.A.2.1.5_P42956	genome_01	3
+gene_count		K02804 | 4.A.1.1.15_Q9HXN4 | 4.A.1.1.2_P09323 | 4.A.1.1.5_Q8GBT6 | 4.A.1.1.5_Q8GBT7 | 4.A.1.1.6_P39816 | 4.A.1.1.7_O34521	genome_01	1
+gene_count		K02810	genome_01	2
+gene_count		K02810 | 4.A.1.2.10_P15400 | 4.A.1.2.12_Q8NMD6 | 4.A.1.2.16_ART98386 | 4.A.1.2.1_P08470 | 4.A.1.2.9_P05306	genome_01	2
+gene_count		K02819	genome_01	1
+gene_count		K02819 | 4.A.1.2.13_Q720G7 | 4.A.1.2.4_P36672 | 4.A.1.2.8_P39794	genome_01	1
+gene_count		K02822 | 4.A.7.1	genome_01	1
+gene_count		K02824 | 2.A.40.1.1_P0AGM7 | 2.A.40.1.2_Q9CF78 | 2.A.40.1.4_P39766	genome_01	1
+gene_count		K02834	genome_01	1
+gene_count		K02834	genome_02	1
+gene_count		K02851	genome_04	2
+gene_count		K02856 | 2.A.7.6.1_P27125 | 2.A.7.6.2_M5UGY9 | 2.A.7.6.3_I3CAS8	genome_02	2
+gene_count		K02863	genome_02	2
+gene_count		K02864	genome_02	2
+gene_count		K02867	genome_02	2
+gene_count		K02871	genome_02	2
+gene_count		K02874	genome_02	1
+gene_count		K02876	genome_02	1
+gene_count		K02878	genome_02	1
+gene_count		K02879	genome_02	2
+gene_count		K02881	genome_02	1
+gene_count		K02884	genome_01	1
+gene_count		K02886	genome_02	2
+gene_count		K02887	genome_01	1
+gene_count		K02887	genome_02	1
+gene_count		K02888	genome_01	1
+gene_count		K02890	genome_02	1
+gene_count		K02892	genome_02	2
+gene_count		K02895	genome_02	1
+gene_count		K02897	genome_02	3
+gene_count		K02899	genome_01	1
+gene_count		K02899	genome_02	1
+gene_count		K02902	genome_01	1
+gene_count		K02902	genome_02	1
+gene_count		K02904	genome_02	1
+gene_count		K02906	genome_02	2
+gene_count		K02907	genome_02	1
+gene_count		K02909	genome_01	1
+gene_count		K02909	genome_02	1
+gene_count		K02911	genome_01	1
+gene_count		K02913	genome_02	1
+gene_count		K02914	genome_01	1
+gene_count		K02914	genome_02	1
+gene_count		K02916	genome_01	1
+gene_count		K02916	genome_02	1
+gene_count		K02919	genome_02	1
+gene_count		K02926	genome_02	2
+gene_count		K02931	genome_02	1
+gene_count		K02933	genome_02	1
+gene_count		K02935	genome_02	2
+gene_count		K02939	genome_01	1
+gene_count		K02939	genome_02	2
+gene_count		K02945	genome_02	5
+gene_count		K02946	genome_02	2
+gene_count		K02948	genome_02	1
+gene_count		K02950	genome_02	1
+gene_count		K02952	genome_02	1
+gene_count		K02954	genome_02	1
+gene_count		K02956	genome_01	1
+gene_count		K02959	genome_01	1
+gene_count		K02959	genome_02	1
+gene_count		K02961	genome_02	1
+gene_count		K02963	genome_01	1
+gene_count		K02963	genome_02	2
+gene_count		K02965	genome_02	1
+gene_count		K02967	genome_01	2
+gene_count		K02967	genome_02	3
+gene_count		K02968	genome_01	1
+gene_count		K02968	genome_02	1
+gene_count		K02970	genome_01	1
+gene_count		K02970	genome_02	1
+gene_count		K02982	genome_02	1
+gene_count		K02986	genome_02	1
+gene_count		K02988	genome_02	1
+gene_count		K02990	genome_01	1
+gene_count		K02990	genome_02	2
+gene_count		K02992	genome_03	1
+gene_count		K02992	genome_05	1
+gene_count		K02992	genome_06	2
+gene_count		K02994	genome_02	1
+gene_count		K02996	genome_02	2
+gene_count		K03040	genome_02	2
+gene_count		K03043	genome_02	2
+gene_count		K03046	genome_02	2
+gene_count		K03048	genome_01	1
+gene_count		K03060	genome_01	1
+gene_count		K03070	genome_01	1
+gene_count		K03070	genome_02	1
+gene_count		K03073	genome_02	1
+gene_count		K03075	genome_02	1
+gene_count		K03076	genome_02	1
+gene_count		K03088	genome_02	5
+gene_count		K03101	genome_01	1
+gene_count		K03101	genome_02	1
+gene_count		K03106	genome_01	1
+gene_count		K03106	genome_02	2
+gene_count		K03110	genome_01	1
+gene_count		K03110	genome_02	1
+gene_count		K03147	genome_01	1
+gene_count		K03148	genome_01	1
+gene_count		K03149	genome_01	1
+gene_count		K03150	genome_01	2
+gene_count		K03154	genome_01	1
+gene_count		K03179	genome_01	1
+gene_count		K03179	genome_02	1
+gene_count		K03182	genome_01	1
+gene_count		K03182	genome_02	1
+gene_count		K03183	genome_01	1
+gene_count		K03183	genome_02	1
+gene_count		K03186	genome_01	2
+gene_count		K03186	genome_02	2
+gene_count		K03208	genome_03	1
+gene_count		K03208	genome_05	1
+gene_count		K03208	genome_06	1
+gene_count		K03210	genome_01	1
+gene_count		K03210	genome_02	1
+gene_count		K03217	genome_01	2
+gene_count		K03217	genome_02	1
+gene_count		K03282 | 1.A.22.1.1_P0A742 | 1.A.22.1.3_P94585	genome_03	1
+gene_count		K03282 | 1.A.22.1.1_P0A742 | 1.A.22.1.3_P94585	genome_05	1
+gene_count		K03282 | 1.A.22.1.1_P0A742 | 1.A.22.1.3_P94585	genome_06	1
+gene_count		K03284	genome_01	2
+gene_count		K03284 | 1.A.35.1 | 1.A.35.3	genome_01	2
+gene_count		K03292 | 2.A.2.3.12_Q745T8 | 2.A.2.3.7_Q0HIQ0	genome_01	2
+gene_count		K03292 | 2.A.2.3.12_Q745T8 | 2.A.2.3.7_Q0HIQ0	genome_02	1
+gene_count		K03293 | 2.A.3.1.20_F2HQ24 | 2.A.3.1.21_F2HQ25	genome_01	3
+gene_count		K03294 | 2.A.3.3.16_Q9L100 | 2.A.3.3.22_Q8R706 | 2.A.3.3.23_s6ex81 | 2.A.3.8.12_O34739 | 2.A.3.8.28_K1M2K1	genome_01	2
+gene_count		K03294 | 2.A.3.3.16_Q9L100 | 2.A.3.3.22_Q8R706 | 2.A.3.3.23_s6ex81 | 2.A.3.8.12_O34739 | 2.A.3.8.28_K1M2K1	genome_02	6
+gene_count		K03296 | 2.A.6.3.1_P25197 | 2.A.6.3.2_A9CGX6 | 2.A.6.3.3_E8PBU7 | 2.A.6.3.4_Q1DEX6 | 2.A.6.3.6_Q8CX78 | 2.A.6.2.23_Q6VV68	genome_02	1
+gene_count		K03297 | 2.A.7.1	genome_01	1
+gene_count		K03299 | 2.A.8	genome_01	2
+gene_count		K03300 | 2.A.11.1.6_A4QA05	genome_04	1
+gene_count		K03307 | 2.A.21.2.2_Q7A4Q7 | 2.A.21.2.5_M1TZ79 | 2.A.21.3.19_Q8AAV7 | 2.A.21.3.21_P31448 | 2.A.21.3.2_P96169 | 2.A.21.3.9_A8H019 | 2.A.21.4.1_Q8VM88	genome_01	3
+gene_count		K03307 | 2.A.21.2.2_Q7A4Q7 | 2.A.21.2.5_M1TZ79 | 2.A.21.3.19_Q8AAV7 | 2.A.21.3.21_P31448 | 2.A.21.3.2_P96169 | 2.A.21.3.9_A8H019 | 2.A.21.4.1_Q8VM88	genome_02	5
+gene_count		K03308 | 2.A.22.4.1_O50649 | 2.A.22.4.3_Q8NRL8 | 2.A.22.5.2_Q8RHM5	genome_01	1
+gene_count		K03317 | 2.A.41.2.11_Q9KPL5	genome_02	2
+gene_count		K03319 | 2.A.47.3.4_Q6D017	genome_01	3
+gene_count		K03320	genome_01	1
+gene_count		K03320	genome_02	3
+gene_count		K03320 | 1.A.11	genome_01	1
+gene_count		K03320 | 1.A.11	genome_02	3
+gene_count		K03321 | 2.A.53.3.13_Q1J2S8	genome_01	1
+gene_count		K03321 | 2.A.53.3.13_Q1J2S8	genome_02	1
+gene_count		K03322	genome_01	3
+gene_count		K03322	genome_02	1
+gene_count		K03322 | 2.A.55.2.6 | 2.A.55.3	genome_01	3
+gene_count		K03322 | 2.A.55.2.6 | 2.A.55.3	genome_02	1
+gene_count		K03324 | 2.A.58.2	genome_01	1
+gene_count		K03325	genome_01	1
+gene_count		K03325	genome_02	1
+gene_count		K03325 | 2.A.59	genome_01	1
+gene_count		K03325 | 2.A.59	genome_02	1
+gene_count		K03326 | 2.A.61.1.1_P0ABP3 | 2.A.61.1.2_P45428	genome_01	1
+gene_count		K03387	genome_01	2
+gene_count		K03388	genome_02	1
+gene_count		K03394	genome_01	1
+gene_count		K03399	genome_01	1
+gene_count		K03404	genome_01	1
+gene_count		K03405	genome_01	1
+gene_count		K03406	genome_01	51
+gene_count		K03406	genome_02	1
+gene_count		K03407	genome_01	6
+gene_count		K03407	genome_02	1
+gene_count		K03408	genome_01	5
+gene_count		K03408	genome_02	1
+gene_count		K03409	genome_01	2
+gene_count		K03409	genome_02	1
+gene_count		K03412	genome_01	6
+gene_count		K03412	genome_02	2
+gene_count		K03413	genome_01	7
+gene_count		K03413	genome_02	1
+gene_count		K03415	genome_01	1
+gene_count		K03416	genome_03	1
+gene_count		K03416	genome_05	1
+gene_count		K03416	genome_06	1
+gene_count		K03446 | 2.A.1.3.20_Q9RQ29 | 2.A.1.3.36_C5W789	genome_02	5
+gene_count		K03457 | 2.A.39.5.1_Q082R8 | 2.A.39.1.5_P94369 | 2.A.39.3.12_V9SBV7	genome_01	1
+gene_count		K03475 | 4.A.7.1	genome_01	1
+gene_count		K03517	genome_01	1
+gene_count		K03517	genome_02	2
+gene_count		K03518	genome_01	2
+gene_count		K03523 | 3.A.1.25.5_Q9WZQ6 | 3.A.1.25.7_D5ARG8	genome_01	2
+gene_count		K03523 | 3.A.1.25.5_Q9WZQ6 | 3.A.1.25.7_D5ARG8	genome_02	1
+gene_count		K03525	genome_01	1
+gene_count		K03525	genome_02	1
+gene_count		K03543 | 2.A.1.3.36_C5W790	genome_01	4
+gene_count		K03543 | 2.A.1.3.36_C5W790	genome_02	3
+gene_count		K03549 | 2.A.72	genome_04	1
+gene_count		K03553	genome_01	1
+gene_count		K03553	genome_02	3
+gene_count		K03559 | 1.A.30.2.1	genome_01	2
+gene_count		K03560 | 1.A.30.2.2	genome_02	1
+gene_count		K03561 | 1.A.30.2.1	genome_01	2
+gene_count		K03562 | 1.A.30.2.2	genome_02	1
+gene_count		K03563	genome_01	1
+gene_count		K03564	genome_02	2
+gene_count		K03574	genome_01	4
+gene_count		K03574	genome_02	3
+gene_count		K03575	genome_01	1
+gene_count		K03575	genome_02	1
+gene_count		K03584	genome_01	1
+gene_count		K03584	genome_02	2
+gene_count		K03585	genome_01	5
+gene_count		K03585 | 2.A.6.2.5_P43505 | 2.A.6.2.6_P52477 | 2.A.6.2.9_Q9WWZ9 | 2.A.6.2.23_Q6VV69	genome_01	5
+gene_count		K03594	genome_03	2
+gene_count		K03594	genome_05	3
+gene_count		K03594	genome_06	3
+gene_count		K03612	genome_01	2
+gene_count		K03613	genome_01	1
+gene_count		K03614	genome_01	1
+gene_count		K03615	genome_01	1
+gene_count		K03616	genome_01	1
+gene_count		K03617	genome_01	1
+gene_count		K03637	genome_01	1
+gene_count		K03639	genome_01	1
+gene_count		K03639	genome_02	1
+gene_count		K03644	genome_01	1
+gene_count		K03644	genome_02	2
+gene_count		K03651	genome_03	1
+gene_count		K03651	genome_05	1
+gene_count		K03666	genome_01	1
+gene_count		K03666	genome_02	3
+gene_count		K03667	genome_01	1
+gene_count		K03671	genome_01	4
+gene_count		K03671	genome_02	1
+gene_count		K03686	genome_01	1
+gene_count		K03686	genome_02	3
+gene_count		K03687	genome_01	1
+gene_count		K03687	genome_02	1
+gene_count		K03695	genome_01	1
+gene_count		K03695	genome_02	1
+gene_count		K03704	genome_01	1
+gene_count		K03704	genome_02	3
+gene_count		K03705	genome_01	1
+gene_count		K03705	genome_02	1
+gene_count		K03709	genome_02	1
+gene_count		K03711	genome_01	1
+gene_count		K03737	genome_01	8
+gene_count		K03737	genome_02	1
+gene_count		K03738	genome_03	1
+gene_count		K03738	genome_05	1
+gene_count		K03738	genome_06	1
+gene_count		K03741	genome_02	1
+gene_count		K03750	genome_01	1
+gene_count		K03750	genome_02	1
+gene_count		K03752	genome_01	1
+gene_count		K03752	genome_02	1
+gene_count		K03763	genome_01	1
+gene_count		K03781	genome_01	2
+gene_count		K03782	genome_02	1
+gene_count		K03785	genome_01	1
+gene_count		K03799	genome_03	1
+gene_count		K03799	genome_04	1
+gene_count		K03799	genome_05	1
+gene_count		K03801	genome_02	1
+gene_count		K03811 | 4.B.1.1.1_P24520 | 4.B.1.1.2_Q4QLL1 | 4.B.1.1.3_Q9EWJ7 | 4.B.1.1.5_Q8NU75 | 4.B.1.1.6_Q837U1	genome_02	1
+gene_count		K03820	genome_02	3
+gene_count		K03831	genome_01	1
+gene_count		K03856	genome_01	2
+gene_count		K03856	genome_02	3
+gene_count		K03892	genome_01	1
+gene_count		K03892	genome_02	1
+gene_count		K03893	genome_03	1
+gene_count		K03893	genome_05	1
+gene_count		K03893 | 2.A.45.1 | 3.A.4.1	genome_03	1
+gene_count		K03893 | 2.A.45.1 | 3.A.4.1	genome_05	1
+gene_count		K03926	genome_03	1
+gene_count		K03926	genome_06	1
+gene_count		K04034	genome_03	1
+gene_count		K04034	genome_05	1
+gene_count		K04034	genome_06	1
+gene_count		K04041	genome_01	1
+gene_count		K04042	genome_01	1
+gene_count		K04043	genome_01	1
+gene_count		K04043	genome_02	3
+gene_count		K04047	genome_02	1
+gene_count		K04063	genome_02	1
+gene_count		K04065	genome_02	2
+gene_count		K04069	genome_01	4
+gene_count		K04069	genome_02	2
+gene_count		K04072	genome_02	1
+gene_count		K04077	genome_01	1
+gene_count		K04077	genome_02	2
+gene_count		K04078	genome_01	1
+gene_count		K04078	genome_02	1
+gene_count		K04079	genome_01	2
+gene_count		K04083	genome_01	1
+gene_count		K04093	genome_02	1
+gene_count		K04486	genome_01	1
+gene_count		K04487	genome_01	1
+gene_count		K04487	genome_02	4
+gene_count		K04517	genome_01	1
+gene_count		K04517	genome_02	1
+gene_count		K04518	genome_01	1
+gene_count		K04518	genome_02	1
+gene_count		K04561	genome_05	1
+gene_count		K04564	genome_01	2
+gene_count		K04564	genome_02	2
+gene_count		K04565	genome_01	1
+gene_count		K04720	genome_01	1
+gene_count		K04744 | 1.B.42.1.12_L0KAJ8 | 1.B.42.1.1_Q9K187 | 1.B.42.1.2_P31554 | 1.B.42.1.3_Q1D8U8 | 1.B.42.1.4_Q215S1 | 1.B.42.1.5_E8QT47 | 1.B.42.1.6_B4U7L6 | 1.B.42.1.9_B3DWJ6	genome_02	1
+gene_count		K04761	genome_02	1
+gene_count		K04762	genome_02	1
+gene_count		K05340 | 2.A.7.5.1_O07881 | 2.A.7.5.3_Q9CDF7 | 2.A.7.5.4_P40420 | 2.A.7.5.5_L8DP77	genome_02	1
+gene_count		K05343	genome_02	1
+gene_count		K05359	genome_03	1
+gene_count		K05359	genome_05	1
+gene_count		K05359	genome_06	1
+gene_count		K05559	genome_02	4
+gene_count		K05559 | 2.A.63.1	genome_02	4
+gene_count		K05568	genome_02	1
+gene_count		K05568 | 2.A.63.1 | 2.A.63.2	genome_02	1
+gene_count		K05586	genome_02	3
+gene_count		K05587	genome_02	3
+gene_count		K05588	genome_02	4
+gene_count		K05592	genome_01	4
+gene_count		K05595 | 2.A.95.1.4_Q8J305 | 2.A.95.1.6_D3P9M4 | 2.A.95.1.7_P25743	genome_02	1
+gene_count		K05606	genome_01	1
+gene_count		K05685 | 3.A.1.122.1_P75831 | 3.A.1.122.12	genome_03	1
+gene_count		K05685 | 3.A.1.122.1_P75831 | 3.A.1.122.12	genome_05	1
+gene_count		K05685 | 3.A.1.122.1_P75831 | 3.A.1.122.12	genome_06	1
+gene_count		K05772 | 3.A.1.6.2 | 3.A.1.6.4	genome_03	2
+gene_count		K05772 | 3.A.1.6.2 | 3.A.1.6.4	genome_05	1
+gene_count		K05772 | 3.A.1.6.2 | 3.A.1.6.4	genome_06	1
+gene_count		K05773 | 3.A.1.6.2 | 3.A.1.6.4	genome_03	1
+gene_count		K05773 | 3.A.1.6.2 | 3.A.1.6.4	genome_05	1
+gene_count		K05773 | 3.A.1.6.2 | 3.A.1.6.4	genome_06	1
+gene_count		K05801	genome_02	1
+gene_count		K05810	genome_01	1
+gene_count		K05810	genome_02	1
+gene_count		K05820 | 2.A.1.65.9_Q45632	genome_01	1
+gene_count		K05845	genome_01	3
+gene_count		K05845 | 3.A.1.12.10_Q87WH3 | 3.A.1.12.11_Q8Q040 | 3.A.1.12.14_Q8ZPK2 | 3.A.1.12.15_P33362 | 3.A.1.12.4_O32243	genome_01	3
+gene_count		K05846	genome_01	4
+gene_count		K05846 | 3.A.1.12.10_Q87WH4 | 3.A.1.12.11_Q8Q042 | 3.A.1.12.11_Q8Q043 | 3.A.1.12.14_Q8ZPK1 | 3.A.1.12.14_Q8ZPK3 | 3.A.1.12.15_P33359 | 3.A.1.12.15_P33361 | 3.A.1.12.4_O34742 | 3.A.1.12.4_O34878 | 3.A.1.12.8_Q93A34	genome_01	4
+gene_count		K05847	genome_01	2
+gene_count		K05847 | 3.A.1.12.10_Q87WH5 | 3.A.1.12.11_Q8Q041 | 3.A.1.12.14_Q8ZPK4 | 3.A.1.12.15_P33360 | 3.A.1.12.4_O34992 | 3.A.1.12.8_Q93A35	genome_01	2
+gene_count		K05895	genome_01	2
+gene_count		K05919	genome_01	1
+gene_count		K05934	genome_01	1
+gene_count		K05936	genome_01	1
+gene_count		K05979	genome_01	1
+gene_count		K06001	genome_01	1
+gene_count		K06001	genome_02	1
+gene_count		K06016	genome_01	2
+gene_count		K06042	genome_01	1
+gene_count		K06044	genome_03	1
+gene_count		K06044	genome_05	1
+gene_count		K06044	genome_06	1
+gene_count		K06147	genome_01	3
+gene_count		K06147 | 3.A.1.106.14_P73239 | 3.A.1.106.15_Q0P9C4 | 3.A.1.21.1_Q9R7V3 | 3.A.1.21.1_Q9Z375	genome_01	3
+gene_count		K06155 | 2.A.8.1.4	genome_01	1
+gene_count		K06208	genome_01	1
+gene_count		K06209	genome_01	1
+gene_count		K06213	genome_01	1
+gene_count		K06213	genome_02	1
+gene_count		K06213 | 1.A.26.1 | 1.A.26.2 | 1.A.26.3	genome_01	1
+gene_count		K06213 | 1.A.26.1 | 1.A.26.2 | 1.A.26.3	genome_02	1
+gene_count		K06215	genome_01	1
+gene_count		K06215	genome_02	2
+gene_count		K06596	genome_03	1
+gene_count		K06596	genome_05	1
+gene_count		K06596	genome_06	1
+gene_count		K06857 | 3.A.1.6.2 | 3.A.1.6.4	genome_03	1
+gene_count		K06857 | 3.A.1.6.2 | 3.A.1.6.4	genome_05	1
+gene_count		K06857 | 3.A.1.6.2 | 3.A.1.6.4	genome_06	1
+gene_count		K06861 | 1.B.42.1.2_P0A9V1 | 3.A.1.142.1_Q8DNB9 | 3.A.1.152.1_Q9HVV6	genome_01	1
+gene_count		K06861 | 1.B.42.1.2_P0A9V1 | 3.A.1.142.1_Q8DNB9 | 3.A.1.152.1_Q9HVV6	genome_02	1
+gene_count		K06895 | 2.A.75.1.1_P94633 | 2.A.75.1.2_P11667 | 2.A.75.1.3_P64711	genome_01	1
+gene_count		K06901 | 2.A.40.7.2_O34987 | 2.A.40.7.4_P31440 | 2.A.40.7.5_P0AF52 | 2.A.40.7.6_P31466 | 2.A.40.7.7_Q46817	genome_01	2
+gene_count		K06901 | 2.A.40.7.2_O34987 | 2.A.40.7.4_P31440 | 2.A.40.7.5_P0AF52 | 2.A.40.7.6_P31466 | 2.A.40.7.7_Q46817	genome_02	1
+gene_count		K06911	genome_01	1
+gene_count		K06911	genome_02	1
+gene_count		K06998	genome_03	1
+gene_count		K06998	genome_05	1
+gene_count		K06998	genome_06	1
+gene_count		K07034 | 2.A.96.1.1_P0AC98	genome_03	2
+gene_count		K07034 | 2.A.96.1.1_P0AC98	genome_05	2
+gene_count		K07034 | 2.A.96.1.1_P0AC98	genome_06	2
+gene_count		K07091 | 1.B.42.1.2_P0AF98 | 3.A.1.152.1_Q9HXH4 | 3.A.1.152.3_Q5SL96	genome_02	1
+gene_count		K07141	genome_01	2
+gene_count		K07141	genome_02	2
+gene_count		K07213	genome_01	1
+gene_count		K07230 | 2.A.108.2.10 | 2.A.108.2.4 | 2.A.108.2.9	genome_01	1
+gene_count		K07240	genome_01	2
+gene_count		K07240	genome_02	1
+gene_count		K07240 | 2.A.51.1	genome_01	2
+gene_count		K07240 | 2.A.51.1	genome_02	1
+gene_count		K07241	genome_01	1
+gene_count		K07241	genome_02	1
+gene_count		K07241 | 2.A.52.1	genome_01	1
+gene_count		K07241 | 2.A.52.1	genome_02	1
+gene_count		K07250	genome_01	2
+gene_count		K07267 | 1.B.19.1.1_Q51485 | 1.B.19.1.2_A4LTL1	genome_02	2
+gene_count		K07301 | 2.A.19.5	genome_01	1
+gene_count		K07304	genome_02	1
+gene_count		K07305	genome_01	1
+gene_count		K07305	genome_02	2
+gene_count		K07306	genome_01	1
+gene_count		K07321	genome_01	1
+gene_count		K07404	genome_02	2
+gene_count		K07407	genome_02	3
+gene_count		K07516	genome_02	1
+gene_count		K07552 | 2.A.1.2.7_P28246	genome_01	2
+gene_count		K07636	genome_01	1
+gene_count		K07636	genome_02	1
+gene_count		K07644	genome_02	1
+gene_count		K07646	genome_01	1
+gene_count		K07646	genome_02	3
+gene_count		K07665	genome_03	1
+gene_count		K07665	genome_05	1
+gene_count		K07665	genome_06	1
+gene_count		K07666	genome_01	1
+gene_count		K07666	genome_02	2
+gene_count		K07667	genome_01	1
+gene_count		K07667	genome_02	2
+gene_count		K07689	genome_03	2
+gene_count		K07689	genome_05	2
+gene_count		K07689	genome_06	2
+gene_count		K07692	genome_01	1
+gene_count		K07699	genome_01	1
+gene_count		K07713	genome_03	1
+gene_count		K07713	genome_05	1
+gene_count		K07713	genome_06	1
+gene_count		K07722	genome_02	1
+gene_count		K07755	genome_01	1
+gene_count		K07755	genome_02	2
+gene_count		K07783 | 2.A.1.4.4_P09836 | 2.A.1.4.6_Q9Z7N9	genome_01	1
+gene_count		K07787	genome_01	1
+gene_count		K07787	genome_02	2
+gene_count		K07787 | 2.A.6.1.4	genome_01	1
+gene_count		K07787 | 2.A.6.1.4	genome_02	2
+gene_count		K07788	genome_02	2
+gene_count		K07788 | 2.A.6.2	genome_02	2
+gene_count		K07789	genome_02	1
+gene_count		K07789 | 2.A.6.2	genome_02	1
+gene_count		K07792 | 2.A.13.1.2_P0ABN9 | 2.A.13.1.3_Q8ZLD2 | 2.A.13.1.4_K0K2U6	genome_01	1
+gene_count		K07798	genome_01	1
+gene_count		K07798	genome_02	1
+gene_count		K07799	genome_02	2
+gene_count		K08094	genome_01	2
+gene_count		K08138 | 2.A.1.1.3_P0AGF4	genome_02	1
+gene_count		K08151	genome_01	1
+gene_count		K08177 | 2.A.1.11.3_P37662	genome_01	1
+gene_count		K08222 | 2.A.1.33.1_P54487	genome_03	1
+gene_count		K08224 | 2.A.1.36.1_P43531	genome_01	1
+gene_count		K08224 | 2.A.1.36.1_P43531	genome_02	1
+gene_count		K08227 | 2.A.1.42.1_P39196	genome_01	1
+gene_count		K08369 | 2.A.1.82.4_O34691	genome_01	1
+gene_count		K08483 | 4.A.2.1.26_Q5V5X2	genome_01	2
+gene_count		K08641	genome_03	1
+gene_count		K08641	genome_05	1
+gene_count		K08641	genome_06	1
+gene_count		K08678	genome_01	1
+gene_count		K08681	genome_01	1
+gene_count		K08681	genome_02	1
+gene_count		K08970	genome_01	1
+gene_count		K08970 | 2.A.52.2	genome_01	1
+gene_count		K09007	genome_01	1
+gene_count		K09011	genome_03	1
+gene_count		K09011	genome_05	1
+gene_count		K09011	genome_06	1
+gene_count		K09013	genome_03	1
+gene_count		K09013	genome_05	1
+gene_count		K09013	genome_06	1
+gene_count		K09014	genome_03	1
+gene_count		K09014	genome_05	2
+gene_count		K09014	genome_06	1
+gene_count		K09015	genome_05	1
+gene_count		K09458	genome_01	3
+gene_count		K09458	genome_02	1
+gene_count		K09694 | 3.A.1.102.1_P50333	genome_01	1
+gene_count		K09695 | 3.A.1.102.1_P50332	genome_01	1
+gene_count		K09773	genome_01	1
+gene_count		K09774	genome_01	1
+gene_count		K09774 | 1.B.42.1.2_P0ADV1	genome_01	1
+gene_count		K09775	genome_01	2
+gene_count		K09808 | 3.A.1.125.1_P0ADC3 | 3.A.1.125.1_P75958	genome_02	1
+gene_count		K09810 | 3.A.1.125.1_P75957	genome_01	1
+gene_count		K09810 | 3.A.1.125.1_P75957	genome_02	1
+gene_count		K09811	genome_01	1
+gene_count		K09812	genome_01	1
+gene_count		K09815	genome_01	2
+gene_count		K09815 | 3.A.1.15.3 | 3.A.1.15.5 | 3.A.1.15.11 | 3.A.1.15.13 | 3.A.1.15.18	genome_01	2
+gene_count		K09816	genome_01	2
+gene_count		K09816 | 3.A.1.15.3 | 3.A.1.15.5 | 3.A.1.15.11 | 3.A.1.15.13 | 3.A.1.15.18	genome_01	2
+gene_count		K09817	genome_01	2
+gene_count		K09817 | 3.A.1.15.3 | 3.A.1.15.5 | 3.A.1.15.11 | 3.A.1.15.13 | 3.A.1.15.18	genome_01	2
+gene_count		K09823	genome_05	1
+gene_count		K09825	genome_01	1
+gene_count		K09936	genome_01	1
+gene_count		K09936 | 2.A.7.21.9_D3P9M1 | 2.A.7.21.5_G8WDN2 | 2.A.7.21.5_G8WDN3	genome_01	1
+gene_count		K10009 | 3.A.1.3.28_B8F897	genome_01	1
+gene_count		K10010 | 3.A.1.3.28_B8F898	genome_01	1
+gene_count		K10036	genome_01	2
+gene_count		K10036 | 3.A.1.3.2_P0AEQ3	genome_01	2
+gene_count		K10037	genome_01	1
+gene_count		K10037 | 3.A.1.3.2_P0AEQ6	genome_01	1
+gene_count		K10038	genome_01	1
+gene_count		K10038 | 3.A.1.3.2_P10346	genome_01	1
+gene_count		K10039 | 3.A.1.3.16_Q0P9X8	genome_01	1
+gene_count		K10040 | 3.A.1.3.16_A1VZQ3	genome_01	2
+gene_count		K10041 | 3.A.1.3.16_A3ZI83	genome_01	1
+gene_count		K10206	genome_01	2
+gene_count		K10439	genome_01	4
+gene_count		K10439	genome_02	5
+gene_count		K10439 | 3.A.1.2.20_G4FGN5	genome_01	4
+gene_count		K10439 | 3.A.1.2.20_G4FGN5	genome_02	5
+gene_count		K10440	genome_01	4
+gene_count		K10440 | 3.A.1.2.18_Q9WXW7 | 3.A.1.2.20_G4FGN4 | 3.A.1.2.6_P32720	genome_01	4
+gene_count		K10441	genome_01	3
+gene_count		K10441 | 3.A.1.2.20_G4FGN3	genome_01	3
+gene_count		K10540 | 3.A.1.2.3_P0AEE5	genome_01	1
+gene_count		K10541 | 3.A.1.2.3_P23200	genome_01	1
+gene_count		K10542 | 3.A.1.2.3_P0AAG8	genome_01	1
+gene_count		K10543	genome_01	2
+gene_count		K10543 | 3.A.1.2.24_O50503 | 3.A.1.2.26_A6LW10 | 3.A.1.2.4_P37387	genome_01	2
+gene_count		K10544	genome_01	2
+gene_count		K10544 | 3.A.1.2.24_O50505 | 3.A.1.2.26_A6LW12 | 3.A.1.2.4_P0AGI4	genome_01	2
+gene_count		K10545	genome_01	2
+gene_count		K10545 | 3.A.1.2.24_O50504 | 3.A.1.2.26_A6LW11 | 3.A.1.2.4_P37388	genome_01	2
+gene_count		K10546 | 3.A.1.2.22_Q8G3R1 | 3.A.1.2.5_P25548	genome_01	1
+gene_count		K10547 | 3.A.1.2.22_Q8G3Q9 | 3.A.1.2.5_O05177	genome_01	2
+gene_count		K10548 | 3.A.1.2.22_Q8G3R0 | 3.A.1.2.5_O05176	genome_01	1
+gene_count		K10559	genome_01	1
+gene_count		K10559 | 3.A.1.2.9_Q7BSH5	genome_01	1
+gene_count		K10560	genome_01	1
+gene_count		K10560 | 3.A.1.2.9_Q7BSH3	genome_01	1
+gene_count		K10561	genome_01	1
+gene_count		K10561 | 3.A.1.2.9	genome_01	1
+gene_count		K10562	genome_01	1
+gene_count		K10562 | 3.A.1.2.9_Q7BSH4	genome_01	1
+gene_count		K10563	genome_01	1
+gene_count		K10563	genome_02	2
+gene_count		K10716 | 1.A.1.1 | 1.A.1.6 | 1.A.1.13 | 1.A.1.17 | 1.A.1.24 | 1.A.1.25	genome_01	2
+gene_count		K10716 | 1.A.1.1 | 1.A.1.6 | 1.A.1.13 | 1.A.1.17 | 1.A.1.24 | 1.A.1.25	genome_02	1
+gene_count		K10773	genome_01	2
+gene_count		K10773	genome_02	1
+gene_count		K10823 | 3.A.1.5.18_O31310 | 3.A.1.5.19_Q2FZR4 | 3.A.1.5.1_P08007 | 3.A.1.5.20_P42065 | 3.A.1.5.25_Q9CIK8 | 3.A.1.5.37_B1W1L8 | 3.A.1.5.41_P77737	genome_04	2
+gene_count		K10831 | 3.A.1.17.1 | 3.A.1.17.4	genome_01	3
+gene_count		K10914	genome_02	7
+gene_count		K11065	genome_01	1
+gene_count		K11085 | 3.A.1.106.1_P60752	genome_01	2
+gene_count		K11085 | 3.A.1.106.1_P60752	genome_02	1
+gene_count		K11103 | 2.A.23.1.10_Q848I3 | 2.A.23.1.3_Q01857 | 2.A.23.1.6_P96603 | 2.A.23.1.9_Q1J1H5	genome_01	1
+gene_count		K11103 | 2.A.23.1.10_Q848I3 | 2.A.23.1.3_Q01857 | 2.A.23.1.6_P96603 | 2.A.23.1.9_Q1J1H5	genome_02	1
+gene_count		K11175	genome_01	1
+gene_count		K11175	genome_02	1
+gene_count		K11180	genome_02	1
+gene_count		K11180 | dsrA	genome_02	1
+gene_count		K11181	genome_02	1
+gene_count		K11181 | dsrB	genome_02	1
+gene_count		K11202	genome_01	1
+gene_count		K11202 | 4.A.2.1	genome_01	1
+gene_count		K11203	genome_01	1
+gene_count		K11203 | 4.A.2.1.25_P32154	genome_01	1
+gene_count		K11249 | 2.A.76.1.4_P38101	genome_01	1
+gene_count		K11381	genome_02	1
+gene_count		K11532	genome_03	1
+gene_count		K11532	genome_05	1
+gene_count		K11532	genome_06	1
+gene_count		K11535 | 2.A.41.1.1_P0AFF2 | 2.A.41.1.2_P39141	genome_01	1
+gene_count		K11616 | 2.A.24.2.3_O05256	genome_01	1
+gene_count		K11717	genome_01	1
+gene_count		K11720 | 1.B.42.1.2_P0ADC6 | 3.A.1.152.1_Q9HXH5	genome_01	1
+gene_count		K11720 | 1.B.42.1.2_P0ADC6 | 3.A.1.152.1_Q9HXH5	genome_02	1
+gene_count		K11752	genome_01	1
+gene_count		K11752	genome_02	1
+gene_count		K11753	genome_01	1
+gene_count		K11753	genome_02	1
+gene_count		K11754	genome_01	1
+gene_count		K11754	genome_02	1
+gene_count		K11755	genome_01	1
+gene_count		K11782	genome_01	1
+gene_count		K11782	genome_02	1
+gene_count		K11784	genome_01	1
+gene_count		K11784	genome_02	1
+gene_count		K11785	genome_02	1
+gene_count		K11931	genome_01	2
+gene_count		K11936	genome_01	2
+gene_count		K11937	genome_01	2
+gene_count		K12340	genome_01	2
+gene_count		K12340	genome_02	6
+gene_count		K12942 | 2.A.68.1.1_P46133 | 2.A.68.1.3_D9QJW1 | 2.A.68.1.4_Q0VR69	genome_01	1
+gene_count		K12957	genome_02	1
+gene_count		K13038	genome_01	1
+gene_count		K13542	genome_01	1
+gene_count		K13542	genome_02	1
+gene_count		K13640	genome_02	2
+gene_count		K13766	genome_03	1
+gene_count		K13766	genome_05	1
+gene_count		K13766	genome_06	1
+gene_count		K13810	genome_03	2
+gene_count		K13810	genome_05	2
+gene_count		K13810	genome_06	2
+gene_count		K13832	genome_02	2
+gene_count		K13888 | 3.A.1.122.1_P75830	genome_03	1
+gene_count		K13888 | 3.A.1.122.1_P75830	genome_05	1
+gene_count		K13888 | 3.A.1.122.1_P75830	genome_06	1
+gene_count		K13919	genome_01	1
+gene_count		K13920	genome_01	1
+gene_count		K13922	genome_01	1
+gene_count		K13954	genome_01	3
+gene_count		K13979	genome_02	1
+gene_count		K13990	genome_02	2
+gene_count		K13993	genome_01	1
+gene_count		K13993	genome_02	1
+gene_count		K14090	genome_02	3
+gene_count		K14127	genome_05	1
+gene_count		K14127	genome_06	1
+gene_count		K14155	genome_01	4
+gene_count		K14170	genome_03	1
+gene_count		K14170	genome_05	1
+gene_count		K14170	genome_06	1
+gene_count		K14393 | 2.A.21.7.2_P32705 | 2.A.21.7.3_Q8NS49 | 2.A.21.7.4_D5AU53 | 2.A.21.7.5_D5APM1	genome_03	1
+gene_count		K14393 | 2.A.21.7.2_P32705 | 2.A.21.7.3_Q8NS49 | 2.A.21.7.4_D5AU53 | 2.A.21.7.5_D5APM1	genome_05	1
+gene_count		K14393 | 2.A.21.7.2_P32705 | 2.A.21.7.3_Q8NS49 | 2.A.21.7.4_D5AU53 | 2.A.21.7.5_D5APM1	genome_06	2
+gene_count		K14652	genome_01	1
+gene_count		K14652	genome_02	2
+gene_count		K14982	genome_01	2
+gene_count		K14983	genome_01	1
+gene_count		K15022	genome_04	1
+gene_count		K15024	genome_01	2
+gene_count		K15495 | 3.A.1.6.5	genome_02	1
+gene_count		K15551	genome_01	2
+gene_count		K15551 | 3.A.1.17.1 | 3.A.1.17.4	genome_01	2
+gene_count		K15552	genome_01	2
+gene_count		K15552 | 3.A.1.17.1 | 3.A.1.17.4	genome_01	2
+gene_count		K15553	genome_01	2
+gene_count		K15553 | 3.A.1.17.2	genome_01	2
+gene_count		K15554	genome_01	2
+gene_count		K15554 | 3.A.1.17.2	genome_01	2
+gene_count		K15555	genome_01	2
+gene_count		K15555 | 3.A.1.17.2	genome_01	2
+gene_count		K15580	genome_01	1
+gene_count		K15580 | 3.A.1.5.18_O31315 | 3.A.1.5.18_O50927 | 3.A.1.5.18_O51307 | 3.A.1.5.18_O51308 | 3.A.1.5.18_O54584 | 3.A.1.5.19_Q2FZR3 | 3.A.1.5.1_P06202 | 3.A.1.5.1_P77348 | 3.A.1.5.25_Q64K09 | 3.A.1.5.25_Q9CIL2 | 3.A.1.5.37_B1W1M2 | 3.A.1.5.41_P23843 | 3.A.1.5.41_P77348 | 3.A.1.5.41_Q46863	genome_01	1
+gene_count		K15581	genome_04	1
+gene_count		K15581 | 3.A.1.5.18_O31307 | 3.A.1.5.19_Q2FZR7 | 3.A.1.5.1_P08005 | 3.A.1.5.25_Q9CIL1 | 3.A.1.5.37_B1W1M1 | 3.A.1.5.41_P0AFH2	genome_04	1
+gene_count		K15582	genome_04	1
+gene_count		K15582 | 3.A.1.5.18_O51310 | 3.A.1.5.19_Q2FZR6 | 3.A.1.5.1_P08006 | 3.A.1.5.25_Q9CIL0 | 3.A.1.5.37_B1W1M0 | 3.A.1.5.41_P0AFH6	genome_04	1
+gene_count		K15583 | 3.A.1.5.18_O31309 | 3.A.1.5.19_Q2FZR5 | 3.A.1.5.1_P04285 | 3.A.1.5.20_P42064 | 3.A.1.5.25_Q9CIK9 | 3.A.1.5.37_B1W1L9 | 3.A.1.5.41_P76027	genome_04	1
+gene_count		K15633	genome_02	1
+gene_count		K15725	genome_01	1
+gene_count		K15725	genome_02	1
+gene_count		K15725 | 1.B.17.2.2	genome_01	1
+gene_count		K15725 | 1.B.17.2.2	genome_02	1
+gene_count		K15726	genome_02	1
+gene_count		K15726 | 2.A.6.1.2	genome_02	1
+gene_count		K15727	genome_03	1
+gene_count		K15727	genome_05	1
+gene_count		K15727	genome_06	1
+gene_count		K15778	genome_01	1
+gene_count		K16011	genome_01	1
+gene_count		K16012 | 3.A.1.129.1_P23886	genome_01	1
+gene_count		K16013 | 3.A.1.129.1_P29018	genome_01	2
+gene_count		K16089	genome_03	1
+gene_count		K16089	genome_04	1
+gene_count		K16089	genome_05	1
+gene_count		K16089	genome_06	1
+gene_count		K16089 | 1.B.14.1.3_O54507 | 1.B.14.1.4_P17315	genome_03	1
+gene_count		K16089 | 1.B.14.1.3_O54507 | 1.B.14.1.4_P17315	genome_04	1
+gene_count		K16089 | 1.B.14.1.3_O54507 | 1.B.14.1.4_P17315	genome_05	1
+gene_count		K16089 | 1.B.14.1.3_O54507 | 1.B.14.1.4_P17315	genome_06	1
+gene_count		K16092 | 1.B.14.3.1_P06129	genome_01	1
+gene_count		K16092 | 1.B.14.3.1_P06129	genome_02	2
+gene_count		K16168	genome_01	1
+gene_count		K16179	genome_01	1
+gene_count		K16211 | 2.A.2.6.2_Q9A612 | 2.A.2.6.3_Q8EEC4	genome_02	1
+gene_count		K16235 | 2.A.3.1.11_P39137	genome_01	1
+gene_count		K16263 | 2.A.3.13.1_P39277	genome_01	1
+gene_count		K16264	genome_02	1
+gene_count		K16264 | 2.A.4.1	genome_02	1
+gene_count		K16267 | 2.A.5.4.11	genome_03	1
+gene_count		K16267 | 2.A.5.4.11	genome_05	1
+gene_count		K16267 | 2.A.5.4.11	genome_06	1
+gene_count		K16651	genome_01	1
+gene_count		K16785 | 3.A.1.29.1_Q74I61 | 3.A.1.25.5_Q9X2I1 | 3.A.1.25.6_Q5M245 | 3.A.1.26.10_I7BV49 | 3.A.1.32.1_Q9KXJ7 | 3.A.1.32.2_Q2NFA7 | 3.A.1.32.3_A9WJX6 | 3.A.1.33.1_Q8R9L9	genome_04	2
+gene_count		K16786 | 3.A.1.25.5_Q9X1Z1 | 3.A.1.25.6_Q5M243 | 3.A.1.26.10_Q839D5	genome_04	2
+gene_count		K16787	genome_04	2
+gene_count		K16849	genome_04	1
+gene_count		K17465 | 4.A.6.1.17_D0ZLR6	genome_01	1
+gene_count		K17466 | 4.A.6.1.17_D0ZLR5	genome_01	1
+gene_count		K17686	genome_01	1
+gene_count		K17686	genome_02	1
+gene_count		K17723	genome_01	1
+gene_count		K17828	genome_01	1
+gene_count		K17828	genome_02	1
+gene_count		K18007	genome_02	3
+gene_count		K18013	genome_01	2
+gene_count		K18023	genome_02	2
+gene_count		K18101	genome_02	1
+gene_count		K18118	genome_01	3
+gene_count		K18122	genome_03	1
+gene_count		K18122	genome_05	1
+gene_count		K18122	genome_06	1
+gene_count		K18139	genome_02	1
+gene_count		K18139 | 2.A.6.2.5_Q51006 | 2.A.6.2.9_Q9WWZ8 | 2.A.6.2.23_Q6VV67	genome_02	1
+gene_count		K18285	genome_01	3
+gene_count		K18285	genome_02	1
+gene_count		K18286	genome_02	1
+gene_count		K18303 | 2.A.6.2.17	genome_01	1
+gene_count		K18303 | 2.A.6.2.17	genome_02	2
+gene_count		K18331	genome_01	1
+gene_count		K18332	genome_01	2
+gene_count		K18345	genome_01	1
+gene_count		K18903 | 1.B.17.3.3	genome_03	1
+gene_count		K18903 | 1.B.17.3.3	genome_05	1
+gene_count		K18903 | 1.B.17.3.3	genome_06	2
+gene_count		K18933	genome_02	1
+gene_count		K19221	genome_01	2
+gene_count		K19221	genome_02	1
+gene_count		K19824	genome_01	1
+gene_count		K20118	genome_01	1
+gene_count		K20118 | 4.A.1.1.9 | 4.A.1.1.13 | 4.A.1.1.14	genome_01	1
+gene_count		K20257	genome_01	2
+gene_count		K20265	genome_02	1
+gene_count		K20265 | 2.A.3.7.1 | 2.A.3.7.3	genome_02	1
+gene_count		K20276	genome_02	3
+gene_count		K20527	genome_01	1
+gene_count		K20531	genome_01	1
+gene_count		K20532	genome_01	1
+gene_count		K20533	genome_01	1
+gene_count		K20542	genome_02	1
+gene_count		K20974	genome_01	1
+gene_count		K21000	genome_01	1
+gene_count		K21001	genome_05	1
+gene_count		K21001	genome_06	2
+gene_count		K21019	genome_02	1
+gene_count		K21021	genome_06	1
+gene_count		K21023	genome_01	1
+gene_count		K21064	genome_01	1
+gene_count		K21071	genome_01	3
+gene_count		K21071	genome_02	2
+gene_count		K21142	genome_03	1
+gene_count		K21142	genome_05	1
+gene_count		K21142	genome_06	1
+gene_count		K21393 | 2.A.56.1	genome_04	1
+gene_count		K21449	genome_02	3
+gene_count		K21600	genome_01	1
+gene_count		K21636	genome_01	3
+gene_count		K21903	genome_01	1
+gene_count		K22015	genome_01	1
+gene_count		K22225	genome_01	2
+gene_count		K22226	genome_01	1
+gene_count		K22227	genome_01	1
+gene_count		K22227	genome_02	1
+gene_count		K22447	genome_01	1
+gene_count		K22906	genome_01	1
+gene_count		K22958	genome_01	1
+gene_count		K23163 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_05	1
+gene_count		K23163 | 3.A.1.6.1 | 3.A.1.6.3 | 3.A.1.6.7	genome_06	1
+gene_count		K23242	genome_03	1
+gene_count		K23242	genome_05	1
+gene_count		K23242	genome_06	2
+gene_count		K23242 | 2.A.107	genome_03	1
+gene_count		K23242 | 2.A.107	genome_05	1
+gene_count		K23242 | 2.A.107	genome_06	2
+gene_count		K23264	genome_02	1
+gene_count		K23265	genome_02	1
+gene_count		K23269	genome_02	1
+gene_count		K23734	genome_01	1
+gene_count		K23775	genome_01	1
+gene_count		K23775	genome_02	1
+gene_count		K24042	genome_01	1
+gene_count		K24042	genome_02	1
+gene_count		K24866	genome_01	1
+gene_count		K25026	genome_03	1
+gene_count		K25026	genome_05	2
+gene_count		K25123	genome_01	1
+gene_count		K25124	genome_01	1
+gene_count		Leu (CAA)	genome_01	2
+gene_count		Leu (CAA)	genome_02	2
+gene_count		Leu (CAA)	genome_03	1
+gene_count		Leu (CAA)	genome_04	2
+gene_count		Leu (CAA)	genome_05	1
+gene_count		Leu (CAG)	genome_01	1
+gene_count		Leu (CAG)	genome_02	1
+gene_count		Leu (CAG)	genome_03	1
+gene_count		Leu (CAG)	genome_04	1
+gene_count		Leu (CAG)	genome_05	1
+gene_count		Leu (CAG)	genome_06	1
+gene_count		Leu (GAG)	genome_01	1
+gene_count		Leu (GAG)	genome_02	1
+gene_count		Leu (GAG)	genome_03	1
+gene_count		Leu (GAG)	genome_04	1
+gene_count		Leu (GAG)	genome_05	1
+gene_count		Leu (GAG)	genome_06	1
+gene_count		Leu (TAA)	genome_01	2
+gene_count		Leu (TAA)	genome_02	1
+gene_count		Leu (TAA)	genome_03	1
+gene_count		Leu (TAA)	genome_05	1
+gene_count		Leu (TAA)	genome_06	1
+gene_count		Leu (TAG)	genome_01	2
+gene_count		Leu (TAG)	genome_02	2
+gene_count		Leu (TAG)	genome_03	1
+gene_count		Leu (TAG)	genome_04	1
+gene_count		Leu (TAG)	genome_05	2
+gene_count		Leu (TAG)	genome_06	1
+gene_count		Lys (CTT)	genome_01	1
+gene_count		Lys (CTT)	genome_02	1
+gene_count		Lys (CTT)	genome_03	1
+gene_count		Lys (CTT)	genome_04	1
+gene_count		Lys (CTT)	genome_05	1
+gene_count		Lys (CTT)	genome_06	1
+gene_count		Lys (TTT)	genome_01	3
+gene_count		Lys (TTT)	genome_02	1
+gene_count		Lys (TTT)	genome_03	1
+gene_count		Lys (TTT)	genome_04	3
+gene_count		Lys (TTT)	genome_05	1
+gene_count		Lys (TTT)	genome_06	1
+gene_count		M01	genome_02	3
+gene_count		M02	genome_02	1
+gene_count		M03A	genome_02	1
+gene_count		M03B	genome_01	1
+gene_count		M101	genome_01	2
+gene_count		M13	genome_02	3
+gene_count		M14B	genome_02	11
+gene_count		M15A	genome_02	2
+gene_count		M15D	genome_03	1
+gene_count		M15D	genome_05	1
+gene_count		M15D	genome_06	1
+gene_count		M16B	genome_01	1
+gene_count		M16B	genome_02	1
+gene_count		M16B	genome_03	1
+gene_count		M16B	genome_05	1
+gene_count		M16B	genome_06	1
+gene_count		M16C	genome_01	1
+gene_count		M17	genome_01	2
+gene_count		M17	genome_02	2
+gene_count		M19	genome_01	1
+gene_count		M19	genome_02	1
+gene_count		M20A	genome_01	4
+gene_count		M20A	genome_02	4
+gene_count		M20B	genome_01	1
+gene_count		M20C	genome_05	1
+gene_count		M20C	genome_06	1
+gene_count		M20D	genome_01	3
+gene_count		M20D	genome_02	1
+gene_count		M20F	genome_02	3
+gene_count		M23B	genome_01	61
+gene_count		M23B	genome_02	4
+gene_count		M23B	genome_03	1
+gene_count		M23B	genome_05	1
+gene_count		M23B	genome_06	1
+gene_count		M24A	genome_01	1
+gene_count		M24A	genome_02	1
+gene_count		M24B	genome_01	3
+gene_count		M24B	genome_02	5
+gene_count		M28A	genome_02	1
+gene_count		M28B	genome_03	1
+gene_count		M28D	genome_02	2
+gene_count		M28F	genome_02	2
+gene_count		M29	genome_01	2
+gene_count		M38	genome_01	13
+gene_count		M38	genome_02	6
+gene_count		M38	genome_03	1
+gene_count		M38	genome_04	1
+gene_count		M41	genome_01	2
+gene_count		M41	genome_06	1
+gene_count		M43B	genome_04	1
+gene_count		M48A	genome_01	1
+gene_count		M48A	genome_02	2
+gene_count		M48A	genome_03	1
+gene_count		M48A	genome_04	1
+gene_count		M48A	genome_05	1
+gene_count		M48C	genome_02	1
+gene_count		M50	genome_01	3
+gene_count		M50	genome_02	1
+gene_count		M50B	genome_01	5
+gene_count		M50B	genome_02	8
+gene_count		M54	genome_03	1
+gene_count		M54	genome_05	1
+gene_count		M54	genome_06	1
+gene_count		M56	genome_02	1
+gene_count		M61	genome_01	1
+gene_count		M67B	genome_03	1
+gene_count		M67B	genome_05	2
+gene_count		M67B	genome_06	2
+gene_count		M78	genome_01	1
+gene_count		M78	genome_02	2
+gene_count		M79	genome_01	2
+gene_count		M79	genome_02	3
+gene_count		M95	genome_01	1
+gene_count		M96	genome_03	1
+gene_count		M96	genome_05	1
+gene_count		M96	genome_06	1
+gene_count		Met (CAT)	genome_01	2
+gene_count		Met (CAT)	genome_02	2
+gene_count		Met (CAT)	genome_03	4
+gene_count		Met (CAT)	genome_04	1
+gene_count		Met (CAT)	genome_05	3
+gene_count		Met (CAT)	genome_06	3
+gene_count		N06	genome_01	2
+gene_count		N06	genome_02	1
+gene_count		N11	genome_02	1
+gene_count		PL10	genome_02	1
+gene_count		PL22	genome_06	1
+gene_count		PL4	genome_06	3
+gene_count		PL9	genome_05	2
+gene_count		Phe (GAA)	genome_01	3
+gene_count		Phe (GAA)	genome_02	1
+gene_count		Phe (GAA)	genome_03	1
+gene_count		Phe (GAA)	genome_04	1
+gene_count		Phe (GAA)	genome_05	1
+gene_count		Pro (CGG)	genome_02	1
+gene_count		Pro (CGG)	genome_03	1
+gene_count		Pro (CGG)	genome_05	1
+gene_count		Pro (CGG)	genome_06	1
+gene_count		Pro (GGG)	genome_01	1
+gene_count		Pro (GGG)	genome_02	1
+gene_count		Pro (GGG)	genome_03	1
+gene_count		Pro (GGG)	genome_04	2
+gene_count		Pro (GGG)	genome_06	1
+gene_count		Pro (TGG)	genome_01	3
+gene_count		Pro (TGG)	genome_02	1
+gene_count		Pro (TGG)	genome_03	1
+gene_count		Pro (TGG)	genome_04	1
+gene_count		Pro (TGG)	genome_05	1
+gene_count		Pro (TGG)	genome_06	1
+gene_count		S01B	genome_03	1
+gene_count		S01C	genome_01	2
+gene_count		S01C	genome_02	3
+gene_count		S01E	genome_01	1
+gene_count		S01E	genome_02	1
+gene_count		S08A	genome_02	1
+gene_count		S09A	genome_02	2
+gene_count		S09B	genome_01	1
+gene_count		S09B	genome_02	1
+gene_count		S09C	genome_01	3
+gene_count		S09C	genome_02	7
+gene_count		S09C	genome_03	1
+gene_count		S09C	genome_05	1
+gene_count		S09C	genome_06	1
+gene_count		S10	genome_02	1
+gene_count		S11	genome_01	6
+gene_count		S12	genome_02	6
+gene_count		S12	genome_03	1
+gene_count		S12	genome_05	1
+gene_count		S12	genome_06	1
+gene_count		S13	genome_02	1
+gene_count		S14	genome_01	2
+gene_count		S14	genome_02	2
+gene_count		S15	genome_02	4
+gene_count		S16	genome_01	8
+gene_count		S16	genome_02	3
+gene_count		S24	genome_01	1
+gene_count		S24	genome_02	1
+gene_count		S26A	genome_01	1
+gene_count		S26A	genome_02	4
+gene_count		S26B	genome_03	1
+gene_count		S26B	genome_06	2
+gene_count		S33	genome_01	3
+gene_count		S33	genome_02	8
+gene_count		S41A	genome_01	1
+gene_count		S41A	genome_02	2
+gene_count		S45	genome_02	1
+gene_count		S46	genome_02	1
+gene_count		S49A	genome_01	1
+gene_count		S49B	genome_05	1
+gene_count		S49B	genome_06	1
+gene_count		S49C	genome_01	1
+gene_count		S49C	genome_02	3
+gene_count		S49C	genome_03	1
+gene_count		S49C	genome_05	1
+gene_count		S53	genome_02	5
+gene_count		S54	genome_02	2
+gene_count		S55	genome_01	2
+gene_count		S66	genome_01	1
+gene_count		S66	genome_02	2
+gene_count		Ser (CGA)	genome_01	1
+gene_count		Ser (CGA)	genome_02	2
+gene_count		Ser (CGA)	genome_03	1
+gene_count		Ser (CGA)	genome_04	1
+gene_count		Ser (CGA)	genome_06	1
+gene_count		Ser (GCT)	genome_01	2
+gene_count		Ser (GCT)	genome_02	1
+gene_count		Ser (GCT)	genome_03	1
+gene_count		Ser (GCT)	genome_04	1
+gene_count		Ser (GCT)	genome_05	1
+gene_count		Ser (GCT)	genome_06	1
+gene_count		Ser (GGA)	genome_01	1
+gene_count		Ser (GGA)	genome_02	1
+gene_count		Ser (GGA)	genome_03	1
+gene_count		Ser (GGA)	genome_04	1
+gene_count		Ser (GGA)	genome_05	1
+gene_count		Ser (GGA)	genome_06	1
+gene_count		Ser (TGA)	genome_01	2
+gene_count		Ser (TGA)	genome_02	1
+gene_count		Ser (TGA)	genome_03	1
+gene_count		Ser (TGA)	genome_04	1
+gene_count		Ser (TGA)	genome_05	1
+gene_count		Ser (TGA)	genome_06	1
+gene_count		T01B	genome_01	1
+gene_count		T02	genome_02	2
+gene_count		T03	genome_01	1
+gene_count		T05	genome_01	1
+gene_count		T05	genome_02	1
+gene_count		Thr (CGT)	genome_01	1
+gene_count		Thr (CGT)	genome_02	1
+gene_count		Thr (CGT)	genome_03	1
+gene_count		Thr (CGT)	genome_05	2
+gene_count		Thr (CGT)	genome_06	2
+gene_count		Thr (GGT)	genome_03	1
+gene_count		Thr (GGT)	genome_05	1
+gene_count		Thr (GGT)	genome_06	2
+gene_count		Thr (TGT)	genome_01	2
+gene_count		Thr (TGT)	genome_03	1
+gene_count		Thr (TGT)	genome_04	1
+gene_count		Thr (TGT)	genome_05	1
+gene_count		Thr (TGT)	genome_06	2
+gene_count		Trp (CCA)	genome_01	3
+gene_count		Trp (CCA)	genome_02	1
+gene_count		Trp (CCA)	genome_04	1
+gene_count		Tyr (GTA)	genome_01	1
+gene_count		Tyr (GTA)	genome_03	1
+gene_count		Tyr (GTA)	genome_05	1
+gene_count		Tyr (GTA)	genome_06	2
+gene_count		U32	genome_01	5
+gene_count		U56	genome_04	1
+gene_count		U57	genome_01	1
+gene_count		U69	genome_01	1
+gene_count		Undet (NNN)	genome_01	1
+gene_count		Undet (NNN)	genome_04	1
+gene_count		Undet (NNN)	genome_05	1
+gene_count		Undet (NNN)	genome_06	1
+gene_count		Val (CAC)	genome_01	1
+gene_count		Val (CAC)	genome_02	1
+gene_count		Val (CAC)	genome_03	1
+gene_count		Val (CAC)	genome_05	1
+gene_count		Val (CAC)	genome_06	1
+gene_count		Val (GAC)	genome_01	1
+gene_count		Val (GAC)	genome_02	1
+gene_count		Val (GAC)	genome_03	1
+gene_count		Val (GAC)	genome_05	1
+gene_count		Val (GAC)	genome_06	1
+gene_count		Val (TAC)	genome_01	6
+gene_count		Val (TAC)	genome_02	1
+gene_count		Val (TAC)	genome_03	1
+gene_count		Val (TAC)	genome_04	4
+gene_count		Val (TAC)	genome_05	1
+gene_count		Val (TAC)	genome_06	1
+gene_count		arsC|K00537	genome_01	2
+gene_count		arsC|K03741	genome_02	1
+gene_count		cadX|K21903	genome_01	1
+gene_count		copA|K17686	genome_01	1
+gene_count		copA|K17686	genome_02	1
+gene_count		cusA-ybdE|K07787	genome_01	1
+gene_count		cusA-ybdE|K07787	genome_02	2
+gene_count		cusB|K07798	genome_01	1
+gene_count		cusB|K07798	genome_02	1
+gene_count		czcA|K15726	genome_02	1
+gene_count		czcB|K15727	genome_03	1
+gene_count		czcB|K15727	genome_05	1
+gene_count		czcB|K15727	genome_06	1
+gene_count		czcC|K15725	genome_01	1
+gene_count		czcC|K15725	genome_02	1
+gene_count		rcnA-yohM|K08970	genome_01	1
+gene_count		zitB-ybgR|K16264	genome_02	1
+gene_count		zntA-yhhO|K01534	genome_01	2
+presence	traits	CO2-fixation	genome_01	True
+presence	traits	aerobic	genome_02	True
+presence	traits	dissimilatory-nitrogen-reduction	genome_02	True
+presence	traits	microaerophillic	genome_02	True
+presence	traits	nitrite-oxidizer-or-nitrate-reducer	genome_01	True
+presence	traits	nitrogen-fixer	genome_01	True
+presence	traits	obligate-fermenter	genome_01	True
+presence	traits	probable-iron-reduction	genome_02	True
+presence	visualize/ag	ATP synthase	genome_01	True
+presence	visualize/ag	ATP synthase	genome_02	True
+presence	visualize/ag	Acetate	genome_01	True
+presence	visualize/ag	Acetate	genome_02	True
+presence	visualize/ag	Amidase	genome_02	True
+presence	visualize/ag	Ammonium Transport	genome_01	True
+presence	visualize/ag	Ammonium Transport	genome_02	True
+presence	visualize/ag	Arabinose	genome_01	True
+presence	visualize/ag	Arsenate Reduction Potential	genome_01	True
+presence	visualize/ag	Arsenate Reduction Potential	genome_02	True
+presence	visualize/ag	Arsenic Methylation	genome_01	True
+presence	visualize/ag	Arsenic Methylation	genome_02	True
+presence	visualize/ag	Bacterial Cell Wall Polymers	genome_01	True
+presence	visualize/ag	Bacterial Cell Wall Polymers	genome_02	True
+presence	visualize/ag	Bacterial Cell Wall Polymers	genome_03	True
+presence	visualize/ag	Bacterial Cell Wall Polymers	genome_05	True
+presence	visualize/ag	Bacterial Cell Wall Polymers	genome_06	True
+presence	visualize/ag	Beta-D-Xylosidase (BX)	genome_05	True
+presence	visualize/ag	Beta-D-Xylosidase (BX)	genome_06	True
+presence	visualize/ag	Beta-Glucosidase (BG)	genome_02	True
+presence	visualize/ag	Beta-Glucosidase (BG)	genome_03	True
+presence	visualize/ag	Beta-Glucosidase (BG)	genome_05	True
+presence	visualize/ag	Beta-Glucosidase (BG)	genome_06	True
+presence	visualize/ag	CO2 Fixation	genome_01	True
+presence	visualize/ag	Candidate Extracellular Serine Peptidases	genome_02	True
+presence	visualize/ag	Cellobiose	genome_02	True
+presence	visualize/ag	Cellulose	genome_02	True
+presence	visualize/ag	Chitin	genome_01	True
+presence	visualize/ag	Chitin	genome_02	True
+presence	visualize/ag	Chitin and Related Oligosaccharides	genome_01	True
+presence	visualize/ag	Chitin and Related Oligosaccharides	genome_02	True
+presence	visualize/ag	Chromium/Silver Efflux	genome_01	True
+presence	visualize/ag	Chromium/Silver Efflux	genome_02	True
+presence	visualize/ag	Compatible-Solutes: Other Sugar-Derived Compounds Synthesis	genome_02	True
+presence	visualize/ag	Compatible-Solutes: Other Sugar-Derived Compounds Synthesis	genome_03	True
+presence	visualize/ag	Compatible-Solutes: Other Sugar-Derived Compounds Synthesis	genome_05	True
+presence	visualize/ag	Compatible-Solutes: Other Sugar-Derived Compounds Synthesis	genome_06	True
+presence	visualize/ag	Compatible-Solutes: Trehalose Synthesis	genome_02	True
+presence	visualize/ag	Compatible-Solutes: Trehalose Synthesis	genome_03	True
+presence	visualize/ag	Compatible-Solutes: Trehalose Synthesis	genome_05	True
+presence	visualize/ag	Compatible-Solutes: Trehalose Synthesis	genome_06	True
+presence	visualize/ag	Copper Efflux	genome_01	True
+presence	visualize/ag	Copper Efflux	genome_02	True
+presence	visualize/ag	Fructose	genome_01	True
+presence	visualize/ag	Fructose	genome_02	True
+presence	visualize/ag	Fucose	genome_01	True
+presence	visualize/ag	Fucose	genome_02	True
+presence	visualize/ag	Galactose	genome_01	True
+presence	visualize/ag	Galactose	genome_02	True
+presence	visualize/ag	Glucose	genome_02	True
+presence	visualize/ag	Hemicellulose	genome_01	True
+presence	visualize/ag	Hemicellulose	genome_02	True
+presence	visualize/ag	Hemicellulose	genome_03	True
+presence	visualize/ag	Hemicellulose	genome_04	True
+presence	visualize/ag	Hemicellulose	genome_05	True
+presence	visualize/ag	Hemicellulose	genome_06	True
+presence	visualize/ag	Hemicellulose-Associated	genome_01	True
+presence	visualize/ag	Hemicellulose-Associated	genome_02	True
+presence	visualize/ag	Hemicellulose-Associated	genome_03	True
+presence	visualize/ag	Hemicellulose-Associated	genome_05	True
+presence	visualize/ag	Hemicellulose-Associated	genome_06	True
+presence	visualize/ag	High-affinity Pi uptake	genome_01	True
+presence	visualize/ag	High-affinity Pi uptake	genome_02	True
+presence	visualize/ag	Inorganic P Solubilization	genome_02	True
+presence	visualize/ag	Lactose	genome_02	True
+presence	visualize/ag	Leucine Aminopeptidase (LAP)	genome_01	True
+presence	visualize/ag	Leucine Aminopeptidase (LAP)	genome_02	True
+presence	visualize/ag	Mannose	genome_01	True
+presence	visualize/ag	Mannose	genome_02	True
+presence	visualize/ag	Mannose/Mannobiose (mixed size)	genome_02	True
+presence	visualize/ag	Mixed/Unassigned Polymers	genome_01	True
+presence	visualize/ag	Mixed/Unassigned Polymers	genome_02	True
+presence	visualize/ag	N-Acetyl-Beta-D-Glucosaminidase (NAG)	genome_01	True
+presence	visualize/ag	N-Acetyl-Beta-D-Glucosaminidase (NAG)	genome_02	True
+presence	visualize/ag	N2 Fixation	genome_01	True
+presence	visualize/ag	NO To N2O	genome_05	True
+presence	visualize/ag	NO3 To NO2	genome_01	True
+presence	visualize/ag	NO3 To NO2	genome_02	True
+presence	visualize/ag	Nitrate/Nitrite Transporter	genome_01	True
+presence	visualize/ag	Obligate Fermenter	genome_01	True
+presence	visualize/ag	Organic Phosphorus Mineralization	genome_01	True
+presence	visualize/ag	Other Oligosaccharides	genome_01	True
+presence	visualize/ag	Other Oligosaccharides	genome_02	True
+presence	visualize/ag	Other Oligosaccharides	genome_05	True
+presence	visualize/ag	Other Oligosaccharides	genome_06	True
+presence	visualize/ag	Other Plant Structural Polymers	genome_01	True
+presence	visualize/ag	Other Plant Structural Polymers	genome_02	True
+presence	visualize/ag	Other Plant Structural Polymers	genome_05	True
+presence	visualize/ag	Other Plant Structural Polymers	genome_06	True
+presence	visualize/ag	Oxygen Reduction - High Affinity	genome_01	True
+presence	visualize/ag	Oxygen Reduction - High Affinity	genome_02	True
+presence	visualize/ag	Oxygen Reduction - Low Affinity	genome_02	True
+presence	visualize/ag	Pectin	genome_02	True
+presence	visualize/ag	Pectin	genome_06	True
+presence	visualize/ag	Pectin-Associated	genome_01	True
+presence	visualize/ag	Peroxide-catalase	genome_01	True
+presence	visualize/ag	Peroxide-catalase	genome_02	True
+presence	visualize/ag	Peroxide-peroxiredoxin	genome_01	True
+presence	visualize/ag	Phosphatase (PHOS)	genome_01	True
+presence	visualize/ag	Rhamnose	genome_01	True
+presence	visualize/ag	Storage Polysaccharides	genome_01	True
+presence	visualize/ag	Storage Polysaccharides	genome_02	True
+presence	visualize/ag	Storage Polysaccharides	genome_03	True
+presence	visualize/ag	Storage Polysaccharides	genome_04	True
+presence	visualize/ag	Storage Polysaccharides	genome_05	True
+presence	visualize/ag	Storage Polysaccharides	genome_06	True
+presence	visualize/ag	Storage-Associated	genome_01	True
+presence	visualize/ag	Storage-Associated	genome_02	True
+presence	visualize/ag	Storage-Associated	genome_03	True
+presence	visualize/ag	Storage-Associated	genome_04	True
+presence	visualize/ag	Storage-Associated	genome_05	True
+presence	visualize/ag	Storage-Associated	genome_06	True
+presence	visualize/ag	Sucrose	genome_01	True
+presence	visualize/ag	Sucrose	genome_02	True
+presence	visualize/ag	Sulfur Transporters	genome_01	True
+presence	visualize/ag	Superoxide	genome_01	True
+presence	visualize/ag	Superoxide	genome_02	True
+presence	visualize/ag	Trehalose	genome_01	True
+presence	visualize/ag	Trehalose	genome_02	True
+presence	visualize/ag	Trehalose	genome_05	True
+presence	visualize/ag	Trehalose	genome_06	True
+presence	visualize/ag	Xylose	genome_01	True
+presence	visualize/ag	Zinc/Cadmium/Cobalt/Nickel Efflux	genome_01	True
+presence	visualize/ag	Zinc/Cadmium/Cobalt/Nickel Efflux	genome_02	True
+presence	visualize/aquatic	Acetate	genome_01	True
+presence	visualize/aquatic	Acetate	genome_02	True
+presence	visualize/aquatic	Amidase	genome_02	True
+presence	visualize/aquatic	Arabinogalactan	genome_01	True
+presence	visualize/aquatic	Arabinogalactan	genome_02	True
+presence	visualize/aquatic	Arabinogalactan	genome_05	True
+presence	visualize/aquatic	Arabinogalactan	genome_06	True
+presence	visualize/aquatic	Arabinose	genome_01	True
+presence	visualize/aquatic	Candidate Extracellular Serine Peptidases	genome_02	True
+presence	visualize/aquatic	Cellobiose	genome_02	True
+presence	visualize/aquatic	Cellulose	genome_02	True
+presence	visualize/aquatic	Chitin	genome_01	True
+presence	visualize/aquatic	Chitin	genome_02	True
+presence	visualize/aquatic	Chitin and Related Oligosaccharides	genome_01	True
+presence	visualize/aquatic	Chitin and Related Oligosaccharides	genome_02	True
+presence	visualize/aquatic	Cobalt/Cadmium/Zinc/Ni Efflux	genome_01	True
+presence	visualize/aquatic	Cobalt/Cadmium/Zinc/Ni Efflux	genome_02	True
+presence	visualize/aquatic	Compatible-Solutes: Ectoine Transport	genome_01	True
+presence	visualize/aquatic	Compatible-Solutes: Methylated Transport	genome_01	True
+presence	visualize/aquatic	Compatible-Solutes: Sugar Derived Synthesis	genome_02	True
+presence	visualize/aquatic	Compatible-Solutes: Sugar Derived Synthesis	genome_03	True
+presence	visualize/aquatic	Compatible-Solutes: Sugar Derived Synthesis	genome_05	True
+presence	visualize/aquatic	Compatible-Solutes: Sugar Derived Synthesis	genome_06	True
+presence	visualize/aquatic	Copper Efflux	genome_01	True
+presence	visualize/aquatic	Copper Efflux	genome_02	True
+presence	visualize/aquatic	Dicarboxylate Hydroxybutyrate Cycle	genome_01	True
+presence	visualize/aquatic	Fructose	genome_01	True
+presence	visualize/aquatic	Fructose	genome_02	True
+presence	visualize/aquatic	Fucose	genome_01	True
+presence	visualize/aquatic	Fucose	genome_02	True
+presence	visualize/aquatic	Galactose	genome_01	True
+presence	visualize/aquatic	Galactose	genome_02	True
+presence	visualize/aquatic	Glucose	genome_02	True
+presence	visualize/aquatic	Hemicellulose	genome_01	True
+presence	visualize/aquatic	Hemicellulose	genome_02	True
+presence	visualize/aquatic	Hemicellulose	genome_03	True
+presence	visualize/aquatic	Hemicellulose	genome_04	True
+presence	visualize/aquatic	Hemicellulose	genome_05	True
+presence	visualize/aquatic	Hemicellulose	genome_06	True
+presence	visualize/aquatic	Hemicellulose-Associated	genome_01	True
+presence	visualize/aquatic	Hemicellulose-Associated	genome_02	True
+presence	visualize/aquatic	Hemicellulose-Associated	genome_03	True
+presence	visualize/aquatic	Hemicellulose-Associated	genome_05	True
+presence	visualize/aquatic	Hemicellulose-Associated	genome_06	True
+presence	visualize/aquatic	Ion Homeostasis: K+ Uptake and Na+ Exclusion	genome_01	True
+presence	visualize/aquatic	Ion Homeostasis: K+ Uptake and Na+ Exclusion	genome_02	True
+presence	visualize/aquatic	Laminarin	genome_02	True
+presence	visualize/aquatic	Mannose	genome_01	True
+presence	visualize/aquatic	Mannose	genome_02	True
+presence	visualize/aquatic	Mannose/Mannobiose	genome_02	True
+presence	visualize/aquatic	Motility	genome_01	True
+presence	visualize/aquatic	Motility	genome_02	True
+presence	visualize/aquatic	N2 Fixation	genome_01	True
+presence	visualize/aquatic	NO To N2O	genome_05	True
+presence	visualize/aquatic	NO3 To NO2	genome_01	True
+presence	visualize/aquatic	NO3 To NO2	genome_02	True
+presence	visualize/aquatic	Oxygen - High Affinity Use	genome_01	True
+presence	visualize/aquatic	Oxygen - High Affinity Use	genome_02	True
+presence	visualize/aquatic	Oxygen - Low Affinity Use	genome_02	True
+presence	visualize/aquatic	Phosphorus- Organic Mineralization	genome_01	True
+presence	visualize/aquatic	Phosphorus- Pi Uptake	genome_01	True
+presence	visualize/aquatic	Phosphorus- Pi Uptake	genome_02	True
+presence	visualize/aquatic	Rhamnose	genome_01	True
+presence	visualize/aquatic	Starch/Glycogen	genome_01	True
+presence	visualize/aquatic	Starch/Glycogen	genome_02	True
+presence	visualize/aquatic	Starch/Glycogen	genome_03	True
+presence	visualize/aquatic	Starch/Glycogen	genome_05	True
+presence	visualize/aquatic	Starch/Glycogen	genome_06	True
+presence	visualize/aquatic	Storage-Associated	genome_01	True
+presence	visualize/aquatic	Storage-Associated	genome_02	True
+presence	visualize/aquatic	Storage-Associated	genome_03	True
+presence	visualize/aquatic	Storage-Associated	genome_04	True
+presence	visualize/aquatic	Storage-Associated	genome_05	True
+presence	visualize/aquatic	Storage-Associated	genome_06	True
+presence	visualize/aquatic	Sucrose	genome_01	True
+presence	visualize/aquatic	Sucrose	genome_02	True
+presence	visualize/aquatic	Thiosulfate-Reduction-(Rhodanese)	genome_02	True
+presence	visualize/aquatic	Trehalose	genome_01	True
+presence	visualize/aquatic	Trehalose	genome_02	True
+presence	visualize/aquatic	Trehalose	genome_05	True
+presence	visualize/aquatic	Trehalose	genome_06	True
+presence	visualize/aquatic	Xylose	genome_01	True
+presence	visualize/bgc	Arabinose	genome_01	True
+presence	visualize/bgc	Arsenate Reduction Potential	genome_01	True
+presence	visualize/bgc	Arsenate Reduction Potential	genome_02	True
+presence	visualize/bgc	Arsenic Methylation	genome_01	True
+presence	visualize/bgc	Arsenic Methylation	genome_02	True
+presence	visualize/bgc	Cellobiose	genome_02	True
+presence	visualize/bgc	Cellulose	genome_02	True
+presence	visualize/bgc	Chitin	genome_01	True
+presence	visualize/bgc	Chitin	genome_02	True
+presence	visualize/bgc	Chitin-Associated	genome_01	True
+presence	visualize/bgc	Chitin-Associated	genome_02	True
+presence	visualize/bgc	Dicarboxylate Hydroxybutyrate Cycle	genome_01	True
+presence	visualize/bgc	ETC: Complex I Nadh Dehydrogenase	genome_02	True
+presence	visualize/bgc	ETC: Complex V Atpsynthase	genome_01	True
+presence	visualize/bgc	ETC: Complex V Atpsynthase	genome_02	True
+presence	visualize/bgc	Flavones	genome_01	True
+presence	visualize/bgc	Formate	genome_01	True
+presence	visualize/bgc	Fructose	genome_01	True
+presence	visualize/bgc	Fructose	genome_02	True
+presence	visualize/bgc	Galactose	genome_01	True
+presence	visualize/bgc	Galactose	genome_02	True
+presence	visualize/bgc	Glucose	genome_02	True
+presence	visualize/bgc	Hemicellulose	genome_01	True
+presence	visualize/bgc	Hemicellulose	genome_02	True
+presence	visualize/bgc	Hemicellulose	genome_03	True
+presence	visualize/bgc	Hemicellulose	genome_04	True
+presence	visualize/bgc	Hemicellulose	genome_05	True
+presence	visualize/bgc	Hemicellulose	genome_06	True
+presence	visualize/bgc	Hemicellulose-Associated	genome_01	True
+presence	visualize/bgc	Hemicellulose-Associated	genome_02	True
+presence	visualize/bgc	Hemicellulose-Associated	genome_03	True
+presence	visualize/bgc	Hemicellulose-Associated	genome_05	True
+presence	visualize/bgc	Hemicellulose-Associated	genome_06	True
+presence	visualize/bgc	Lactose	genome_02	True
+presence	visualize/bgc	Mannobiose or Mannose (mixed size)	genome_02	True
+presence	visualize/bgc	Mannose	genome_01	True
+presence	visualize/bgc	Mannose	genome_02	True
+presence	visualize/bgc	Multiple Plant Polysaccharides	genome_01	True
+presence	visualize/bgc	Multiple Plant Polysaccharides	genome_02	True
+presence	visualize/bgc	NO To N2O	genome_05	True
+presence	visualize/bgc	NO3 To NO2	genome_01	True
+presence	visualize/bgc	NO3 To NO2	genome_02	True
+presence	visualize/bgc	Nitrogen Fixation	genome_01	True
+presence	visualize/bgc	Other oligosaccharides	genome_01	True
+presence	visualize/bgc	Other oligosaccharides	genome_02	True
+presence	visualize/bgc	Other oligosaccharides	genome_04	True
+presence	visualize/bgc	Other oligosaccharides	genome_05	True
+presence	visualize/bgc	Other oligosaccharides	genome_06	True
+presence	visualize/bgc	Oxygen - High Affinity Use	genome_01	True
+presence	visualize/bgc	Oxygen - High Affinity Use	genome_02	True
+presence	visualize/bgc	Oxygen - Low Affinity Use	genome_02	True
+presence	visualize/bgc	Pectin	genome_02	True
+presence	visualize/bgc	Pectin	genome_06	True
+presence	visualize/bgc	Pectin-Associated	genome_01	True
+presence	visualize/bgc	Peroxide-catalase	genome_01	True
+presence	visualize/bgc	Peroxide-catalase	genome_02	True
+presence	visualize/bgc	Peroxide-peroxiredoxin	genome_01	True
+presence	visualize/bgc	Possible Obligate Fermenter	genome_01	True
+presence	visualize/bgc	Rhamnose	genome_01	True
+presence	visualize/bgc	SCFA-Acetate	genome_01	True
+presence	visualize/bgc	SCFA-Acetate	genome_02	True
+presence	visualize/bgc	Starch/Glycogen	genome_01	True
+presence	visualize/bgc	Starch/Glycogen	genome_02	True
+presence	visualize/bgc	Starch/Glycogen	genome_03	True
+presence	visualize/bgc	Starch/Glycogen	genome_05	True
+presence	visualize/bgc	Starch/Glycogen	genome_06	True
+presence	visualize/bgc	Starch/Glycogen Associated	genome_01	True
+presence	visualize/bgc	Starch/Glycogen Associated	genome_02	True
+presence	visualize/bgc	Starch/Glycogen Associated	genome_03	True
+presence	visualize/bgc	Starch/Glycogen Associated	genome_05	True
+presence	visualize/bgc	Starch/Glycogen Associated	genome_06	True
+presence	visualize/bgc	Sucrose	genome_01	True
+presence	visualize/bgc	Sucrose	genome_02	True
+presence	visualize/bgc	Superoxide	genome_01	True
+presence	visualize/bgc	Superoxide	genome_02	True
+presence	visualize/bgc	Trehalose	genome_01	True
+presence	visualize/bgc	Trehalose	genome_02	True
+presence	visualize/bgc	Trehalose	genome_05	True
+presence	visualize/bgc	Trehalose	genome_06	True
+presence	visualize/bgc	Xylose	genome_01	True
+presence	visualize/eng_sys	Arabinose	genome_01	True
+presence	visualize/eng_sys	Biocide-Efflux-(General)	genome_01	True
+presence	visualize/eng_sys	Broad Arsenic Resistance	genome_01	True
+presence	visualize/eng_sys	Broad Arsenic Resistance	genome_02	True
+presence	visualize/eng_sys	Broad Arsenic Resistance	genome_03	True
+presence	visualize/eng_sys	Broad Arsenic Resistance	genome_05	True
+presence	visualize/eng_sys	Cellobiose	genome_02	True
+presence	visualize/eng_sys	Cellulose	genome_02	True
+presence	visualize/eng_sys	Chitin	genome_01	True
+presence	visualize/eng_sys	Chitin	genome_02	True
+presence	visualize/eng_sys	Chitin-Associated	genome_01	True
+presence	visualize/eng_sys	Chitin-Associated	genome_02	True
+presence	visualize/eng_sys	Compatible-Solutes: Ectoine Transport	genome_01	True
+presence	visualize/eng_sys	Compatible-Solutes: Methylated Transport	genome_01	True
+presence	visualize/eng_sys	Compatible-Solutes: Sugar Derived Synthesis	genome_02	True
+presence	visualize/eng_sys	Compatible-Solutes: Sugar Derived Synthesis	genome_03	True
+presence	visualize/eng_sys	Compatible-Solutes: Sugar Derived Synthesis	genome_05	True
+presence	visualize/eng_sys	Compatible-Solutes: Sugar Derived Synthesis	genome_06	True
+presence	visualize/eng_sys	Detox Arsenic Export	genome_01	True
+presence	visualize/eng_sys	Detox Arsenic Export	genome_02	True
+presence	visualize/eng_sys	Detox Arsenic Export	genome_03	True
+presence	visualize/eng_sys	Detox Arsenic Export	genome_05	True
+presence	visualize/eng_sys	Detox Arsenic Methylation	genome_01	True
+presence	visualize/eng_sys	Detox Arsenic Methylation	genome_02	True
+presence	visualize/eng_sys	Detox Arsenic Reduction	genome_01	True
+presence	visualize/eng_sys	Detox Arsenic Reduction	genome_02	True
+presence	visualize/eng_sys	Detox Cadmium/Zinc Export	genome_01	True
+presence	visualize/eng_sys	Detox Chromate Export	genome_01	True
+presence	visualize/eng_sys	Detox Chromate Export	genome_02	True
+presence	visualize/eng_sys	Detox Cobalt/Zinc/Cadmium Export	genome_02	True
+presence	visualize/eng_sys	Detox Copper Export	genome_01	True
+presence	visualize/eng_sys	Detox Copper Export	genome_02	True
+presence	visualize/eng_sys	Detox Nickel/Cobalt Export	genome_01	True
+presence	visualize/eng_sys	Dicarboxylate Hydroxybutyrate Cycle	genome_01	True
+presence	visualize/eng_sys	Flavones	genome_01	True
+presence	visualize/eng_sys	Formate	genome_01	True
+presence	visualize/eng_sys	Fructose	genome_01	True
+presence	visualize/eng_sys	Fructose	genome_02	True
+presence	visualize/eng_sys	Galactomannan (e.g., Guar-Gum)	genome_02	True
+presence	visualize/eng_sys	Galactomannan (e.g., Guar-Gum)	genome_04	True
+presence	visualize/eng_sys	Galactose	genome_01	True
+presence	visualize/eng_sys	Galactose	genome_02	True
+presence	visualize/eng_sys	Glucose	genome_02	True
+presence	visualize/eng_sys	Hemicellulose	genome_01	True
+presence	visualize/eng_sys	Hemicellulose	genome_02	True
+presence	visualize/eng_sys	Hemicellulose	genome_03	True
+presence	visualize/eng_sys	Hemicellulose	genome_04	True
+presence	visualize/eng_sys	Hemicellulose	genome_05	True
+presence	visualize/eng_sys	Hemicellulose	genome_06	True
+presence	visualize/eng_sys	Hemicellulose-Associated	genome_01	True
+presence	visualize/eng_sys	Hemicellulose-Associated	genome_02	True
+presence	visualize/eng_sys	Hemicellulose-Associated	genome_03	True
+presence	visualize/eng_sys	Hemicellulose-Associated	genome_05	True
+presence	visualize/eng_sys	Hemicellulose-Associated	genome_06	True
+presence	visualize/eng_sys	Ion Homeostasis: K+ Uptake and Na+ Exclusion	genome_01	True
+presence	visualize/eng_sys	Ion Homeostasis: K+ Uptake and Na+ Exclusion	genome_02	True
+presence	visualize/eng_sys	Lactose	genome_02	True
+presence	visualize/eng_sys	Mannobiose or Mannose (mixed size)	genome_02	True
+presence	visualize/eng_sys	Mannose	genome_01	True
+presence	visualize/eng_sys	Mannose	genome_02	True
+presence	visualize/eng_sys	Motility	genome_01	True
+presence	visualize/eng_sys	Motility	genome_02	True
+presence	visualize/eng_sys	Multiple Plant Polysaccharides	genome_01	True
+presence	visualize/eng_sys	Multiple Plant Polysaccharides	genome_02	True
+presence	visualize/eng_sys	NO To N2O	genome_05	True
+presence	visualize/eng_sys	NO3 To NO2	genome_01	True
+presence	visualize/eng_sys	NO3 To NO2	genome_02	True
+presence	visualize/eng_sys	Nitrogen Fixation	genome_01	True
+presence	visualize/eng_sys	Other oligosaccharides	genome_01	True
+presence	visualize/eng_sys	Other oligosaccharides	genome_02	True
+presence	visualize/eng_sys	Other oligosaccharides	genome_04	True
+presence	visualize/eng_sys	Other oligosaccharides	genome_05	True
+presence	visualize/eng_sys	Other oligosaccharides	genome_06	True
+presence	visualize/eng_sys	Oxygen - High Affinity Use	genome_01	True
+presence	visualize/eng_sys	Oxygen - High Affinity Use	genome_02	True
+presence	visualize/eng_sys	Oxygen - Low Affinity Use	genome_02	True
+presence	visualize/eng_sys	Pectin	genome_02	True
+presence	visualize/eng_sys	Pectin	genome_06	True
+presence	visualize/eng_sys	Pectin-Associated	genome_01	True
+presence	visualize/eng_sys	Peroxide-catalase	genome_01	True
+presence	visualize/eng_sys	Peroxide-catalase	genome_02	True
+presence	visualize/eng_sys	Peroxide-peroxiredoxin	genome_01	True
+presence	visualize/eng_sys	Possible Obligate Fermenter	genome_01	True
+presence	visualize/eng_sys	Rhamnose	genome_01	True
+presence	visualize/eng_sys	SCFA-Acetate	genome_01	True
+presence	visualize/eng_sys	SCFA-Acetate	genome_02	True
+presence	visualize/eng_sys	Starch/Glycogen	genome_01	True
+presence	visualize/eng_sys	Starch/Glycogen	genome_02	True
+presence	visualize/eng_sys	Starch/Glycogen	genome_03	True
+presence	visualize/eng_sys	Starch/Glycogen	genome_05	True
+presence	visualize/eng_sys	Starch/Glycogen	genome_06	True
+presence	visualize/eng_sys	Starch/Glycogen Associated	genome_01	True
+presence	visualize/eng_sys	Starch/Glycogen Associated	genome_02	True
+presence	visualize/eng_sys	Starch/Glycogen Associated	genome_03	True
+presence	visualize/eng_sys	Starch/Glycogen Associated	genome_05	True
+presence	visualize/eng_sys	Starch/Glycogen Associated	genome_06	True
+presence	visualize/eng_sys	Sucrose	genome_01	True
+presence	visualize/eng_sys	Sucrose	genome_02	True
+presence	visualize/eng_sys	Superoxide	genome_01	True
+presence	visualize/eng_sys	Superoxide	genome_02	True
+presence	visualize/eng_sys	Thiosulfate-Reduction-(Rhodanese)	genome_02	True
+presence	visualize/eng_sys	Trehalose	genome_01	True
+presence	visualize/eng_sys	Trehalose	genome_02	True
+presence	visualize/eng_sys	Trehalose	genome_05	True
+presence	visualize/eng_sys	Trehalose	genome_06	True
+presence	visualize/eng_sys	Xylose	genome_01	True
+presence	visualize/gut	Arabinose	genome_01	True
+presence	visualize/gut	Beta-Glucan Other	genome_01	True
+presence	visualize/gut	Beta-Glucan Other	genome_02	True
+presence	visualize/gut	Biotin (B7)	genome_01	True
+presence	visualize/gut	Cellobiose	genome_02	True
+presence	visualize/gut	Cellulose	genome_02	True
+presence	visualize/gut	Chondroitin-sulfate	genome_02	True
+presence	visualize/gut	Cobalamin (B12)	genome_01	True
+presence	visualize/gut	Folate	genome_01	True
+presence	visualize/gut	Fructan	genome_01	True
+presence	visualize/gut	Fructan	genome_04	True
+presence	visualize/gut	Fructan	genome_06	True
+presence	visualize/gut	Fructan-Associated	genome_01	True
+presence	visualize/gut	Fructan-Associated	genome_04	True
+presence	visualize/gut	Fructan-Associated	genome_06	True
+presence	visualize/gut	Fructose	genome_01	True
+presence	visualize/gut	Fructose	genome_02	True
+presence	visualize/gut	Fucose	genome_01	True
+presence	visualize/gut	Fucose	genome_02	True
+presence	visualize/gut	Galactose	genome_01	True
+presence	visualize/gut	Galactose	genome_02	True
+presence	visualize/gut	Glucose	genome_02	True
+presence	visualize/gut	Hemicellulose-Associated	genome_01	True
+presence	visualize/gut	Hemicellulose-Associated	genome_02	True
+presence	visualize/gut	Hemicellulose-Associated	genome_03	True
+presence	visualize/gut	Hemicellulose-Associated	genome_05	True
+presence	visualize/gut	Hemicellulose-Associated	genome_06	True
+presence	visualize/gut	Hemicellulose-Other	genome_01	True
+presence	visualize/gut	Hemicellulose-Other	genome_02	True
+presence	visualize/gut	Hemicellulose-Other	genome_03	True
+presence	visualize/gut	Hemicellulose-Other	genome_04	True
+presence	visualize/gut	Hemicellulose-Other	genome_05	True
+presence	visualize/gut	Hemicellulose-Other	genome_06	True
+presence	visualize/gut	Hemicellulose-Xylan	genome_01	True
+presence	visualize/gut	Hemicellulose-Xylan	genome_02	True
+presence	visualize/gut	Hemicellulose-Xylan	genome_04	True
+presence	visualize/gut	Hemicellulose-Xylan	genome_05	True
+presence	visualize/gut	Hemicellulose-Xylan	genome_06	True
+presence	visualize/gut	Heparin-heparan-sulfate	genome_02	True
+presence	visualize/gut	Host-N-glycan	genome_01	True
+presence	visualize/gut	Host-N-glycan	genome_02	True
+presence	visualize/gut	Host-glycosphingolipid	genome_01	True
+presence	visualize/gut	Host-glycosphingolipid	genome_02	True
+presence	visualize/gut	Hyaluronan	genome_02	True
+presence	visualize/gut	Iron Acquisition	genome_01	True
+presence	visualize/gut	Iron Acquisition	genome_02	True
+presence	visualize/gut	Iron Acquisition	genome_03	True
+presence	visualize/gut	Iron Acquisition	genome_04	True
+presence	visualize/gut	Iron Acquisition	genome_05	True
+presence	visualize/gut	Iron Acquisition	genome_06	True
+presence	visualize/gut	Lactose	genome_02	True
+presence	visualize/gut	Mannose	genome_01	True
+presence	visualize/gut	Mannose	genome_02	True
+presence	visualize/gut	Mannose/Mannobiose	genome_02	True
+presence	visualize/gut	Mixed-heparan-sulfate/dermatan-sulfate	genome_01	True
+presence	visualize/gut	Mixed-heparan-sulfate/dermatan-sulfate	genome_05	True
+presence	visualize/gut	Mixed-heparan-sulfate/dermatan-sulfate	genome_06	True
+presence	visualize/gut	Motility	genome_01	True
+presence	visualize/gut	Motility	genome_02	True
+presence	visualize/gut	Mucin-O-glycan	genome_01	True
+presence	visualize/gut	Mucin-O-glycan	genome_02	True
+presence	visualize/gut	Niacin (B3)	genome_01	True
+presence	visualize/gut	Niacin (B3)	genome_02	True
+presence	visualize/gut	Nitrate Reduction To Nitrite	genome_01	True
+presence	visualize/gut	Nitrate Reduction To Nitrite	genome_02	True
+presence	visualize/gut	Obligate Fermenter	genome_01	True
+presence	visualize/gut	Organic Acid-Formate	genome_01	True
+presence	visualize/gut	Other-host-milk-glycan	genome_02	True
+presence	visualize/gut	Oxygen - High Affinity Use	genome_01	True
+presence	visualize/gut	Oxygen - High Affinity Use	genome_02	True
+presence	visualize/gut	Oxygen - Low Affinity Use	genome_02	True
+presence	visualize/gut	Pectin	genome_02	True
+presence	visualize/gut	Pectin	genome_06	True
+presence	visualize/gut	Pectin-Associated	genome_01	True
+presence	visualize/gut	Pilus And Fimbrial Adhesion	genome_03	True
+presence	visualize/gut	Pilus And Fimbrial Adhesion	genome_05	True
+presence	visualize/gut	Pilus And Fimbrial Adhesion	genome_06	True
+presence	visualize/gut	Rhamnose	genome_01	True
+presence	visualize/gut	Riboflavin (B2)	genome_01	True
+presence	visualize/gut	SCFA-Acetate	genome_01	True
+presence	visualize/gut	SCFA-Acetate	genome_02	True
+presence	visualize/gut	Starch/Glycogen	genome_01	True
+presence	visualize/gut	Starch/Glycogen	genome_02	True
+presence	visualize/gut	Starch/Glycogen	genome_03	True
+presence	visualize/gut	Starch/Glycogen	genome_05	True
+presence	visualize/gut	Starch/Glycogen	genome_06	True
+presence	visualize/gut	Starch/Glycogen-Associated	genome_01	True
+presence	visualize/gut	Starch/Glycogen-Associated	genome_02	True
+presence	visualize/gut	Starch/Glycogen-Associated	genome_03	True
+presence	visualize/gut	Starch/Glycogen-Associated	genome_05	True
+presence	visualize/gut	Starch/Glycogen-Associated	genome_06	True
+presence	visualize/gut	Sucrose	genome_01	True
+presence	visualize/gut	Sucrose	genome_02	True
+presence	visualize/gut	Thiamine	genome_01	True
+presence	visualize/gut	Trehalose	genome_01	True
+presence	visualize/gut	Trehalose	genome_02	True
+presence	visualize/gut	Trehalose	genome_05	True
+presence	visualize/gut	Trehalose	genome_06	True
+presence	visualize/gut	Xylose	genome_01	True

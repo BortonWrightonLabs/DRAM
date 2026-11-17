@@ -3,6 +3,7 @@ nextflow_function {
     name "Test resource class helpers"
     script "subworkflows/local/utils_resource_classes.nf"
     tag "resource_classes"
+    tag "pr"
 
     test("200 MiB is small") {
         function "resourceClass"

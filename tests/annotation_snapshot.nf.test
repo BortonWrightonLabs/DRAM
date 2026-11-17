@@ -3,6 +3,7 @@ nextflow_pipeline {
     name "Test Pipeline with 1 process"
     script "../main.nf"
     profile "test"
+    tag "full"
 
     test("Test the whole pipeline e2e") {
 

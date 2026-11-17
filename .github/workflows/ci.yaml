@@ -21,3 +21,49 @@ jobs:
 
       - name: Run pre-commit hooks for linting and other checks
         run: pre-commit run --all-files
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [docker, apptainer]
+    env:
+      DRAM_ENGINE: ${{ matrix.engine }}
+      KOFAM_RELEASE: "2022-08-01"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # bin/rules (dram-rules) is a submodule; Summarize/Traits need its data files
+          submodules: true
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@v0.11.3
+        with:
+          pixi-version: v0.82.0
+      - name: Set up Apptainer
+        if: matrix.engine == 'apptainer'
+        uses: eWaterCycle/setup-apptainer@v3.0.0
+      # KOfam is KEGG-derived, so its mini database is built here, not committed.
+      # KOFAM_RELEASE must match the release databases/kofam was built from (the one
+      # `build_mini_dbs.py select` chose ids.txt against); see tests/data/db/README.md.
+      - name: Restore KOfam mini database
+        id: kofam
+        uses: actions/cache@v4
+        with:
+          path: |
+            tests/data/db/kofam/kofam.hmm
+            tests/data/db/kofam/kofam_ko_list.tsv
+          key: kofam-${{ env.KOFAM_RELEASE }}-${{ hashFiles('tests/data/db/kofam/ids.txt', 'tests/scripts/build_mini_dbs.py') }}
+      - name: Build KOfam mini database
+        if: steps.kofam.outputs.cache-hit != 'true'
+        run: |
+          # GenomeNet's HTTPS mirror resets the connection for archives; FTP works
+          base=ftp://ftp.genome.jp/pub/db/kofam/archives/$KOFAM_RELEASE
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/profiles.tar.gz" "$base/profiles.tar.gz"
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/ko_list.gz" "$base/ko_list.gz"
+          pixi run python tests/scripts/build_mini_dbs.py kofam \
+            --profiles "$RUNNER_TEMP/profiles.tar.gz" --ko-list "$RUNNER_TEMP/ko_list.gz" \
+            --out tests/data/db/kofam
+      - name: Run PR-gate tests
+        run: pixi run test
