@@ -1,6 +1,13 @@
 name: CI on push
 
-on: pull_request
+on:
+  pull_request:
+  # Caches saved on dev, the default branch, are the only ones every PR can restore
+  push:
+    branches: [dev]
+
+env:
+  KOFAM_RELEASE: "2022-08-01"
 
 jobs:
   ci:
@@ -22,7 +29,18 @@ jobs:
       - name: Run pre-commit hooks for linting and other checks
         run: pre-commit run --all-files
 
+  kofam-cache:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.11.3
+        with:
+          pixi-version: v0.82.0
+      - uses: ./.github/actions/kofam-mini-db
+
   test:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -30,7 +48,6 @@ jobs:
         engine: [docker, apptainer]
     env:
       DRAM_ENGINE: ${{ matrix.engine }}
-      KOFAM_RELEASE: "2022-08-01"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -44,26 +61,16 @@ jobs:
       - name: Set up Apptainer
         if: matrix.engine == 'apptainer'
         uses: eWaterCycle/setup-apptainer@v3.0.0
-      # KOfam is KEGG-derived, so its mini database is built here, not committed.
-      # KOFAM_RELEASE must match the release databases/kofam was built from (the one
-      # `build_mini_dbs.py select` chose ids.txt against); see tests/data/db/README.md.
-      - name: Restore KOfam mini database
-        id: kofam
-        uses: actions/cache@v4
-        with:
-          path: |
-            tests/data/db/kofam/kofam.hmm
-            tests/data/db/kofam/kofam_ko_list.tsv
-          key: kofam-${{ env.KOFAM_RELEASE }}-${{ hashFiles('tests/data/db/kofam/ids.txt', 'tests/scripts/build_mini_dbs.py') }}
-      - name: Build KOfam mini database
-        if: steps.kofam.outputs.cache-hit != 'true'
-        run: |
-          # GenomeNet's HTTPS mirror resets the connection for archives; FTP works
-          base=ftp://ftp.genome.jp/pub/db/kofam/archives/$KOFAM_RELEASE
-          curl -fsSL --retry 3 -o "$RUNNER_TEMP/profiles.tar.gz" "$base/profiles.tar.gz"
-          curl -fsSL --retry 3 -o "$RUNNER_TEMP/ko_list.gz" "$base/ko_list.gz"
-          pixi run python tests/scripts/build_mini_dbs.py kofam \
-            --profiles "$RUNNER_TEMP/profiles.tar.gz" --ko-list "$RUNNER_TEMP/ko_list.gz" \
-            --out tests/data/db/kofam
+      - uses: ./.github/actions/kofam-mini-db
       - name: Run PR-gate tests
-        run: pixi run test
+        shell: bash
+        env:
+          # One image cache for all tests; by default each nf-test gets its own and re-downloads
+          NXF_APPTAINER_CACHEDIR: ${{ runner.temp }}/apptainer
+        run: |
+          pixi run test 2>&1 | tee "$RUNNER_TEMP/test.log" && exit 0
+          # Nextflow doesn't retry a failed apptainer image download (docker's are retried by
+          # conf/base.config on exit 125), so rerun once if that is what failed; cached images stay
+          grep -q "Failed to pull singularity image" "$RUNNER_TEMP/test.log" || exit 1
+          echo "::warning::an image download failed; running the nf-tests again"
+          pixi run test-nf

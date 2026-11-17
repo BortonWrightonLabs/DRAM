@@ -1,0 +1,27 @@
+name: KOfam mini database
+description: Restore tests/data/db/kofam from cache, or build it from the pinned GenomeNet archive
+runs:
+  using: composite
+  steps:
+    # KOfam is KEGG-derived, so its mini database is built here, not committed.
+    # KOFAM_RELEASE (workflow env) must match the release databases/kofam was built from (the one
+    # `build_mini_dbs.py select` chose ids.txt against); see tests/data/db/README.md.
+    - name: Restore KOfam mini database
+      id: kofam
+      uses: actions/cache@v4
+      with:
+        path: |
+          tests/data/db/kofam/kofam.hmm
+          tests/data/db/kofam/kofam_ko_list.tsv
+        key: kofam-${{ env.KOFAM_RELEASE }}-${{ hashFiles('tests/data/db/kofam/ids.txt', 'tests/scripts/build_mini_dbs.py') }}
+    - name: Build KOfam mini database
+      if: steps.kofam.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        # GenomeNet's HTTPS mirror resets the connection for archives; FTP works
+        base=ftp://ftp.genome.jp/pub/db/kofam/archives/$KOFAM_RELEASE
+        curl -fsSL --retry 3 -o "$RUNNER_TEMP/profiles.tar.gz" "$base/profiles.tar.gz"
+        curl -fsSL --retry 3 -o "$RUNNER_TEMP/ko_list.gz" "$base/ko_list.gz"
+        pixi run python tests/scripts/build_mini_dbs.py kofam \
+          --profiles "$RUNNER_TEMP/profiles.tar.gz" --ko-list "$RUNNER_TEMP/ko_list.gz" \
+          --out tests/data/db/kofam
