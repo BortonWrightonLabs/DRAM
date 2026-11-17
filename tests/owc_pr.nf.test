@@ -31,7 +31,7 @@ nextflow_pipeline {
                 def rows = path("${out}/${name}").csv(sep: name.endsWith(".csv") ? "," : "\t").rows
                 rows.collect { r -> r.findAll { k, v -> !k.toLowerCase().contains("evalue") }.sort().toString() }.sort()
             }
-            // summarized_genomes.tsv is ~7000 rows of mostly zero counts: keep the row count and non-zero rows
+            // Summary Collection TSVs are thousands of rows of mostly zero counts: keep the row count and non-zero rows
             def summary = { name ->
                 def rows = path("${out}/${name}").csv(sep: "\t").rows
                 def genomes = ["OWC_0000", "OWC_0001"]
@@ -68,7 +68,7 @@ nextflow_pipeline {
             html.each { assert path("${out}/${it}").toFile().length() > 0 }
             assert snapshot(
                 published,
-                published.findAll { it ==~ /.*\.(tsv|csv)/ }.collectEntries { [(it): it.endsWith("summarized_genomes.tsv") ? summary(it) : table(it)] },
+                published.findAll { it ==~ /.*\.(tsv|csv)/ }.collectEntries { [(it): it ==~ /SUMMARIZE\/.*_summary\.tsv/ ? summary(it) : table(it)] },
                 published.findAll { it.endsWith(".xlsx") }.collectEntries { [(it): xlsx(it)] },
                 published.findAll { it ==~ /.*\.(fa|faa|fna|gff)/ }.collectEntries { [(it): path("${out}/${it}").md5] },
             ).match()

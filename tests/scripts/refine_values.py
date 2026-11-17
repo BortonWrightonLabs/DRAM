@@ -4,7 +4,7 @@
 Reads a pipeline --outdir and reduces it to values:
 
 - Summarize: Gene Count per (label, Genome), from `summarized_genomes.tsv` (today) or
-  `summarize/*_summary.tsv` (Refine). Group, description, sheet, file name and order
+  `SUMMARIZE/*_summary.tsv` (Refine). Group, description, sheet, file name and order
   are ignored.
 - Traits and Visualize: Presence or Coverage per (Rule, sheet, Genome), from the
   `df_vertical_genome*.tsv` tables both layouts write.
@@ -53,7 +53,9 @@ def label(text):
 def gene_counts(outdir):
     """{(label, genome): Gene Count} from every Summarize table under outdir."""
     tables = [*outdir.rglob("summarized_genomes.tsv")]
-    tables += [p for p in outdir.rglob("*_summary.tsv") if p.parent.name == "summarize"]
+    tables += [
+        p for p in outdir.rglob("*_summary.tsv") if p.parent.name.lower() == "summarize"
+    ]
     counts = {}
     for table in tables:
         rows = read_tsv(table)
@@ -76,7 +78,7 @@ def sheet(path, outdir):
     """The Refinement and sheet a df_vertical_genome table belongs to, in either layout.
 
     Today: TRAITS publishes SUMMARIZE/df_vertical_genome.tsv and PRODUCT_HEATMAP
-    VISUALIZE/df_vertical_genome_<sheet>.tsv. Refine: traits/[<sheet>/] and visualize/<sheet>/.
+    VISUALIZE/df_vertical_genome_<sheet>.tsv. Refine: TRAITS/[<sheet>/] and VISUALIZE/<sheet>/.
     """
     parts = [p.lower() for p in path.relative_to(outdir).parts[:-1]]
     suffix = path.stem.removeprefix("df_vertical_genome").lstrip("_").lower()

@@ -30,15 +30,15 @@ def test_current_and_refine_layouts_give_the_same_values(tmp_path):
     write(today / "VISUALIZE/df_vertical_genome_ag.tsv", COVERAGE)
     # Refine: one table per Summary Collection, label column first, Groups as header/subheader
     write(
-        refine / "summarize/topic_summary.tsv",
+        refine / "SUMMARIZE/topic_summary.tsv",
         "gene_id\tgene_description\tmodule\theader\tg1\tg2\nK00001\td\tm\tEnergy\t2\t0\n",
     )
     write(
-        refine / "summarize/ecosystem_summary.tsv",
+        refine / "SUMMARIZE/ecosystem_summary.tsv",
         "name\tmodule\tsubheader\tg1\tg2\nAla (CGC)\ttRNAs\tx\t0\t1\nK00001\tm2\tx\t2\t0\n",
     )
-    write(refine / "traits/df_vertical_genome.tsv", VERTICAL)
-    write(refine / "visualize/ag/df_vertical_genome.tsv", COVERAGE)
+    write(refine / "TRAITS/df_vertical_genome.tsv", VERTICAL)
+    write(refine / "VISUALIZE/ag/df_vertical_genome.tsv", COVERAGE)
 
     values = refine_values.extract(today)
     assert values == refine_values.extract(refine)

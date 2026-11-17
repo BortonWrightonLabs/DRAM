@@ -49,17 +49,16 @@
                 "ANNOTATE/collected_rrnas.tsv",
                 "ANNOTATE/raw-annotations.tsv",
                 "ANNOTATE/raw_rrna_scan.tsv",
-                "SUMMARIZE/assimilation_and_cofactor_metabolism_summary.xlsx",
-                "SUMMARIZE/cellular_machinery_summary.xlsx",
-                "SUMMARIZE/df_genome.tsv",
-                "SUMMARIZE/df_vertical_genome.tsv",
-                "SUMMARIZE/energy_acquisition_bioenergetics_summary.xlsx",
-                "SUMMARIZE/environmental_interaction_and_adaptation_summary.xlsx",
-                "SUMMARIZE/summarized_genomes.tsv",
-                "VISUALIZE/df_genome_default.tsv",
-                "VISUALIZE/df_vertical_genome_default.tsv",
-                "VISUALIZE/heatmap_genome_presence_coverage.html",
-                "VISUALIZE/heatmap_traits.html"
+                "SUMMARIZE/ecosystem_summary.tsv",
+                "SUMMARIZE/ecosystem_summary.xlsx",
+                "SUMMARIZE/topic_summary.tsv",
+                "SUMMARIZE/topic_summary.xlsx",
+                "TRAITS/df_genome.tsv",
+                "TRAITS/df_vertical_genome.tsv",
+                "TRAITS/heatmap_genome_presence_coverage.html",
+                "VISUALIZE/default/df_genome.tsv",
+                "VISUALIZE/default/df_vertical_genome.tsv",
+                "VISUALIZE/default/heatmap_genome_presence_coverage.html"
             ],
             {
                 "ANNOTATE/HMM_SEARCH/OWC_0000___formatted_kofam_hits.csv": [
@@ -249,7 +248,26 @@
                 "ANNOTATE/raw_rrna_scan.tsv": [
 
                 ],
-                "SUMMARIZE/df_genome.tsv": [
+                "SUMMARIZE/ecosystem_summary.tsv": {
+                    "rows": 4124,
+                    "counted": [
+                        "K00441\t1\t0",
+                        "K14127\t1\t0",
+                        "K14127\t1\t0"
+                    ]
+                },
+                "SUMMARIZE/topic_summary.tsv": {
+                    "rows": 6819,
+                    "counted": [
+                        "FbpC-iron_uptake_ATPase-rep\t0\t1",
+                        "K00441\t1\t0",
+                        "K01990 | 3.A.1.105.17_P36879 | 3.A.1.132.1_O30489 | 3.A.1.142.1_Q8DNB9 | 3.A.1.143.1_P55339\t0\t1",
+                        "K03388\t1\t0",
+                        "K08264\t1\t0",
+                        "K14127\t1\t0"
+                    ]
+                },
+                "TRAITS/df_genome.tsv": [
                     "[OWC_0000:false, OWC_0001:false, long_name:CO2-fixation, name:CO2-fixation, topic_ecosystem:traits]",
                     "[OWC_0000:false, OWC_0001:false, long_name:acetogen-or-acetate-oxidizer, name:acetogen-or-acetate-oxidizer, topic_ecosystem:traits]",
                     "[OWC_0000:false, OWC_0001:false, long_name:aerobic, name:aerobic, topic_ecosystem:traits]",
@@ -271,11 +289,10 @@
                     "[OWC_0000:false, OWC_0001:false, long_name:non-sulfate-sulfur-reduction, name:non-sulfate-sulfur-reduction, topic_ecosystem:traits]",
                     "[OWC_0000:false, OWC_0001:false, long_name:obligate-fermenter, name:obligate-fermenter, topic_ecosystem:traits]",
                     "[OWC_0000:false, OWC_0001:false, long_name:phototroph, name:phototroph, topic_ecosystem:traits]",
-                    "[OWC_0000:false, OWC_0001:false, long_name:probable-iron-reduction, name:probable-iron-reduction, topic_ecosystem:traits]",
                     "[OWC_0000:false, OWC_0001:false, long_name:sulfate-reduction, name:sulfate-reduction, topic_ecosystem:traits]",
                     "[OWC_0000:false, OWC_0001:false, long_name:sulfur-oxidizer, name:sulfur-oxidizer, topic_ecosystem:traits]"
                 ],
-                "SUMMARIZE/df_vertical_genome.tsv": [
+                "TRAITS/df_vertical_genome.tsv": [
                     "[gene_ids_present:, genome:OWC_0000, long_name:CO2-fixation, name:CO2-fixation, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0000, long_name:acetogen-or-acetate-oxidizer, name:acetogen-or-acetate-oxidizer, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0000, long_name:aerobic, name:aerobic, present:false, topic_ecosystem:traits]",
@@ -297,7 +314,6 @@
                     "[gene_ids_present:, genome:OWC_0000, long_name:non-sulfate-sulfur-reduction, name:non-sulfate-sulfur-reduction, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0000, long_name:obligate-fermenter, name:obligate-fermenter, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0000, long_name:phototroph, name:phototroph, present:false, topic_ecosystem:traits]",
-                    "[gene_ids_present:, genome:OWC_0000, long_name:probable-iron-reduction, name:probable-iron-reduction, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0000, long_name:sulfate-reduction, name:sulfate-reduction, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0000, long_name:sulfur-oxidizer, name:sulfur-oxidizer, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0001, long_name:CO2-fixation, name:CO2-fixation, present:false, topic_ecosystem:traits]",
@@ -321,22 +337,10 @@
                     "[gene_ids_present:, genome:OWC_0001, long_name:non-sulfate-sulfur-reduction, name:non-sulfate-sulfur-reduction, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0001, long_name:obligate-fermenter, name:obligate-fermenter, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0001, long_name:phototroph, name:phototroph, present:false, topic_ecosystem:traits]",
-                    "[gene_ids_present:, genome:OWC_0001, long_name:probable-iron-reduction, name:probable-iron-reduction, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0001, long_name:sulfate-reduction, name:sulfate-reduction, present:false, topic_ecosystem:traits]",
                     "[gene_ids_present:, genome:OWC_0001, long_name:sulfur-oxidizer, name:sulfur-oxidizer, present:false, topic_ecosystem:traits]"
                 ],
-                "SUMMARIZE/summarized_genomes.tsv": {
-                    "rows": 6831,
-                    "counted": [
-                        "FbpC-iron_uptake_ATPase-rep\t0\t1",
-                        "K00441\t1\t0",
-                        "K01990 | 3.A.1.105.17_P36879 | 3.A.1.132.1_O30489 | 3.A.1.142.1_Q8DNB9 | 3.A.1.143.1_P55339\t0\t1",
-                        "K03388\t1\t0",
-                        "K08264\t1\t0",
-                        "K14127\t1\t0"
-                    ]
-                },
-                "VISUALIZE/df_genome_default.tsv": [
+                "VISUALIZE/default/df_genome.tsv": [
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Aminoglycosde efflux, name:Aminoglycosde efflux]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Aminoglycoside alteration, name:Aminoglycoside alteration]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Aminoglycoside inactivation, name:Aminoglycoside inactivation]",
@@ -437,7 +441,7 @@
                     "[OWC_0000:false, OWC_0001:false, group:Vitamin biosynthesis, long_name:Riboflavin (B2), name:Riboflavin (B2)]",
                     "[OWC_0000:false, OWC_0001:false, group:Vitamin biosynthesis, long_name:Thiamine, name:Thiamine]"
                 ],
-                "VISUALIZE/df_vertical_genome_default.tsv": [
+                "VISUALIZE/default/df_vertical_genome.tsv": [
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Aminoglycosde efflux, name:Aminoglycosde efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Aminoglycoside alteration, name:Aminoglycoside alteration, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Aminoglycoside inactivation, name:Aminoglycoside inactivation, present:false]",
@@ -639,18 +643,84 @@
                 ]
             },
             {
-                "SUMMARIZE/assimilation_and_cofactor_metabolism_summary.xlsx": {
+                "SUMMARIZE/ecosystem_summary.xlsx": {
+                    "ag": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "header",
+                            "module",
+                            "subheader"
+                        ],
+                        "rows": 792,
+                        "md5": "79ebee4d20dd5fecde7fe4ca029d4ff7"
+                    },
+                    "bgc": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "header",
+                            "module",
+                            "subheader"
+                        ],
+                        "rows": 1145,
+                        "md5": "8d9ecb4f20af901820d0ab74640f2cc0"
+                    },
+                    "eng_sys": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "header",
+                            "module",
+                            "subheader"
+                        ],
+                        "rows": 725,
+                        "md5": "55318c50ad37d41e834148aabcdddddc"
+                    },
+                    "gut": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "header",
+                            "module",
+                            "subheader"
+                        ],
+                        "rows": 754,
+                        "md5": "2105ed51bd7b973101781ea8b94281e5"
+                    },
+                    "marine": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "header",
+                            "module",
+                            "subheader"
+                        ],
+                        "rows": 708,
+                        "md5": "c50f764a9e047f7d351e2e1232239758"
+                    }
+                },
+                "SUMMARIZE/topic_summary.xlsx": {
                     "Anabolism biosynthesis": {
                         "columns": [
                             "OWC_0000",
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
                         "rows": 585,
-                        "md5": "1dcbbc8be1201363e5421df5a8ba8132"
+                        "md5": "126758660b3c56a7de3b2c0e55d31588"
                     },
                     "Assimilation nutrient aquistion": {
                         "columns": [
@@ -658,63 +728,21 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
-                        "rows": 536,
-                        "md5": "8f042f86e6440e42607eaf7c8d1c17fa"
+                        "rows": 538,
+                        "md5": "2951a60d44a8287a52cde97fa46925a0"
                     },
-                    "Transporters": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module",
-                            "workbook"
-                        ],
-                        "rows": 892,
-                        "md5": "6835a240160fff60515a5ac59c60487f"
-                    }
-                },
-                "SUMMARIZE/cellular_machinery_summary.xlsx": {
-                    "Housekeeping": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module",
-                            "workbook"
-                        ],
-                        "rows": 282,
-                        "md5": "1bcebd6af0834e560b0efe86159a74c3"
-                    },
-                    "Motility": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module",
-                            "workbook"
-                        ],
-                        "rows": 74,
-                        "md5": "8cde3711324e41521fb7b5cbc8442525"
-                    }
-                },
-                "SUMMARIZE/energy_acquisition_bioenergetics_summary.xlsx": {
                     "Carbon_Central Carbon": {
                         "columns": [
                             "OWC_0000",
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
-                        "rows": 160,
-                        "md5": "e0a9e4e5b703f0c3b8df0dda80ccb11c"
+                        "rows": 154,
+                        "md5": "8385585277c1610446ae31623b7a3539"
                     },
                     "Carbon_Hydrocarbons": {
                         "columns": [
@@ -722,11 +750,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
-                        "rows": 310,
-                        "md5": "2a323dd58671d4a743955f3c2f417554"
+                        "rows": 309,
+                        "md5": "fcbb7946013b8367a9437b2e61bb95c3"
                     },
                     "Carbon_Organic Trophic": {
                         "columns": [
@@ -734,11 +761,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
-                        "rows": 2554,
-                        "md5": "a20dd48a49c3e88bf818b2d66940117c"
+                        "rows": 2552,
+                        "md5": "e99a4149080fdc88027d559fbc2a4384"
                     },
                     "Carbon_Other": {
                         "columns": [
@@ -746,11 +772,43 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
                         "rows": 22,
-                        "md5": "305d5893180ff48a2ee5c78caf662726"
+                        "md5": "bb6339663d8bbc33d909aac5a88ab66f"
+                    },
+                    "Defense System-Viral": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "module"
+                        ],
+                        "rows": 56,
+                        "md5": "af417190803bae68375612855530cf84"
+                    },
+                    "Housekeeping": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "module"
+                        ],
+                        "rows": 282,
+                        "md5": "9ec9741c0c83fe57bbed3eb91d0d9db3"
+                    },
+                    "Motility": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "module"
+                        ],
+                        "rows": 74,
+                        "md5": "a531d49ab4b704e6c4146468671f0edb"
                     },
                     "Photosynthesis": {
                         "columns": [
@@ -758,11 +816,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
-                        "rows": 40,
-                        "md5": "4f61d324026f9562e8feb8f730a06a27"
+                        "rows": 37,
+                        "md5": "ed2fd8fbe98371285c68631e00fb064f"
                     },
                     "Respiratory- Nitrogen": {
                         "columns": [
@@ -770,11 +827,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
                         "rows": 23,
-                        "md5": "3a361452aaf90c2d8729bb2365b0f211"
+                        "md5": "a8b189c035717c6cb64d963142bad86e"
                     },
                     "Respiratory- Other": {
                         "columns": [
@@ -782,11 +838,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
-                        "rows": 338,
-                        "md5": "c44482f1f2c23283fc9cfdc5e42db286"
+                        "rows": 155,
+                        "md5": "38198953948f62fe763e5f99665b5f35"
                     },
                     "Respiratory- Oxygen": {
                         "columns": [
@@ -794,11 +849,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
                         "rows": 56,
-                        "md5": "22adf272e7137e0d72de103dc09ac125"
+                        "md5": "61319831ddeceb84cda034ab35886720"
                     },
                     "Respiratory-ETC": {
                         "columns": [
@@ -806,25 +860,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
                         "rows": 154,
-                        "md5": "04cd36880e06cb0cd1dd2db682124629"
-                    }
-                },
-                "SUMMARIZE/environmental_interaction_and_adaptation_summary.xlsx": {
-                    "Defense System-Viral": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module",
-                            "workbook"
-                        ],
-                        "rows": 56,
-                        "md5": "7ab4b8407627d177757d74f38aa79d9a"
+                        "md5": "a10d92c0849f45354dfb4bea55101b6c"
                     },
                     "Social interactions": {
                         "columns": [
@@ -832,11 +871,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
                         "rows": 432,
-                        "md5": "610af1d31f5c76133ac177fbbf79d04e"
+                        "md5": "86764079307928599cb18ce512453fb1"
                     },
                     "Stress Tolerance-Metal": {
                         "columns": [
@@ -844,11 +882,10 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
-                        "rows": 165,
-                        "md5": "ef66e05814b12b315089eb11cb7e98a7"
+                        "rows": 186,
+                        "md5": "67253b8f2dca69c797302b06d7bcb0f2"
                     },
                     "Stress tolerance- general": {
                         "columns": [
@@ -856,11 +893,21 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module",
-                            "workbook"
+                            "module"
                         ],
                         "rows": 152,
-                        "md5": "438a93ed11896d78bdff8a8d39c3676f"
+                        "md5": "64b1a5293147b037981febcfedfe1313"
+                    },
+                    "Transporters": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "module"
+                        ],
+                        "rows": 1052,
+                        "md5": "e30cfe1dfd163e8a44546370efe7e189"
                     }
                 }
             },
@@ -877,7 +924,7 @@
                 "ANNOTATE/RENAMED_HEADERS/OWC_0001.fa": "651a1d0f186fe7e9d92d65aef45e2a90"
             }
         ],
-        "timestamp": "2026-11-16T18:19:19.852221",
+        "timestamp": "2026-11-17T12:39:10.13599362",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.4"
