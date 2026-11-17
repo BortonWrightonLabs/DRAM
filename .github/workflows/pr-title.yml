@@ -1,0 +1,21 @@
+name: PR title
+
+# Squash merges into dev take their commit title from the PR title (or the
+# single commit's title), and git-cliff groups the changelog by it.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  conventional-title:
+    runs-on: ubuntu-latest
+    steps:
+      # Allowed types: the action's defaults (conventionalcommits.org); cliff.toml groups each one
+      - uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          validateSingleCommit: true

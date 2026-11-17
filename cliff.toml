@@ -9,6 +9,8 @@ header = """
 All notable changes to this project will be documented in this file.\n
 """
 # A Tera template to be rendered for each release in the changelog.
+# The body is the raw message after the title: git-cliff's parsed body stops at
+# any paragraph starting `Word:` (read as a git trailer), e.g. "Tests:".
 # See https://keats.github.io/tera/docs/#introduction
 body = """
 {% if version %}\
@@ -26,15 +28,10 @@ body = """
     ### {{ group | upper_first }}
     {% for commit in commits %}
         - {{ commit.message | split(pat="\n") | first | upper_first | trim }} ([{{ commit.id | truncate(length=7, end="") }}](https://github.com/BortonWrightonLabs/DRAM/commit/{{ commit.id }}))\
-          {% if commit.body %}\
+          {% set body = commit.raw_message | split(pat="\n") | slice(start=1) | join(sep="\n") | trim %}\
+          {% if body %}\
           \n
-          {{ commit.body | indent(prefix="  ", first=true) }}\
-          {% endif %}\
-          {% if commit.footers %}\
-            {% for footer in commit.footers -%}
-                \n
-                , {{ footer.token }}{{ footer.separator }}{{ footer.value }}\
-            {% endfor %}\
+          {{ body | indent(prefix="  ", first=true) }}\
           {% endif %}\
           \n
     {% endfor %}
@@ -54,9 +51,15 @@ trim = true
 conventional_commits = true
 # Exclude commits that do not match the conventional commits specification.
 filter_unconventional = false
+# Strip trailers that aren't changelog content; link "(#123)" from GitHub squash merges.
+commit_preprocessors = [
+    { pattern = '(?m)^Co-authored-by: .*$', replace = "" },
+    { pattern = '\(#(\d+)\)', replace = "([#${1}](https://github.com/BortonWrightonLabs/DRAM/pull/${1}))" },
+]
 # An array of regex based parsers for extracting data from the commit message.
 # Assigns commits to groups.
 # Optionally sets the commit's scope and can decide to exclude commits from further processing.
+# One group per type .github/workflows/pr-title.yml allows (the conventional types).
 commit_parsers = [
     { message = "^feat", group = "Features" },
     { message = "^fix", group = "Bug Fixes" },
@@ -65,11 +68,14 @@ commit_parsers = [
     { message = "^refactor", group = "Refactor" },
     { message = "^style", group = "Styling" },
     { message = "^test", group = "Testing" },
+    { message = "^build", group = "Build" },
+    { message = "^revert", group = "Revert" },
     { message = "^chore\\(deps.*\\)", skip = true },
     { message = "^chore\\(pr\\)", skip = true },
     { message = "^chore\\(pull\\)", skip = true },
     { message = "^chore\\(release\\): prepare for", skip = true },
     { message = "^chore|^ci", group = "Miscellaneous Tasks" },
+    # Older commits only; the PR title check doesn't allow it
     { message = "^package", group = "Package" },
     { body = ".*security", group = "Security" },
 ]
