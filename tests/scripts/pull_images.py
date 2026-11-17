@@ -6,7 +6,10 @@ dropped connection fails the run. Pulling first, with retries, into the director
 Nextflow reads (NXF_APPTAINER_CACHEDIR) means the run itself downloads nothing.
 
     nextflow inspect main.nf -profile test,apptainer ... > images.json
-    pull_images.py images.json CACHE_DIR
+    pull_images.py images.json CACHE_DIR PROCESSES.txt
+
+Only the images of the processes listed in PROCESSES.txt are pulled: inspect lists
+every process the pipeline includes, and the unused images cost minutes.
 """
 
 import json
@@ -47,13 +50,25 @@ def pull(url, path):
     raise SystemExit(f"could not pull {url}")
 
 
-def main(inspect_json, cache_dir):
+def images(inspect_json, processes_txt):
+    """Image URLs of the listed processes; a name inspect doesn't know is an error."""
+    lines = Path(processes_txt).read_text().splitlines()
+    wanted = {
+        line.strip() for line in lines if line.strip() and not line.startswith("#")
+    }
+    containers = {
+        p["name"]: p["container"]
+        for p in json.loads(Path(inspect_json).read_text())["processes"]
+    }
+    if unknown := wanted - set(containers):
+        raise SystemExit(f"not in the pipeline (renamed?): {sorted(unknown)}")
+    return sorted({image_url(containers[name]) for name in wanted if containers[name]})
+
+
+def main(inspect_json, cache_dir, processes_txt):
     cache_dir = Path(cache_dir)
     cache_dir.mkdir(parents=True, exist_ok=True)
-    processes = json.loads(Path(inspect_json).read_text())["processes"]
-    for url in sorted(
-        {image_url(p["container"]) for p in processes if p.get("container")}
-    ):
+    for url in images(inspect_json, processes_txt):
         path = cache_dir / cache_name(url)
         if not path.exists():
             pull(url, path)

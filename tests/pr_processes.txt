@@ -1,0 +1,22 @@
+# Processes the PR-gate nf-tests run (`pixi run test-nf`). CI pre-pulls only their
+# apptainer images (tests/scripts/pull_images.py); a missing one is still pulled,
+# without retries, and CI warns. Names as `nextflow inspect` prints them.
+CALL_GENES
+COMBINE_ANNOTATIONS
+DECOMPRESS_FASTA
+GENE_LOCS
+HMM_SEARCH
+MERGE_ANNOTATIONS
+MMSEQS_INDEX
+MMSEQS_SEARCH
+MULTIQC
+PRODUCT_HEATMAP
+QUAST
+RENAME_FASTA
+RENAME_PROTEINS
+RRNA_COLLECT
+RRNA_SCAN
+SUMMARIZE
+TRAITS
+TRNA_COLLECT
+TRNA_SCAN
