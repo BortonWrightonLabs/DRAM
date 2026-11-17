@@ -65,5 +65,16 @@ jobs:
           pixi run python tests/scripts/build_mini_dbs.py kofam \
             --profiles "$RUNNER_TEMP/profiles.tar.gz" --ko-list "$RUNNER_TEMP/ko_list.gz" \
             --out tests/data/db/kofam
+      # Nextflow doesn't retry a failed apptainer image download, and gives each nf-test its own
+      # image cache; pull every image once, with retries, into one cache all tests share.
+      # (Docker pulls inside the task, so conf/base.config retries those on exit 125.)
+      - name: Pull apptainer images
+        if: matrix.engine == 'apptainer'
+        run: |
+          echo "NXF_APPTAINER_CACHEDIR=$RUNNER_TEMP/apptainer" >> "$GITHUB_ENV"
+          pixi run nextflow -q inspect main.nf -profile test,apptainer -c tests/nextflow.config -c tests/pr.config \
+            --outdir "$RUNNER_TEMP/inspect" --summarize --traits --visualize --qc \
+            > "$RUNNER_TEMP/images.json"
+          pixi run python tests/scripts/pull_images.py "$RUNNER_TEMP/images.json" "$RUNNER_TEMP/apptainer"
       - name: Run PR-gate tests
         run: pixi run test
