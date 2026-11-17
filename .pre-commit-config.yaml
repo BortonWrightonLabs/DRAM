@@ -26,10 +26,11 @@ repos:
               assets/slackreport.json
           )$
       - id: detect-private-key
+      # test data must stay byte-identical to its source databases
       - id: end-of-file-fixer
-        exclude: \.md$
+        exclude: (\.md$|^tests/data/)
       - id: trailing-whitespace
-        exclude: \.md$
+        exclude: (\.md$|^tests/data/)
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.4
     hooks:

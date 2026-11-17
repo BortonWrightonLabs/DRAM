@@ -1,0 +1,4 @@
+hmm_name	A_rank	B_rank	score_type	description
+DmpO	180	130	full	HMM; dmpO; Phenol hydroxylase
+TmoB_BmoB	180	140	full	HMM; tmoB; Toluene/Benzene 4-monooxygenase
+TomA4	200	150	full	HMM; tomA4; Toluene 2-monooxygenase/Phenol Hydroxylase

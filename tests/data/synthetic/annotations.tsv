@@ -1,0 +1,51 @@
+query_id	input_fasta	scaffold	gene_number	start_position	stop_position	strandedness	rank	kofam_id	camper_id	camper_score_rank	camper_full_bitScore	cant_hyd_id	cant_hyd_rank	cant_hyd_bitScore	dbcan_id	dbcan_sub_id	dbcan_sub_ec	dbcan_EC	fegenie_id	fegenie_full_bitScore	methyl_id	methyl_bitScore	sulfur_id	sulfur_full_bitScore	heme_regulatory_motif_count
+synthetic_01_scaffold_0001_1	synthetic_01	synthetic_01_scaffold_0001	1	1000	1899	1	D		D00001	A	820.0														0
+synthetic_01_scaffold_0001_2	synthetic_01	synthetic_01_scaffold_0001	2	2000	2899	1	D		D00014	B	551.0														0
+synthetic_01_scaffold_0001_3	synthetic_01	synthetic_01_scaffold_0001	3	3000	3899	1	D					AhyA	A	754.0											0
+synthetic_01_scaffold_0001_4	synthetic_01	synthetic_01_scaffold_0001	4	4000	4899	1	D					AlkB	B	531.0											0
+synthetic_01_scaffold_0001_5	synthetic_01	synthetic_01_scaffold_0001	5	5000	5899	1	D												ExtA_pcc_cyt	210.0					0
+synthetic_01_scaffold_0001_6	synthetic_01	synthetic_01_scaffold_0001	6	6000	6899	1	D												ExtB_porin	180.0					0
+synthetic_01_scaffold_0001_7	synthetic_01	synthetic_01_scaffold_0001	7	7000	7899	1	D												ExtC_pcc_lp_cyt	150.0					0
+synthetic_01_scaffold_0001_8	synthetic_01	synthetic_01_scaffold_0001	8	8000	8899	1	D												ExtD_pcc_lp_cyt	140.0					0
+synthetic_01_scaffold_0001_9	synthetic_01	synthetic_01_scaffold_0001	9	9000	9899	1	D												FoxE	300.0					0
+synthetic_01_scaffold_0001_10	synthetic_01	synthetic_01_scaffold_0001	10	10000	10899	1	D												FoxY	290.0					0
+synthetic_01_scaffold_0001_11	synthetic_01	synthetic_01_scaffold_0001	11	11000	11899	1	D												FoxZ	280.0					0
+synthetic_01_scaffold_0001_12	synthetic_01	synthetic_01_scaffold_0001	12	12000	12899	1	D												Cyc2_repCluster1	400.0					0
+synthetic_01_scaffold_0001_13	synthetic_01	synthetic_01_scaffold_0001	13	13000	13899	1	D												Cyc2_repCluster2	390.0					0
+synthetic_01_scaffold_0001_14	synthetic_01	synthetic_01_scaffold_0001	14	14000	14899	1	D												MtrB_TIGR03509	250.0					0
+synthetic_01_scaffold_0001_15	synthetic_01	synthetic_01_scaffold_0001	15	15000	15899	1	D																dsrA	500.0	0
+synthetic_01_scaffold_0001_16	synthetic_01	synthetic_01_scaffold_0001	16	16000	16899	1	D																dsrB	480.0	0
+synthetic_01_scaffold_0001_17	synthetic_01	synthetic_01_scaffold_0001	17	17000	17899	1	D																SoxY	120.0	0
+synthetic_01_scaffold_0001_18	synthetic_01	synthetic_01_scaffold_0001	18	18000	18899	1	D																SoxZ	110.0	0
+synthetic_01_scaffold_0001_19	synthetic_01	synthetic_01_scaffold_0001	19	19000	19899	1	D																sqr_alignment	330.0	0
+synthetic_01_scaffold_0001_20	synthetic_01	synthetic_01_scaffold_0001	20	20000	20899	1	D								GH1	GH1_e1	3.2.1.21:5								0
+synthetic_01_scaffold_0001_21	synthetic_01	synthetic_01_scaffold_0001	21	21000	21899	1	D								GH9	GH9_e3	3.2.1.4:12								0
+synthetic_01_scaffold_0001_22	synthetic_01	synthetic_01_scaffold_0001	22	22000	22899	1	D								AA3_1	AA3_e12	1.1.99.18:3								0
+synthetic_01_scaffold_0001_23	synthetic_01	synthetic_01_scaffold_0001	23	23000	23899	1	D								GH5	GH5_e40	3.2.1.4:40								0
+synthetic_01_scaffold_0001_24	synthetic_01	synthetic_01_scaffold_0001	24	24000	24899	1	D								CBM50			EC:6.2.1.27; EC:6.2.1.25							0
+synthetic_01_scaffold_0001_25	synthetic_01	synthetic_01_scaffold_0001	25	25000	25899	1	D								GT41			EC:1.14.13.2							0
+synthetic_01_scaffold_0001_26	synthetic_01	synthetic_01_scaffold_0001	26	26000	26899	1	D														METHYL_0016	128.0			0
+synthetic_01_scaffold_0001_27	synthetic_01	synthetic_01_scaffold_0001	27	27000	27899	1	D	K05574																	0
+synthetic_01_scaffold_0001_28	synthetic_01	synthetic_01_scaffold_0001	28	28000	28899	1	D	K05582																	0
+synthetic_01_scaffold_0001_29	synthetic_01	synthetic_01_scaffold_0001	29	29000	29899	1	D	K05581																	0
+synthetic_01_scaffold_0001_30	synthetic_01	synthetic_01_scaffold_0001	30	30000	30899	1	D	K05579																	0
+synthetic_01_scaffold_0001_31	synthetic_01	synthetic_01_scaffold_0001	31	31000	31899	1	D	K05572																	0
+synthetic_01_scaffold_0001_32	synthetic_01	synthetic_01_scaffold_0001	32	32000	32899	1	D	K05580																	0
+synthetic_01_scaffold_0001_33	synthetic_01	synthetic_01_scaffold_0001	33	33000	33899	1	D	K05578																	0
+synthetic_01_scaffold_0001_34	synthetic_01	synthetic_01_scaffold_0001	34	34000	34899	1	D	K02275																	0
+synthetic_02_scaffold_0001_1	synthetic_02	synthetic_02_scaffold_0001	1	1000	1899	1	D		D00014;CarE	A	362.0														0
+synthetic_02_scaffold_0001_2	synthetic_02	synthetic_02_scaffold_0001	2	2000	2899	1	D					BAC0604	B	121.0											0
+synthetic_02_scaffold_0001_3	synthetic_02	synthetic_02_scaffold_0001	3	3000	3899	1	D												ExtA_pcc_cyt	205.0					0
+synthetic_02_scaffold_0001_4	synthetic_02	synthetic_02_scaffold_0001	4	4000	4899	1	D												FoxE	300.0					0
+synthetic_02_scaffold_0001_5	synthetic_02	synthetic_02_scaffold_0001	5	5000	5899	1	D												Cyc2_repCluster1	400.0					0
+synthetic_02_scaffold_0001_6	synthetic_02	synthetic_02_scaffold_0001	6	6000	6899	1	D																dsrA	500.0	0
+synthetic_02_scaffold_0001_7	synthetic_02	synthetic_02_scaffold_0001	7	7000	7899	1	D								GH9	GH9_e3	-								0
+synthetic_02_scaffold_0001_8	synthetic_02	synthetic_02_scaffold_0001	8	8000	8899	1	D																		0
+synthetic_02_scaffold_0001_9	synthetic_02	synthetic_02_scaffold_0001	9	9000	9899	1	D	K05574																	0
+synthetic_02_scaffold_0001_10	synthetic_02	synthetic_02_scaffold_0001	10	10000	10899	1	D	K05582																	0
+synthetic_02_scaffold_0001_11	synthetic_02	synthetic_02_scaffold_0001	11	11000	11899	1	D	K05581																	0
+synthetic_02_scaffold_0001_12	synthetic_02	synthetic_02_scaffold_0001	12	12000	12899	1	D	K05579																	0
+synthetic_02_scaffold_0001_13	synthetic_02	synthetic_02_scaffold_0001	13	13000	13899	1	D	K05572																	0
+synthetic_02_scaffold_0001_14	synthetic_02	synthetic_02_scaffold_0001	14	14000	14899	1	D	K05580																	0
+synthetic_02_scaffold_0001_15	synthetic_02	synthetic_02_scaffold_0001	15	15000	15899	1	D	K05578																	0
+synthetic_02_scaffold_0001_16	synthetic_02	synthetic_02_scaffold_0001	16	16000	16899	1	D	K02275																	0

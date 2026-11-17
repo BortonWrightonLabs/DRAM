@@ -1,0 +1,7 @@
+genome	number of scaffolds	5S rRNA	16S rRNA	23S rRNA	tRNA count
+genome_03	296		genome_03_scaffold_0004 (1, 895)		44
+genome_04	500	7 present			48
+genome_01	310	6 present	genome_01_scaffold_0099 (16739, 17722)		90
+genome_05	333				47
+genome_02	416	genome_02_scaffold_0235 (7, 102)			38
+genome_06	343		genome_06_scaffold_0049 (2, 952)		52

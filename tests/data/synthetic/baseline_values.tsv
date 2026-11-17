@@ -1,0 +1,86 @@
+kind	sheet	label	genome	value
+gene_count		AA3_1	synthetic_01	1
+gene_count		AhyA	synthetic_01	1
+gene_count		AlkB	synthetic_01	1
+gene_count		AlkB|AlmA_GroupI|AlmA_GroupIII|pBmoA|pBmoB|pBmoC|sBmoX|sBmoY|sBmoZ|CYP153|LadA_alpha|LadA_beta|LadB|PrmA|PrmC|AhyA|AssA	synthetic_01	2
+gene_count		Cyc2_repCluster1	synthetic_01	1
+gene_count		Cyc2_repCluster1	synthetic_02	1
+gene_count		Cyc2_repCluster2	synthetic_01	1
+gene_count		D00001	synthetic_01	1
+gene_count		D00014	synthetic_01	1
+gene_count		D00014|K22432	synthetic_01	1
+gene_count		EC:1.14.13.2	synthetic_01	1
+gene_count		ExtA_pcc_cyt	synthetic_01	1
+gene_count		ExtA_pcc_cyt	synthetic_02	1
+gene_count		ExtB_porin	synthetic_01	1
+gene_count		ExtC_pcc_lp_cyt	synthetic_01	1
+gene_count		ExtD_pcc_lp_cyt	synthetic_01	1
+gene_count		FoxE	synthetic_01	1
+gene_count		FoxE	synthetic_02	1
+gene_count		FoxY	synthetic_01	1
+gene_count		FoxZ	synthetic_01	1
+gene_count		GH1	synthetic_01	1
+gene_count		GH5	synthetic_01	1
+gene_count		GH5_e40	synthetic_01	1
+gene_count		GH9	synthetic_01	1
+gene_count		GH9	synthetic_02	1
+gene_count		HMM@dsrA	synthetic_01	1
+gene_count		HMM@dsrA	synthetic_02	1
+gene_count		HMM@dsrB	synthetic_01	1
+gene_count		K02275	synthetic_01	1
+gene_count		K02275	synthetic_02	1
+gene_count		K05572	synthetic_01	1
+gene_count		K05572	synthetic_02	1
+gene_count		K05574	synthetic_01	1
+gene_count		K05574	synthetic_02	1
+gene_count		K05578	synthetic_01	1
+gene_count		K05578	synthetic_02	1
+gene_count		K05579	synthetic_01	1
+gene_count		K05579	synthetic_02	1
+gene_count		K05580	synthetic_01	1
+gene_count		K05580	synthetic_02	1
+gene_count		K05581	synthetic_01	1
+gene_count		K05581	synthetic_02	1
+gene_count		K05582	synthetic_01	1
+gene_count		K05582	synthetic_02	1
+gene_count		K11180 | dsrA	synthetic_01	1
+gene_count		K11180 | dsrA	synthetic_02	1
+gene_count		K11181 | dsrB	synthetic_01	1
+gene_count		K17226 | SoxY	synthetic_01	1
+gene_count		K17227 | SoxZ	synthetic_01	1
+gene_count		MtrB_TIGR03509	synthetic_01	1
+gene_count		SoxY	synthetic_01	1
+gene_count		SoxZ	synthetic_01	1
+gene_count		dsrA	synthetic_01	1
+gene_count		dsrA	synthetic_02	1
+gene_count		dsrB	synthetic_01	1
+gene_count		sqr_alignment	synthetic_01	1
+presence	traits	aerobic	synthetic_01	True
+presence	traits	aerobic	synthetic_02	True
+presence	traits	iron-oxidation	synthetic_01	True
+presence	traits	iron-reduction	synthetic_01	True
+presence	traits	iron-reduction	synthetic_02	True
+presence	traits	sulfur-oxidizer	synthetic_01	True
+presence	visualize/ag	Cellulose	synthetic_01	True
+presence	visualize/ag	Iron Oxidation	synthetic_01	True
+presence	visualize/ag	Iron Reduction	synthetic_01	True
+presence	visualize/ag	Iron Reduction	synthetic_02	True
+presence	visualize/ag	Sulfur Oxidation	synthetic_01	True
+presence	visualize/aquatic	Cellulose	synthetic_01	True
+presence	visualize/bgc	4-Hydroxybenzoate	synthetic_01	True
+presence	visualize/bgc	Alkane Long-Chain - Aerobic	synthetic_01	True
+presence	visualize/bgc	Cellulose	synthetic_01	True
+presence	visualize/bgc	ETC: Complex I Nadh Dehydrogenase	synthetic_01	True
+presence	visualize/bgc	ETC: Complex I Nadh Dehydrogenase	synthetic_02	True
+presence	visualize/bgc	Iron Oxidation	synthetic_01	True
+presence	visualize/bgc	Iron Reduction	synthetic_01	True
+presence	visualize/bgc	Iron Reduction	synthetic_02	True
+presence	visualize/bgc	Sulfur Oxidation	synthetic_01	True
+presence	visualize/eng_sys	4-Hydroxybenzoate	synthetic_01	True
+presence	visualize/eng_sys	Alkane Long-Chain – Aerobic	synthetic_01	True
+presence	visualize/eng_sys	Cellulose	synthetic_01	True
+presence	visualize/eng_sys	Iron Oxidation	synthetic_01	True
+presence	visualize/eng_sys	Iron/Manganese/Selenium-Reduction	synthetic_01	True
+presence	visualize/eng_sys	Iron/Manganese/Selenium-Reduction	synthetic_02	True
+presence	visualize/eng_sys	Sulfur Oxidation	synthetic_01	True
+presence	visualize/gut	Cellulose	synthetic_01	True

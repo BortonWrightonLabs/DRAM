@@ -1,0 +1,11 @@
+# Keeps the GitHub Actions in .github/ on current versions, so runtime deprecations
+# (e.g. Node 20 -> 24) are a reviewable PR instead of a CI warning someone has to notice.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directories: ["/", "/.github/actions/*"]
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]

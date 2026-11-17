@@ -58,6 +58,8 @@ elif tool == "hmm_parser.py":
 elif tool == "mmseqs":
     if args[0] == "createdb":
         Path(args[2]).write_text(sample(args[1]) + "\n")
+        # real createdb also writes <db>.index
+        Path(args[2] + ".index").write_text(sample(args[1]) + "\n")
     elif args[0] == "createindex":
         assert option("--threads") == "1"
         Path(args[1] + ".index").write_text(sample(args[1]) + "\n")
@@ -72,7 +74,15 @@ elif tool == "mmseqs":
         name = sample(args[1])
         assert sample(args[3]) == name
         Path(args[4]).write_text("" if name == "nohit" else name + "\n")
-    elif args[0] != "filterdb":
+    elif args[0] == "filterdb":
+        # every filterdb flag DRAM uses takes a value; the positionals are in, out
+        positional = [
+            a
+            for i, a in enumerate(args[1:], 1)
+            if not a.startswith("--") and not args[i - 1].startswith("--")
+        ]
+        Path(positional[1]).write_text(Path(positional[0]).read_text())
+    elif args[0] != "rmdb":
         raise AssertionError(args)
 elif tool == "mmseqs_add_descriptions.py":
     name, db, info, bitscore, loci, raw, output = args

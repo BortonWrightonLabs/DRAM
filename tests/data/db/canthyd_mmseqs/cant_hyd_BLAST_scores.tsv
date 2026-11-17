@@ -1,0 +1,9 @@
+blast_name	A_rank	B_rank	score_type	description
+BAC0001	200	120	full	abeM;Q5FAM9_ACIBA Multidrug efflux pump AbeM OS=Acinetobacter baumannii GN=abeM PE=4 SV=2
+BAC0478	200	120	full	adeT1;C7F8K6_ACIBA AdeT1 OS=Acinetobacter baumannii PE=4 SV=1
+BAC0035	200	120	full	arsM;Q6N3Y0_RHOPA UbiE/COQ5 methyltransferase OS=Rhodopseudomonas palustris (strain ATCC BAA-98 / CGA009) GN=RPA3562 PE=4 SV=1
+BAC0162	200	120	full	fbpC;FBPC2_HAEIN Fe(3+) ions import ATP-binding protein FbpC 2 OS=Haemophilus influenzae (strain ATCC 51907 / DSM 11121 / KW20 / Rd) GN=fbpC2 PE=1 SV=1
+BAC0400	200	120	full	troB;TROB_TREPA Zinc transport system ATP-binding protein TroB OS=Treponema pallidum (strain Nichols) GN=troB PE=3 SV=1
+BAC0607	200	120	full	tupC;Q93KD4_EUBAC ATPase component of tungstate ABC transporter OS=Eubacterium acidaminophilum GN=tupC PE=4 SV=1
+BAC0604	200	120	full	wtpC;WTPC_PYRFU Molybdate/tungstate import ATP-binding protein WtpC OS=Pyrococcus furiosus (strain ATCC 43587 / DSM 3638 / JCM 8422 / Vc1) GN=wtpC PE=3 SV=1
+BAC0465	200	120	full	znuC/yebM;ZNUC_ECOLI Zinc import ATP-binding protein ZnuC OS=Escherichia coli (strain K12) GN=znuC PE=1 SV=1

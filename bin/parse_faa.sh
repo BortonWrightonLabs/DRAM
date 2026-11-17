@@ -13,8 +13,8 @@ BEGIN { OFS="\t"; print "query_id","start_position","stop_position","strandednes
     stop  = a[3]
     strand = a[4]
     gene_field = a[5]
+    sub(/;.*/, "", gene_field)   # keep only ID=<scaffold>_<gene> (later fields contain "_" too)
     sub(/.*_/, "", gene_field)   # strip everything up to last underscore
-    sub(/;.*/, "", gene_field)   # strip everything after first semicolon
     print id, start+0, stop+0, strand+0, gene_field
 }' "$INPUT_FILE" > "$OUTPUT_FILE"
 

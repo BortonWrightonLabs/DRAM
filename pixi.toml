@@ -1,0 +1,32 @@
+[workspace]
+name = "dram"
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.13.*"
+nextflow = "25.10.4.*"
+nf-test = ">=0.9"
+pytest = ">=8"
+pandas = ">=2"
+polars = ">=1"
+click = "<9"
+scikit-bio = "0.7.1.*"
+# tests/scripts/build_mini_dbs.py; mmseqs2 matches modules/local/annotate/environment.yml
+pyhmmer = "*"
+mmseqs2 = "18.8cc5c.*"
+# tests/scripts/anonymize_dram1.py rewrites DRAM1 metabolism_summary.xlsx
+openpyxl = "*"
+# tests/python/test_distill.py runs bin/distill.py (modules/local/distill/environment.yml)
+xlsxwriter = "*"
+networkx = ">=3,<4"
+lark = "*"
+
+# Container engine: singularity by default (apptainer's `singularity` shim satisfies it);
+# set DRAM_ENGINE=docker or apptainer to switch.
+[tasks]
+test-py = "pytest"
+test-nf = "sh -c 'nf-test test --tag pr --profile +${DRAM_ENGINE:-singularity} \"$@\"' --"
+test = { depends-on = ["test-py", "test-nf"] }
+test-full = "sh -c 'nf-test test --tag full --profile +${DRAM_ENGINE:-singularity} \"$@\"' --"
+test-update = "sh -c 'nf-test test --tag pr --update-snapshot --profile +${DRAM_ENGINE:-singularity} \"$@\"' --"

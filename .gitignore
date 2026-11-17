@@ -57,3 +57,14 @@ nextflow-local.config
 
 # scratch folder
 scratch/
+.scratch/
+
+# pixi environments
+.pixi/
+
+# KEGG-derived; built by tests/scripts/build_mini_dbs.py kofam
+tests/data/db/kofam/*
+!tests/data/db/kofam/ids.txt
+
+# the anonymized DRAM1 fixture keeps its product.tsv
+!tests/data/dram1/product.tsv

@@ -1,6 +1,12 @@
 process RENAME_PROTEINS {
     label 'process_tiny'
 
+    // rename/environment.yml is bbmap-only (no python); reuse the annotate image, already pulled for annotation
+    conda "${moduleDir}/../annotate/environment.yml"
+    container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
+        'oras://community.wave.seqera.io/library/python_pandas_polars_hmmer_pruned:1742d882bc99fed5' :
+        'community.wave.seqera.io/library/python_pandas_polars_hmmer_pruned:6d5bc9dfeca29b70' }"
+
     input:
     tuple val(fasta_names), path(fastas)
 

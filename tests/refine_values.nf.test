@@ -1,0 +1,74 @@
+nextflow_pipeline {
+
+    name "Summarize, Traits and Visualize values on the DRAM1 and synthetic fixtures"
+    script "../main.nf"
+    config "./pr.config"
+    tag "pr"
+
+    // Returns exit status and output rather than asserting, so a failure lists every value that differs
+    def refineValues = { String projectDir, List args ->
+        def proc = (["python", "${projectDir}/tests/scripts/refine_values.py"] + args*.toString()).execute()
+        def out = new StringBuffer()
+        proc.consumeProcessOutput(out, out)
+        proc.waitFor()
+        [proc.exitValue(), out.toString()]
+    }
+
+    test("DRAM1 fixture") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                input_fasta = null
+                rename = false
+                annotate = false
+                qc = true  // tRNAs reach Summarize through QC
+                anno_dbs = ""
+                annotations = "${projectDir}/tests/data/dram1/annotations.tsv"
+                trnas = "${projectDir}/tests/data/dram1/trnas"
+                summarize = true
+                sum_ecos = "eng_sys,ag,bgc,gut,aquatic"  // all Summarize sheets, not only the topics
+                traits = true
+                visualize = true
+            }
+        }
+
+        then {
+            assert workflow.success
+            def allowlist = "${projectDir}/tests/data/allowlist.tsv"
+            def (code, out) = refineValues(projectDir, ["check", params.outdir,
+                "${projectDir}/tests/data/dram1/baseline_values.tsv", "--check", "dram1_values", "--allowlist", allowlist])
+            assert code == 0 : out
+            (code, out) = refineValues(projectDir, ["dram1", params.outdir,
+                "${projectDir}/tests/data/dram1", "--check", "dram1_summarize", "--allowlist", allowlist])
+            assert code == 0 : out
+        }
+    }
+
+    test("Synthetic fixture") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                input_fasta = null
+                rename = false
+                annotate = false
+                qc = false
+                anno_dbs = ""
+                annotations = "${projectDir}/tests/data/synthetic/annotations.tsv"
+                summarize = true
+                sum_ecos = "eng_sys,ag,bgc,gut,aquatic"  // all Summarize sheets, not only the topics
+                traits = true
+                visualize = true
+            }
+        }
+
+        then {
+            assert workflow.success
+            def (code, out) = refineValues(projectDir, ["check", params.outdir,
+                "${projectDir}/tests/data/synthetic/baseline_values.tsv", "--check", "synthetic_values",
+                "--allowlist", "${projectDir}/tests/data/allowlist.tsv"])
+            assert code == 0 : out
+        }
+    }
+}

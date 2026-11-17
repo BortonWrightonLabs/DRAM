@@ -1,16 +1,23 @@
 name: CI on push
 
-on: pull_request
+on:
+  pull_request:
+  # Caches saved on dev, the default branch, are the only ones every PR can restore
+  push:
+    branches: [dev]
+
+env:
+  KOFAM_RELEASE: "2022-08-01"
 
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Python
         # This is the version of the action for setting up Python, not the Python version.
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.14"
       - name: Install dependencies
@@ -21,3 +28,49 @@ jobs:
 
       - name: Run pre-commit hooks for linting and other checks
         run: pre-commit run --all-files
+
+  kofam-cache:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: prefix-dev/setup-pixi@v0.11.3
+        with:
+          pixi-version: v0.82.0
+      - uses: ./.github/actions/kofam-mini-db
+
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [docker, apptainer]
+    env:
+      DRAM_ENGINE: ${{ matrix.engine }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          # bin/rules (dram-rules) is a submodule; Summarize/Traits need its data files
+          submodules: true
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@v0.11.3
+        with:
+          pixi-version: v0.82.0
+      - name: Set up Apptainer
+        if: matrix.engine == 'apptainer'
+        uses: eWaterCycle/setup-apptainer@v3.0.0
+      - uses: ./.github/actions/kofam-mini-db
+      - name: Run PR-gate tests
+        shell: bash
+        env:
+          # One image cache for all tests; by default each nf-test gets its own and re-downloads
+          NXF_APPTAINER_CACHEDIR: ${{ runner.temp }}/apptainer
+        run: |
+          pixi run test 2>&1 | tee "$RUNNER_TEMP/test.log" && exit 0
+          # Nextflow doesn't retry a failed apptainer image download (docker's are retried by
+          # conf/base.config on exit 125), so rerun once if that is what failed; cached images stay
+          grep -q "Failed to pull singularity image" "$RUNNER_TEMP/test.log" || exit 1
+          echo "::warning::an image download failed; running the nf-tests again"
+          pixi run test-nf

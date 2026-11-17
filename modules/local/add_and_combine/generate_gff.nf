@@ -1,6 +1,11 @@
 process GENERATE_GFF {
     label 'process_tiny'
 
+    conda "${moduleDir}/environment.yml"
+    container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
+        'oras://community.wave.seqera.io/library/python_pandas_biopython:81f6b2a8fb71cdc6' :
+        'community.wave.seqera.io/library/python_pandas_biopython:7df21d027f67112e' }"
+
     input:
     tuple val(fasta_names), path(input_genes)
 

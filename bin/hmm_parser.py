@@ -68,7 +68,7 @@ OUTPUT_COLUMNS = [
     "{db_name}_ids",
     "{db_name}_full_bitScore",
     "{db_name}_domain_bitScore",
-    "description",
+    "{db_name}_description",
     "{db_name}_EC",
     "{db_name}_score_rank",
 ]
@@ -299,6 +299,7 @@ def main(hmm_domtbl, hmm_info_path, ec_from_info, gene_locs, db_name, output):
             "query_accession": f"{db_name}_acc",
             "full_bitScore": f"{db_name}_full_bitScore",
             "domain_bitScore": f"{db_name}_domain_bitScore",
+            "description": f"{db_name}_description",
         }
     )
 
