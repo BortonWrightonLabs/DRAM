@@ -63,7 +63,7 @@ Rely on things that stay correct on their own over things someone has to remembe
 1. Branch off `dev`.
 1. Open a PR into `dev` with a [Conventional Commit](https://www.conventionalcommits.org/) title (`feat: …`, `fix: …`, `docs: …`). The `conventional-title` check enforces it, and the changelog is built from these titles.
 1. Keep separate commits while the PR is in review. When it's ready to merge, squash the branch into one commit whose message describes the whole change: PRs into `dev` are squash merged, and with one commit the squash uses that commit's message.
-1. CI (pre-commit and the PR test gate below) must pass.
+1. CI (pre-commit and the PR test gate below) must pass. The test gate (`.github/workflows/tests.yml`) skips PRs that only change docs and other non-code files; pre-commit always runs.
 
 ## Testing
 
