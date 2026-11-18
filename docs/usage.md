@@ -349,11 +349,11 @@ Run quality control options for the DRAM workflow. With `--input_fasta`, QC scan
 
 The Refinements, run together as one [dram-rules](https://github.com/BortonWrightonLabs/dram-rules) command on the annotations from this run or from `--annotations`. Each has its own flag; `--refine` runs all three.
 
-- `--summarize` counts, per genome, the genes matching each rule of the Summarize Sheets and writes `SUMMARIZE/{topic,ecosystem,custom}_summary.{xlsx,tsv}`.
+- `--summarize` counts, per genome, the genes matching each rule of the Summarize Sheets and writes `SUMMARIZE/{topic,ecosystem,custom,custom_derived}_summary.{xlsx,tsv}`. Ecosystem summaries are built each run from the ecosystem visualize sheets: one row per Gene ID their rules look up, with the `rule`, `module` and `group` using it. `--viz_custom` sheets get one in `custom_derived_summary`.
 - `--visualize` writes heatmaps and tables of each rule's Presence or Coverage to `VISUALIZE/<sheet>/`.
 - `--traits` does the same for the built-in traits sheet, in `TRAITS/`.
 
-Sheets: `--ecos` picks built-in ecosystem sheets (`ag`, `aquatic`, `bgc`, `eng_sys`, `gut`, or `none`) for both visualize and summarize; when left out, visualize uses gut and summarize all five. `--topics` picks topic Summarize Sheets (`assim`, `cell`, `energy`, `env`, `default` for all four, or `none`). `--sum_custom`, `--viz_custom` and `--traits_custom` add your own sheets, comma separated. `--mapping` adds per-sample abundances to visualize and traits. tRNAs from `--qc` count as genes in every Refinement.
+Sheets: `--ecos` picks built-in ecosystem sheets (`ag`, `aquatic`, `bgc`, `eng_sys`, `gut`, or `none`) for both visualize and summarize; when left out, visualize uses gut and summarize all five. `--topics` picks topic Summarize Sheets (`assim`, `cell`, `energy`, `env`, `default` for all four, or `none`). `--sum_custom`, `--viz_custom` and `--traits_custom` add your own sheets, comma separated. `--descriptions` adds Description Tables (`gene_id`, `description`) for the Gene IDs in those derived summaries. `--mapping` adds per-sample abundances to visualize and traits. tRNAs from `--qc` count as genes in every Refinement.
 
 `--sum_ecos`, `--sum_topics`, `--viz_rules_system`, `--viz_rules_tsv`, `--viz_mapping_file`, `--trait_rules_tsv`, `--product`, `--adjectives` and `--distill_*` still work but are deprecated.
 
