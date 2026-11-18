@@ -23,7 +23,7 @@ deliberately not named anywhere in the repo.
 | `trnas/raw_trna_scan.tsv` | `trnas.tsv` | DRAM2's raw tRNA format, all six genomes, in a directory so it can be passed as `--trnas` |
 | `comparable_ids.tsv` | — | The (genome, ID type, ID) pairs in `genome_03`–`06` whose Gene Counts still match DRAM1 (see below) |
 | `collected_trnas.tsv` | — | `raw_trna_scan.tsv` run through `bin/trna_collect.py`, as the pipeline does |
-| `baseline_values.tsv` | — | Summarize, Traits and Visualize values from DRAM2 on this fixture at `bin/rules` `1b098eb` (see below) |
+| `baseline_values.tsv` | — | Summarize, Traits and Visualize values from DRAM2 on this fixture (see below) |
 | `metabolism_summary.xlsx`, `product.tsv`, `genome_stats.tsv` | distill outputs | Renamed only; still describe the **whole** six genomes |
 
 ## Comparing DRAM2 to DRAM1 with it
@@ -45,15 +45,9 @@ deliberately not named anywhere in the repo.
 
 ## Checks (`tests/refine_values.nf.test`, tag `pr`)
 
-`tests/scripts/refine_values.py` reduces Summarize, Traits and Visualize outputs to values: Gene Count per (label, Genome), and Presence/Coverage per (Rule, sheet, Genome). Files, Groups, descriptions and order are ignored, and both today's layout and Refine's are read.
+How the value checks work, and when to re-record or allowlist, is in `docs/contributing.md` (Testing). On this fixture:
 
-- **Baseline:** values must equal `baseline_values.tsv`, recorded at `bin/rules` `1b098eb`.
-- **DRAM1:** Gene Counts must equal `metabolism_summary.xlsx` for the labels both report, within the comparable values above.
+- **Baseline:** values must equal `baseline_values.tsv` (check `dram1_values`).
+- **DRAM1:** Gene Counts must equal `metabolism_summary.xlsx` for the labels both report, within the comparable values above (check `dram1_summarize`). DRAM1's outputs can't be re-recorded, so differences are allowlisted. The ecosystem summaries name CAZy families only in Family;EC Gene IDs (`GH13;EC:3.2.1.1`), which DRAM1 doesn't report, so few CAZy counts are compared (`AA1`, `AA2`, `AA4`, `AA6`, from the topic sheets).
 
-At `1b098eb` the baselines hold no Coverage values (no built-in sheet reports Coverage), and the default Visualize sheet is recorded as `visualize/gut`: with every Summarize sheet run, the pipeline runs the ecosystem Visualize sheets instead, and dram-rules' default sheet is `rules_gut.tsv`. Only non-zero values are stored, so a rule that disappears from the outputs reads as 0, not as a difference.
-
-Known differences are in `tests/data/allowlist.tsv` (checks `dram1_values` and `dram1_summarize`), one reason per line; an allowlisted value that stops differing also fails. When a change is intended, re-record with the command the failure prints:
-
-```
-pixi run python tests/scripts/refine_values.py extract <outdir> tests/data/dram1/baseline_values.tsv
-```
+The baseline holds no Coverage values (no built-in sheet reports Coverage). The default Visualize sheet is recorded as `visualize/gut`: with every Summarize sheet run, the pipeline runs the ecosystem Visualize sheets instead, and dram-rules' default sheet is `ecosystems/gut.tsv`.

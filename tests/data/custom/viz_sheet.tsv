@@ -1,0 +1,2 @@
+name	rule	rule_options	module	group	notes
+Test rule	NOT_A_GENE_ID | K02275		Test module	Test group	

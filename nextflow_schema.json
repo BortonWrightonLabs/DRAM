@@ -306,6 +306,10 @@
                     "type": "string",
                     "description": "Custom Summarize Sheets (TSV). Comma separated; custom sheets add to the built-in ones."
                 },
+                "descriptions": {
+                    "type": "string",
+                    "description": "Custom Description Tables (TSV with gene_id and description columns), comma separated. They describe the Gene IDs in ecosystem_summary and custom_derived_summary and win over the built-in descriptions."
+                },
                 "viz_custom": {
                     "type": "string",
                     "description": "Custom visualize rule sheets (TSV). Comma separated; custom sheets add to the built-in ones."

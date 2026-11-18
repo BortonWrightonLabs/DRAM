@@ -277,6 +277,7 @@ workflow DRAM {
                 files(params.viz_custom ?: deprecated(['viz_rules_tsv'], 'viz_custom')),
                 files(params.traits_custom ?: deprecated(['trait_rules_tsv'], 'traits_custom')),
                 files(params.sum_custom ?: deprecated(['distill_custom'], 'sum_custom')),
+                files(params.descriptions),
                 files(params.mapping ?: deprecated(['viz_mapping_file'], 'mapping')),
                 files(params.common_rules_tsv ?: deprecated(['viz_common_rules_tsv', 'trait_common_rules_tsv'], 'common_rules_tsv')),
             )

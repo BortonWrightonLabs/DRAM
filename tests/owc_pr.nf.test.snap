@@ -249,9 +249,14 @@
 
                 ],
                 "SUMMARIZE/ecosystem_summary.tsv": {
-                    "rows": 4124,
+                    "rows": 4675,
                     "counted": [
                         "K00441\t1\t0",
+                        "K00441\t1\t0",
+                        "K00441\t1\t0",
+                        "K00441\t1\t0",
+                        "K14127\t1\t0",
+                        "K14127\t1\t0",
                         "K14127\t1\t0",
                         "K14127\t1\t0"
                     ]
@@ -650,12 +655,25 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "header",
+                            "group",
                             "module",
-                            "subheader"
+                            "rule"
                         ],
-                        "rows": 792,
-                        "md5": "79ebee4d20dd5fecde7fe4ca029d4ff7"
+                        "rows": 964,
+                        "md5": "31642d5671f2b5470c65bf2076f2344b"
+                    },
+                    "aquatic": {
+                        "columns": [
+                            "OWC_0000",
+                            "OWC_0001",
+                            "gene_description",
+                            "gene_id",
+                            "group",
+                            "module",
+                            "rule"
+                        ],
+                        "rows": 823,
+                        "md5": "5c573e08ac82e5ce0bcba5d406b51d4f"
                     },
                     "bgc": {
                         "columns": [
@@ -663,12 +681,12 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "header",
+                            "group",
                             "module",
-                            "subheader"
+                            "rule"
                         ],
-                        "rows": 1145,
-                        "md5": "8d9ecb4f20af901820d0ab74640f2cc0"
+                        "rows": 988,
+                        "md5": "dfbbcb951372e72615f6901a6969c1ad"
                     },
                     "eng_sys": {
                         "columns": [
@@ -676,12 +694,12 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "header",
+                            "group",
                             "module",
-                            "subheader"
+                            "rule"
                         ],
-                        "rows": 725,
-                        "md5": "55318c50ad37d41e834148aabcdddddc"
+                        "rows": 1035,
+                        "md5": "51a9174050659666ea768010b6df59a0"
                     },
                     "gut": {
                         "columns": [
@@ -689,25 +707,12 @@
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "header",
+                            "group",
                             "module",
-                            "subheader"
+                            "rule"
                         ],
-                        "rows": 754,
-                        "md5": "2105ed51bd7b973101781ea8b94281e5"
-                    },
-                    "marine": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "header",
-                            "module",
-                            "subheader"
-                        ],
-                        "rows": 708,
-                        "md5": "c50f764a9e047f7d351e2e1232239758"
+                        "rows": 865,
+                        "md5": "ae2e48f355f9cd632f8d5a26219e54e8"
                     }
                 },
                 "SUMMARIZE/topic_summary.xlsx": {
@@ -764,7 +769,7 @@
                             "module"
                         ],
                         "rows": 2552,
-                        "md5": "e99a4149080fdc88027d559fbc2a4384"
+                        "md5": "0f29f1bd0031551b882a7874d746c752"
                     },
                     "Carbon_Other": {
                         "columns": [
@@ -924,7 +929,7 @@
                 "ANNOTATE/RENAMED_HEADERS/OWC_0001.fa": "651a1d0f186fe7e9d92d65aef45e2a90"
             }
         ],
-        "timestamp": "2026-11-17T12:39:10.13599362",
+        "timestamp": "2026-11-18T08:40:14.017355915",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.4"

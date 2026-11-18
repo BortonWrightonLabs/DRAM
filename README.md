@@ -37,6 +37,7 @@ Prepare `cluster.config` for your SLURM partition/account and configure database
 - [Usage Examples](https://dramit.readthedocs.io/en/latest/usage.html)
 - [Parameter API](https://dramit.readthedocs.io/en/latest/params_doc.html#pipeline-steps)
 - [Rules API](https://dramit.readthedocs.io/en/latest/rules_parser.html)
+- [Contributing and testing](docs/contributing.md)
 
 
 ## Other DRAM products from our research group:

@@ -22,11 +22,15 @@ import sys
 from pathlib import Path
 
 VALUE_COLUMNS = ["kind", "sheet", "label", "genome", "value"]
-# Summarize columns that are not a Genome; the first column is the label
+# Summarize columns that are not a Genome; the first column is the label. Must list every
+# non-Genome column dram-rules writes: a missing one is read as a Genome, and its text
+# fails int() in gene_counts.
 SUMMARY_METADATA = {
     "gene_description",
     "topic_ecosystem",
     "module",
+    "rule",
+    "group",
     "workbook",
     "header",
     "subheader",

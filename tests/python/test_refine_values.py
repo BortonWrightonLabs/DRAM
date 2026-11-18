@@ -28,14 +28,15 @@ def test_current_and_refine_layouts_give_the_same_values(tmp_path):
     )
     write(today / "SUMMARIZE/df_vertical_genome.tsv", VERTICAL)
     write(today / "VISUALIZE/df_vertical_genome_ag.tsv", COVERAGE)
-    # Refine: one table per Summary Collection, label column first, Groups as header/subheader
+    # Refine: one table per Summary Collection, label column first; ecosystem ones derived
     write(
         refine / "SUMMARIZE/topic_summary.tsv",
         "gene_id\tgene_description\tmodule\theader\tg1\tg2\nK00001\td\tm\tEnergy\t2\t0\n",
     )
     write(
         refine / "SUMMARIZE/ecosystem_summary.tsv",
-        "name\tmodule\tsubheader\tg1\tg2\nAla (CGC)\ttRNAs\tx\t0\t1\nK00001\tm2\tx\t2\t0\n",
+        "gene_id\tgene_description\trule\tmodule\tgroup\ttopic_ecosystem\tg1\tg2\n"
+        "Ala (CGC)\tt\tr\ttRNAs\tx\tgut\t0\t1\nK00001\td\tr\tm2\tx\tgut\t2\t0\n",
     )
     write(refine / "TRAITS/df_vertical_genome.tsv", VERTICAL)
     write(refine / "VISUALIZE/ag/df_vertical_genome.tsv", COVERAGE)

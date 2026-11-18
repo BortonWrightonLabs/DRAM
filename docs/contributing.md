@@ -57,3 +57,70 @@ Rely on things that stay correct on their own over things someone has to remembe
 1. Add a script section to call your DRAM script, passing in whatever CLI argumenets. The outputs from your DRAM script should be the process outputs. You want them to be written directly in the working directory, Nextflow will manage moving them to the users output directy. You can also rename outputs for future Nextflow steps with the `emit:` keyword, and mark some outputs as optional (see other processes).
 1. We now need to add this process to the correct part in our pipeline to be called and ran. If it is in an already established step such as Annotate, we might go to `subworkflows/local/annotate.nf` and find the right spot in that code and add it. Though we might need to add a new subworkflow and add that to our `workflows/dram.nf`
 1. We also need to add any new parameters to our `nextflow.config` with a default. And then add the equivalent parameter to our `nextflow_schema.json` with help text. The `nextflow_schema.json` is how our `--help` CLI option is populated as well as what our parameters page on our docs is built from. It also allows us to add sanity checks and validation for all relevant parameters.
+
+## Contribution workflow
+
+1. Branch off `dev`.
+1. Open a PR into `dev` with a [Conventional Commit](https://www.conventionalcommits.org/) title (`feat: …`, `fix: …`, `docs: …`). The `conventional-title` check enforces it, and the changelog is built from these titles.
+1. Keep separate commits while the PR is in review. When it's ready to merge, squash the branch into one commit whose message describes the whole change: PRs into `dev` are squash merged, and with one commit the squash uses that commit's message.
+1. CI (pre-commit and the PR test gate below) must pass.
+
+## Testing
+
+### Running the tests
+
+The `pixi.toml` tasks run everything; [pixi](https://pixi.sh) provides Nextflow, nf-test, pytest and Python.
+
+| Command | Runs | Needs |
+|---|---|---|
+| `pixi run test` | The PR gate: pytest, then nf-tests tagged `pr`. CI runs this. | the KOfam mini database (below) |
+| `pixi run test-full` | nf-tests tagged `full` | the full `databases/` |
+| `pixi run test-update` | the `pr` nf-tests, re-recording their snapshots | |
+
+- Containers default to singularity (apptainer's `singularity` shim works too). Set `DRAM_ENGINE=docker` or `DRAM_ENGINE=apptainer` to switch.
+- Arguments after the task go to nf-test, so one file runs with `pixi run test-nf tests/owc_pr.nf.test`.
+- The KOfam mini database isn't committed. Build it once as described in [`tests/data/db/README.md`](https://github.com/BortonWrightonLabs/DRAM/blob/dev/tests/data/db/README.md).
+- The search and preprocessing batching checks run separately; see their READMEs, linked under [Pipeline contribution conventions](#pipeline-contribution-conventions).
+
+### What tests assert
+
+Assert on published outputs (what lands in `--outdir`), not process names, inputs or channel shapes. A process rename or merge that leaves the outputs unchanged must not break a test.
+
+### Where things live
+
+| Path | What |
+|---|---|
+| `tests/python/` | pytest unit tests for `bin/` scripts and `tests/scripts/` |
+| `tests/*.nf.test` | nf-test pipeline tests; `tests/pr.config` points the `pr` ones at the mini databases |
+| `tests/data/owc/` | two OWC genomes and their expected annotations |
+| `tests/data/db/` | mini databases built from what OWC hits; rebuilt with `tests/scripts/build_mini_dbs.py` |
+| `tests/data/dram1/` | an anonymized DRAM1 run, built with `tests/scripts/anonymize_dram1.py` |
+| `tests/data/synthetic/` | a hand-built annotations table for databases the other fixtures don't annotate |
+| `tests/data/allowlist.tsv` | known differences, one reason per line |
+
+Each `tests/data/*/README.md` describes its fixture: where it came from and what each part covers.
+
+### When a test fails after your change
+
+**Snapshot diff** (`tests/owc_pr.nf.test`): re-record with `pixi run test-update`, then review the `.snap` diff. Every changed line should follow from your change. Say why in the commit message.
+
+**Value diff** (`tests/refine_values.nf.test`): `tests/scripts/refine_values.py` reduces Refine outputs to values: a Gene Count per (label, Genome) and a Presence or Coverage per (rule, sheet, Genome). File names, Groups, descriptions and row order are ignored, and only non-zero values are stored, so a label that disappears reads as 0. A failure prints each value that differs and the command to re-record. Explain every difference before deciding:
+
+- **Re-record** when the reference is DRAM2's own earlier output (`baseline_values.tsv`) and every difference is intended. Use the command the failure prints, and put the explanation in the commit message. The baseline's `bin/rules` commit is the one in the commit that last changed it:
+
+  ```sh
+  git ls-tree "$(git log -1 --format=%h -- tests/data/dram1/baseline_values.tsv)" bin/rules
+  ```
+
+- **Allowlist** when the reference can't be re-recorded, such as DRAM1's outputs or expected annotations. Add one line to `tests/data/allowlist.tsv` per difference, with the reason. An allowlisted value that stops differing also fails, so remove its line.
+
+### Bumping `bin/rules`
+
+`bin/rules` is the dram-rules submodule that runs Refine.
+
+1. Move it to the new commit and run `pixi run test`.
+1. Trace each snapshot and value difference to a dram-rules commit (`git -C bin/rules log OLD..NEW`). A difference you can't trace is a bug, here or upstream.
+1. Check that the differences are what those commits describe. For example, when labels are renamed, no Gene Count should change for a label present before and after.
+1. Re-record the snapshot and baselines, and remove allowlist lines that no longer differ.
+1. If dram-rules added or renamed a command-line option, mirror it in `nextflow.config`, `nextflow_schema.json`, `workflows/dram.nf` and `modules/local/refine/refine.nf`.
+1. Summarize the differences and the commits they come from in the commit message.

@@ -68,6 +68,33 @@ nextflow_pipeline {
         }
     }
 
+    test("Test SUMMARIZE derives a custom summary with custom descriptions") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                input_fasta = null
+                rename = false
+                annotate = false
+                qc = false
+                summarize = true
+                anno_dbs = ""
+                annotations = "${projectDir}/tests/data/owc/annotation/dram1_informed_annotations.tsv"
+                ecos = "none"
+                topics = "none"
+                viz_custom = "${projectDir}/tests/data/custom/viz_sheet.tsv"
+                descriptions = "${projectDir}/tests/data/custom/descriptions.tsv"
+            }
+        }
+
+        then {
+            assert workflow.success
+            def rows = path("${params.outdir}/SUMMARIZE/custom_derived_summary.tsv").csv(sep: "\t").rows
+            assert rows.find { it.gene_id == "K02275" }.gene_description == "custom description from --descriptions"
+            assert rows.find { it.gene_id == "NOT_A_GENE_ID" }.gene_description == ""  // custom sheets aren't strict
+        }
+    }
+
     test("Test QC retains bin quality without taxonomy") {
 
         when {

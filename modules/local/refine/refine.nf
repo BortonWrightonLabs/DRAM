@@ -13,6 +13,7 @@ process REFINE {
     path( viz_custom, stageAs: "viz_custom/*" )
     path( traits_custom, stageAs: "traits_custom/*" )
     path( sum_custom, stageAs: "sum_custom/*" )
+    path( descriptions, stageAs: "descriptions/*" )
     path( mapping )
     path( common_rules_tsv )
 
@@ -33,6 +34,7 @@ process REFINE {
         ${sheets('--viz_custom', viz_custom)} \\
         ${sheets('--traits_custom', traits_custom)} \\
         ${sheets('--sum_custom', sum_custom)} \\
+        ${sheets('--descriptions', descriptions)} \\
         ${mapping ? "--mapping ${mapping}" : ''} \\
         ${common_rules_tsv ? "--common_rules_tsv ${common_rules_tsv}" : ''} \\
         $args
