@@ -1,0 +1,104 @@
+{
+    "Given annotations and a gene mapping": {
+        "content": [
+            {
+                "SUMMARIZE/ecosystem_summary.tsv": {
+                    "rows": 4676,
+                    "md5": "af9b4cd951e93e9e6925734fc3836a6f"
+                },
+                "SUMMARIZE/topic_summary.tsv": {
+                    "rows": 6823,
+                    "md5": "214640f9875ed3e98cb7423c712d5bbb"
+                },
+                "TRAITS/df_genome.tsv": {
+                    "rows": 25,
+                    "md5": "7c13c4632aaeda161c8633367f0c3d13"
+                },
+                "TRAITS/df_sample.tsv": {
+                    "rows": 25,
+                    "md5": "b6303cfdc3910815fe873f07ab079340"
+                },
+                "TRAITS/df_vertical_genome.tsv": {
+                    "rows": 49,
+                    "md5": "6605e0c454484e1672d10924478df92f"
+                },
+                "TRAITS/df_vertical_sample.tsv": {
+                    "rows": 49,
+                    "md5": "ae292d812fe48a600492fe41a65ccef1"
+                },
+                "VISUALIZE/default/df_genome.tsv": {
+                    "rows": 100,
+                    "md5": "3334bc2cfea77fdbcc4b628f08567573"
+                },
+                "VISUALIZE/default/df_sample.tsv": {
+                    "rows": 100,
+                    "md5": "6d4471f149f942534fd90e9968797253"
+                },
+                "VISUALIZE/default/df_vertical_genome.tsv": {
+                    "rows": 199,
+                    "md5": "16781890610d5d800ed4102be7de8423"
+                },
+                "VISUALIZE/default/df_vertical_sample.tsv": {
+                    "rows": 199,
+                    "md5": "6131b14638b76500943a2473533acc8d"
+                }
+            }
+        ],
+        "timestamp": "2026-11-18T16:37:33.893962041",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
+    },
+    "OWC annotated with a gene mapping": {
+        "content": [
+            {
+                "SUMMARIZE/ecosystem_summary.tsv": {
+                    "rows": 4676,
+                    "md5": "3aa148d4a5599abf4b10a519910f7001"
+                },
+                "SUMMARIZE/topic_summary.tsv": {
+                    "rows": 6823,
+                    "md5": "9b60febbfc76bea91c7a316186678c20"
+                },
+                "TRAITS/df_genome.tsv": {
+                    "rows": 24,
+                    "md5": "d28fb3dd3c5f6f8304c6ee2423d183d4"
+                },
+                "TRAITS/df_sample.tsv": {
+                    "rows": 24,
+                    "md5": "81625bc17ee6b0733e6107d8a1f23136"
+                },
+                "TRAITS/df_vertical_genome.tsv": {
+                    "rows": 47,
+                    "md5": "207138cadf89ebbc89a752f974c262f9"
+                },
+                "TRAITS/df_vertical_sample.tsv": {
+                    "rows": 47,
+                    "md5": "5e95a36d429e2c717841b59a70f4bcf3"
+                },
+                "VISUALIZE/default/df_genome.tsv": {
+                    "rows": 100,
+                    "md5": "3334bc2cfea77fdbcc4b628f08567573"
+                },
+                "VISUALIZE/default/df_sample.tsv": {
+                    "rows": 100,
+                    "md5": "6d4471f149f942534fd90e9968797253"
+                },
+                "VISUALIZE/default/df_vertical_genome.tsv": {
+                    "rows": 199,
+                    "md5": "16781890610d5d800ed4102be7de8423"
+                },
+                "VISUALIZE/default/df_vertical_sample.tsv": {
+                    "rows": 199,
+                    "md5": "6131b14638b76500943a2473533acc8d"
+                }
+            }
+        ],
+        "timestamp": "2026-11-18T16:37:07.233264968",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
+    }
+}

@@ -1,0 +1,73 @@
+nextflow_pipeline {
+
+    name "A mapping file: attached to the annotations as Sample Columns, read by Refine"
+    script "../main.nf"
+    config "./pr.config"
+    tag "pr"
+
+    // Refine's tables, one entry per file: row count and a checksum of the rows sorted
+    def refineTables = { String outdir ->
+        def out = new File(outdir).toPath()
+        def tables = [:]
+        out.eachFileRecurse(groovy.io.FileType.FILES) { f ->
+            def name = out.relativize(f).toString()
+            if (name ==~ /(SUMMARIZE|VISUALIZE|TRAITS)\/.*\.tsv/) {
+                def rows = f.readLines()
+                tables[name] = [rows: rows.size(), md5: ([rows[0]] + rows.drop(1).sort()).join("\n").md5()]
+            }
+        }
+        tables.sort()
+    }
+
+    test("OWC annotated with a gene mapping") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                anno_dbs = "kofam,uniref,vog,fegenie,camper,canthyd,dram_db"
+                mapping = "${projectDir}/tests/data/owc/mapping_genes.tsv"
+                refine = true
+            }
+        }
+
+        then {
+            assert workflow.success
+            // Recorded while REFINE read the mapping file itself: Refine is unchanged
+            // when it reads the Sample Columns instead.
+            assert snapshot(refineTables(params.outdir)).match()
+
+            def annotations = path("${params.outdir}/ANNOTATE/raw-annotations.tsv").csv(sep: "\t")
+            def columns = annotations.columnNames
+            assert columns.findAll { it.startsWith("sample:") } == ["sample:S1", "sample:S2"]
+            assert columns.takeRight(2) == ["sample:S1", "sample:S2"]
+            def genes = annotations.rows.collectEntries { [(it.query_id): it] }
+            assert genes["OWC_0000_k121_3157_2"].subMap(["sample:S1", "sample:S2"]) == ["sample:S1": "5.0", "sample:S2": "0.0"]
+            assert genes["OWC_0001_k121_21365628_13"].subMap(["sample:S1", "sample:S2"]) == ["sample:S1": "1.5", "sample:S2": "4.0"]
+            // genes missing from the mapping get empty cells
+            assert genes["OWC_0000_k121_3157_4"]["sample:S1"] in [null, ""]
+        }
+    }
+
+    test("Given annotations and a gene mapping") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                input_fasta = null
+                rename = false
+                annotate = false
+                qc = false
+                anno_dbs = ""
+                annotations = "${projectDir}/tests/data/owc/annotation/raw_annotations_snapshot.tsv"
+                mapping = "${projectDir}/tests/data/owc/mapping_genes.tsv"
+                refine = true
+            }
+        }
+
+        then {
+            assert workflow.success
+            // COMBINE_ANNOTATIONS doesn't run, so REFINE still gets --mapping
+            assert snapshot(refineTables(params.outdir)).match()
+        }
+    }
+}

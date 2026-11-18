@@ -204,6 +204,10 @@ workflow DRAM {
         // Pipeline steps
         //
 
+        // Optional files: an empty list when not given
+        def files = { value -> value ? value.tokenize(',').collect { file(it, checkIfExists: true) } : [] }
+        def mapping = files(params.mapping ?: deprecated(['viz_mapping_file'], 'mapping'))
+
         if (params.annotate || params.call) {
 
             ANNOTATE (
@@ -227,7 +231,8 @@ workflow DRAM {
                 use_card,
                 use_tcdb,
                 use_dram_db,
-                use_vog
+                use_vog,
+                mapping
             )
         }
 
@@ -268,8 +273,6 @@ workflow DRAM {
                 ecos ? "--ecos ${ecos}" : '',
                 topics ? "--topics ${topics}" : '',
             ].findAll().join(' ')
-            // Optional files: an empty list when not given
-            def files = { value -> value ? value.tokenize(',').collect { file(it, checkIfExists: true) } : [] }
             REFINE(
                 ch_final_annots,
                 ch_trna_combined,
@@ -278,7 +281,8 @@ workflow DRAM {
                 files(params.traits_custom ?: deprecated(['trait_rules_tsv'], 'traits_custom')),
                 files(params.sum_custom ?: deprecated(['distill_custom'], 'sum_custom')),
                 files(params.descriptions),
-                files(params.mapping ?: deprecated(['viz_mapping_file'], 'mapping')),
+                // With --annotate, COMBINE_ANNOTATIONS attached it as Sample Columns
+                params.annotate ? [] : mapping,
                 files(params.common_rules_tsv ?: deprecated(['viz_common_rules_tsv', 'trait_common_rules_tsv'], 'common_rules_tsv')),
             )
         }

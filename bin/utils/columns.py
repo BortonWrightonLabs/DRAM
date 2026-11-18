@@ -2,11 +2,14 @@
 
 Metadata first (gene, then genome), then one group per database in alphabetical
 order with `<db>_id` first, then any other columns (e.g. user-added annotations)
-in their original order. Standard library only: steps run in pandas and polars
-containers alike.
+in their original order, and Sample Columns (`sample:<name>`) last. Standard
+library only: steps run in pandas and polars containers alike.
 """
 
 import os
+
+import _dram_rules_path  # noqa: F401
+from dram_rules.definitions import SAMPLE_COLUMN_PREFIX  # standard library only
 
 FASTA_COLUMN = os.getenv("FASTA_COLUMN", "input_fasta")
 GENE_COLUMNS = [
@@ -36,6 +39,8 @@ def database(column, databases):
 
 def order_columns(columns):
     columns = list(columns)
+    samples = [c for c in columns if c.startswith(SAMPLE_COLUMN_PREFIX)]
+    columns = [c for c in columns if c not in samples]
     metadata = [c for c in GENE_COLUMNS + GENOME_COLUMNS if c in columns]
     rest = [c for c in columns if c not in metadata]
     databases = [c.removesuffix("_id") for c in rest if c.endswith("_id")]
@@ -49,4 +54,4 @@ def order_columns(columns):
         )
     ]
     others = [c for c in rest if db[c] is None]
-    return metadata + by_database + others
+    return metadata + by_database + others + samples

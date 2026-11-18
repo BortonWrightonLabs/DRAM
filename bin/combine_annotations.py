@@ -6,6 +6,8 @@ import click
 import polars as pl
 from skbio.io import read as read_sequence
 
+import _dram_rules_path  # noqa: F401
+from dram_rules.processing.process_annotations import join_mapping
 from utils.columns import order_columns
 from utils.logger import get_logger
 
@@ -141,7 +143,14 @@ def genes_dict_to_frame(genes_faa_dict: dict) -> pl.DataFrame:
 )
 @click.option("--output", help="Output file path for the combined annotations.")
 @click.option("--rgi_dir", help="Directory of RGI TSV results (.txt files)")
-def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output, rgi_dir=None):
+@click.option(
+    "--mapping",
+    type=click.Path(exists=True, dir_okay=False),
+    help="Mapping file of abundances per gene or genome, attached as Sample Columns.",
+)
+def combine_annotations(
+    annotations_dir, genes_dir, dbcan_dir, output, rgi_dir=None, mapping=None
+):
     """Combine annotation files with ranks and avoid duplicating specific columns."""
     annotations = sorted(Path(annotations_dir).glob("*")) if annotations_dir else []
     genes_faa = sorted(Path(genes_dir).glob("*")) if genes_dir else []
@@ -312,6 +321,8 @@ def combine_annotations(annotations_dir, genes_dir, dbcan_dir, output, rgi_dir=N
     ]
     if sort_columns:
         combined_data = combined_data.sort(sort_columns)
+    if mapping:
+        combined_data = join_mapping(combined_data, mapping, "query_id", FASTA_COLUMN)
 
     combined_data.write_csv(output, separator="\t")
     logger.info(f"Combined annotations saved to {output}, with corrected gene numbers.")

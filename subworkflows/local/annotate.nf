@@ -35,6 +35,7 @@ workflow ANNOTATE {
     use_tcdb
     use_dram_db
     use_vog
+    mapping  // list: the mapping file, or [] for none
 
     main:
     // n_fastas = 0
@@ -121,7 +122,8 @@ workflow ANNOTATE {
             use_tcdb,
             use_dram_db,
             use_vog,
-            call
+            call,
+            mapping
             )
         ch_combined_annotations = DB_SEARCH.out.ch_combined_annotations
     }

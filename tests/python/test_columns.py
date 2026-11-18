@@ -59,6 +59,21 @@ class OrderColumnsTests(unittest.TestCase):
             ],
         )
 
+    def test_sample_columns_last(self):
+        # Sample names can look like databases (kegg_x) or Gene IDs (_id)
+        columns = [
+            "sample:S2",
+            "kegg_id",
+            "sample:kegg_x",
+            "query_id",
+            "sample:a_id",
+            "x",
+        ]
+        self.assertEqual(
+            order_columns(columns),
+            ["query_id", "kegg_id", "x", "sample:S2", "sample:kegg_x", "sample:a_id"],
+        )
+
     def test_keeps_every_column_once(self):
         columns = ["kegg_id", "query_id", "rank", "rgi_aro", "x"]
         self.assertCountEqual(order_columns(columns), columns)
