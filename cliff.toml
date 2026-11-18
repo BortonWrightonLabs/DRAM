@@ -11,8 +11,20 @@ All notable changes to this project will be documented in this file.\n
 # A Tera template to be rendered for each release in the changelog.
 # The body is the raw message after the title: git-cliff's parsed body stops at
 # any paragraph starting `Word:` (read as a git trailer), e.g. "Tests:".
+# A fix with a `Fixes: <sha>` trailer naming a commit in the same release is
+# left out: users never saw that bug. Commits scoped `internal`, e.g.
+# `fix(internal): ...`, go under an "Internal" subheading of their group.
 # See https://keats.github.io/tera/docs/#introduction
 body = """
+{% macro print_commit(commit) %}\
+    - {{ commit.message | split(pat="\n") | first | upper_first | trim }} ([{{ commit.id | truncate(length=7, end="") }}](https://github.com/BortonWrightonLabs/DRAM/commit/{{ commit.id }}))\
+      {% set body = commit.raw_message | split(pat="\n") | slice(start=1) | join(sep="\n") | trim %}\
+      {% if body %}\
+      \n
+      {{ body | indent(prefix="  ", first=true) }}\
+      {% endif %}\
+      \n
+{% endmacro print_commit %}\
 {% if version %}\
     ## {{ version | trim_start_matches(pat="v") }} - {{ timestamp | date(format="%Y-%m-%d") }}
 {% else %}\
@@ -24,17 +36,33 @@ body = """
             [{{ commit_id | truncate(length=7, end="") }}](https://github.com/BortonWrightonLabs/DRAM/commit/{{ commit_id }})
     {% endif %}\
 {% endif %}\
-{% for group, commits in commits | group_by(attribute="group") %}
-    ### {{ group | upper_first }}
-    {% for commit in commits %}
-        - {{ commit.message | split(pat="\n") | first | upper_first | trim }} ([{{ commit.id | truncate(length=7, end="") }}](https://github.com/BortonWrightonLabs/DRAM/commit/{{ commit.id }}))\
-          {% set body = commit.raw_message | split(pat="\n") | slice(start=1) | join(sep="\n") | trim %}\
-          {% if body %}\
-          \n
-          {{ body | indent(prefix="  ", first=true) }}\
-          {% endif %}\
-          \n
-    {% endfor %}
+{% set_global release_ids = [] %}\
+{% for commit in commits %}\
+    {% set_global release_ids = release_ids | concat(with=commit.id | truncate(length=7, end="")) %}\
+{% endfor %}\
+{% set_global shown = [] %}\
+{% for commit in commits %}\
+    {% set_global fixes_this_release = false %}\
+    {% for footer in commit.footers | default(value=[]) %}\
+        {% set fixed = footer.value | truncate(length=7, end="") %}\
+        {% if footer.token == "Fixes" and fixed in release_ids %}{% set_global fixes_this_release = true %}{% endif %}\
+    {% endfor %}\
+    {% if not fixes_this_release %}{% set_global shown = shown | concat(with=commit) %}{% endif %}\
+{% endfor %}\
+{% for entry in shown | commit_groups(groups=commit_parsers_groups) %}
+    ### {{ entry.group | upper_first }}
+    {% for commit in entry.commits %}{% if commit.scope != "internal" %}
+        {{ self::print_commit(commit=commit) }}\
+    {% endif %}{% endfor %}
+    {% set internal = entry.commits | filter(attribute="scope", value="internal") %}\
+    {% if internal %}
+        #### Internal
+
+        Changes to code most users don't run directly; no change to how DRAM is used.
+        {% for commit in internal %}
+            {{ self::print_commit(commit=commit) }}\
+        {% endfor %}
+    {% endif %}\
 {% endfor %}\n
 """
 # A Tera template to be rendered as the changelog's footer.
@@ -66,7 +94,8 @@ commit_parsers = [
     { message = "^doc", group = "Documentation" },
     { message = "^perf", group = "Performance" },
     { message = "^refactor", group = "Refactor" },
-    { message = "^style", group = "Styling" },
+    # Formatting only; commits listed in .git-blame-ignore-revs are left out too
+    { message = "^style", skip = true },
     { message = "^test", group = "Testing" },
     { message = "^build", group = "Build" },
     { message = "^revert", group = "Revert" },
