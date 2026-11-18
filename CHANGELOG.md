@@ -2,6 +2,447 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0-beta43 - 2026-11-18
+
+[5042b5c](https://github.com/BortonWrightonLabs/DRAM/commit/5042b5c3cd26c9a7623197470f49f5ac43c4fd6f)...[b348c8d](https://github.com/BortonWrightonLabs/DRAM/commit/b348c8d01d5d79c79b15142c45644aa6920e7dd2)
+
+### Highlights
+
+#### One Refine step for Summarize, Visualize and Traits
+
+- DRAM's distill.py and dram_viz.py are replaced by the single dram-rules command (the bin/rules submodule), run as one REFINE process. --summarize, --visualize and --traits still each work on their own, and the new --refine runs all three.
+- Params now match dram-rules: --ecos (shared by visualize and summarize), --topics, --sum_custom, --viz_custom, --traits_custom, --mapping, --common_rules_tsv. The old sum_*, viz_*, trait_*, distill_*, --product and --adjectives params still work for now but print a deprecation warning.
+- New output layout: SUMMARIZE/{topic,ecosystem,custom}_summary.{xlsx,tsv}, VISUALIZE/<sheet>/, TRAITS/. summarized_genomes.tsv is gone.
+- Custom viz/traits sheets are now added next to the built-in ones instead of replacing them.
+
+#### Ecosystem summaries now come from the viz ecosystem rules (BREAKING)
+
+- The hand-kept distill_<eco> sheets had drifted from the viz ecosystem rules, so they are deleted. The ecosystem summary is now built every run from the viz ecosystem sheets: one row per gene ID their rules look up, with the rules and groups that use it. Update a viz rule and the summary follows.
+- ecosystem_summary's label column is now gene_id, rule and group are new columns, and pathway, header and subheader are gone. Bare CAZy families are counted only as Family;EC gene IDs there.
+- The marine sheet is now aquatic.
+- New --descriptions param: give your own gene_id/description tables for the ecosystem summary and for the summary made from your --viz_custom sheets (custom_derived_summary).
+
+#### Custom rule functions and a new rule language
+
+- You can now write your own rule functions in Python (decorate them with @rule_function) and load them with dram-rules --functions my_functions.py. Docs: bin/rules/docs/custom_rule_functions.md. This works in standalone dram-rules; DRAM doesn't pass --functions through to dram-rules yet.
+- New rule syntax: keyword arguments and comparison operators (>=, >, <=, <, ==, !=), and at_least(n, group, mode=PRESENCE|COUNTS) with the mode optional. not() now works on row filters and per-sample values.
+- Renamed and removed functions. If your custom sheets use these, they need updating, and the error message tells you what to write instead:
+  - column_count_values -> filter_compare(...) -> count_rows(...)
+  - column_sum_values -> sum_column
+  - path_steps/path_subunits -> rule_options {"coverage": ...}
+- filter_contains and tax now match plain text unless you pass regex=true.
+- New rule docs: bin/rules/docs/rules_parser.md, rule_functions.md, custom_rule_functions.md
+
+#### Rule and output bug fixes
+
+- Rules on pfam and cazy hits never matched before. They do now.
+- at_least(n, COUNTS, ...) was acting like PRESENCE. It counts hits now, which fixes Cyc2 (e.g. A. ferrooxidans now scores Iron Oxidation = true).
+- Traits now honor rule_options include_when. probable-iron-reduction is skipped when there's no KEGG, instead of failing the run.
+- --mapping fixes: mixed-case gene IDs (e.g. McrA) were getting 0 abundance, decimal abundances could turn into 0, and rules that read annotation rows (count_rows, tax(), ...) crashed. Wide-table row counts also changed from run to run; now they don't.
+- Viz taxonomy: genomes with a partial or missing lineage, or a lineage that is a prefix of another genome's, now show up. The Taxonomy Label select relabels the y-axis by rank.
+- Summarize counts each tRNA once. Identical tRNAs on one scaffold used to be multiplied (e.g. 7 Gly (GCC) tRNAs counted as 25).
+- New iron rules for traits and new Sox aliases in the common rules. The aquatic hydrogenase rules now use the FeFe_group*/NiFe_group* gene IDs.
+- Much faster and lighter dram-rules on big runs with a mapping file (1:20 -> 0:17, 14.5 -> 4.3 GB peak; a by-genome mapping that used to run out of memory at 40.9 GB now uses 4 GB).
+
+#### Annotation output changes
+
+- Annotation columns are now ordered: gene and genome metadata first, then each database A-Z with its <db>_id first. Columns without an underscore are no longer silently dropped.
+- HMM descriptions are written as <db>_description (they were a bare "description" that collided across databases).
+- PRODIGAL called_genes_table gene_number is now Prodigal's gene number (it held part of gc_cont before, e.g. cont=0.439).
+
+#### Testing
+
+- Overhaul DRAM test suite (pixi run test / test-full) that runs on every PR with docker and apptainer, and checks Summarize/Visualize/Traits values against DRAM1. See docs/contributing.md.
+- Docker tasks that fail before starting (exit 125, e.g. a dropped image pull) are retried.
+
+### Features
+
+- Test suite with a PR gate, and annotation columns ordered by database ([66982bb](https://github.com/BortonWrightonLabs/DRAM/commit/66982bb4b30ae738a770e5213af3e47459b99e6b))
+
+  Adds a two-tier test suite (pixi run test / test-full) with a PR-gate CI
+  matrix over docker and apptainer, and fixes the pipeline bugs it exposed.
+
+  User-facing changes:
+  - Annotation columns are ordered metadata first (gene, then genome), then
+    one group per database A-Z with <db>_id first, then any other columns.
+    A column's database is the longest prefix with a <db>_id column. One
+    shared function (bin/utils/columns.py) is used by every step that
+    writes annotation columns. Columns without an underscore are no longer
+    silently dropped.
+  - ADD_ANNOTATIONS, ADD_BIN_QUALITY, ADD_TAXA and MERGE_ANNOTATIONS run
+    bin/ scripts instead of inline Python.
+  - fix: HMM hit descriptions are written as <db>_description (were a bare
+    `description` that collided across databases).
+  - fix: PRODIGAL/*_called_genes_table.tsv gene_number is Prodigal's gene
+    number (was part of gc_cont, e.g. cont=0.439).
+  - fix: Summarize counts each tRNA once. tRNAs were keyed by scaffold, so
+    identical tRNAs on one scaffold counted once and the join back to the
+    genome multiplied that by the scaffold's tRNA count (7 Gly (GCC)
+    tRNAs counted 25).
+
+  Tests:
+  - PR gate: pytest for combine_annotations, hmm_parser, rename_headers,
+    generate_gff, parse_faa, the add/merge scripts and the fixture scripts;
+    OWC end-to-end on mini databases (tests/data/db) with snapshots of
+    published outputs; Summarize/Traits/Visualize on the DRAM1 and
+    synthetic fixtures through a value comparator
+    (tests/scripts/refine_values.py: Gene Count per label and genome,
+    Presence/Coverage per rule, sheet and genome; reads today's and the
+    Refine layout) against baselines recorded at bin/rules 1b098eb, plus
+    Gene Counts vs DRAM1's metabolism_summary.xlsx.
+  - CI checks out the dram-rules submodule and caps PR-gate resources to
+    the 4-CPU runner.
+  - Fixtures: mini databases (KOfam built in CI from GenomeNet), anonymized
+    DRAM1 annotations in DRAM2 format, synthetic annotations for databases
+    DRAM1 never ran.
+  - Full tier: one real database per search type (kofam, dram_db, tcdb,
+    camper, dbcan, rgi); OWC coordinates, strand and per-gene KOfam KOs vs
+    DRAM1. Known differences (KOfam vs DRAM1's KEGG, pseudo tRNAs, DRAM1
+    counting only the best CAZy hit) are in tests/data/allowlist.tsv.
+  - fix: tests/nextflow.config points dbcan_version_file at databases/
+    (every full-tier test failed on it under nf-test).
+
+  CI robustness:
+  - Docker task exit 125 (`docker run` failed before the task started,
+    e.g. a dropped image pull) is retried (conf/base.config, so users get
+    it too).
+  - All apptainer tests share one NXF_APPTAINER_CACHEDIR, and if the tests
+    fail with "Failed to pull singularity image" the nf-tests run once
+    more, reusing cached images.
+  - The KOfam mini-database is built by .github/actions/kofam-mini-db and
+    cached on push to dev, so every PR can restore it.
+  - Actions on their Node 24 majors; Dependabot opens one grouped PR a
+    week for action updates in .github/.
+
+  Docs: contributing.md asks for things that can't go stale (derive from
+  the source of truth or use the tool's feature, not hand-kept lists).
+
+
+- One Refine process for Summarize, Visualize and Traits ([#548](https://github.com/BortonWrightonLabs/DRAM/pull/548)) ([891253c](https://github.com/BortonWrightonLabs/DRAM/commit/891253c2fe50fc2b898cd90f14d2ddb38c77b277))
+
+  Bumps bin/rules to dram-rules c816c1c, whose single dram-rules command
+  replaces dram_viz.py and DRAM's own distill.py, and runs all three
+  Refinements in one REFINE process.
+
+  User-facing changes:
+  - --summarize, --visualize and --traits still each work; --refine runs
+    all three (full_mode uses it).
+  - Params mirror dram-rules: --ecos (shared by visualize and summarize),
+    --topics, --sum_custom, --viz_custom, --traits_custom, --mapping,
+    --common_rules_tsv. sum_*, viz_*, trait_*, distill_*, --product and
+    --adjectives still work with a deprecation warning.
+  - Outputs: SUMMARIZE/{topic,ecosystem,custom}_summary.{xlsx,tsv},
+    VISUALIZE/<sheet>/, TRAITS/. summarized_genomes.tsv is gone.
+  - --summarize alone also runs all five ecosystem sheets (dram-rules
+    default); custom viz/traits sheets add to the built-in ones instead of
+    replacing them; ecos/topics are validated by dram-rules.
+
+  Tests:
+  - Value comparator reads the new layout; 15 value changes allowlisted,
+    each traced to a dram-rules rule edit (ebae146, 8fdc3c6, 474c660).
+  - OWC snapshot re-recorded: only Refine file names changed.
+  - Built-in Summarize Sheets used directly (dedup landed upstream).
+
+
+- Bump bin/rules to derived ecosystem summaries; document testing ([#550](https://github.com/BortonWrightonLabs/DRAM/pull/550)) ([b348c8d](https://github.com/BortonWrightonLabs/DRAM/commit/b348c8d01d5d79c79b15142c45644aa6920e7dd2))
+
+  bin/rules goes from c816c1c to 1a74997: ecosystem summaries are now
+  derived each run from the visualize ecosystem sheets (one row per Gene
+  ID their rules look up) instead of the hand-kept distill sheets.
+
+  - New --descriptions param, passed to dram-rules: custom Description
+    Tables (gene_id, description) for ecosystem_summary and
+    custom_derived_summary. A summarize.nf.test case checks a --viz_custom
+    sheet's custom_derived_summary uses them, and leaves an undescribed
+    Gene ID empty.
+  - The value comparator treats the new rule and group columns as
+    metadata, and its comment says what the list must match.
+  - Baselines re-recorded at 1a74997. Every value difference was an
+    ecosystem label appearing or disappearing; no Gene Count changed for
+    a label present before and after. The earlier allowlisted c816c1c
+    changes fold into the new baselines, so their entries are removed.
+  - Bare CAZy families are no longer in any Summarize output, so the
+    DRAM1 check compares few CAZy counts; its CAZy allowlist entries are
+    removed.
+  - OWC snapshot: derived columns, the marine sheet is now aquatic, more
+    ecosystem rows, and the K26847 whitespace fix in the energy topic
+    sheet.
+  - docs/contributing.md gains a Contribution workflow section and a
+    Testing section: the pixi tasks, what tests assert, where tests and
+    fixtures live, snapshot and value diffs, re-recording a baseline
+    versus allowlisting a difference, and bumping bin/rules. The fixture
+    READMEs keep only what describes their data, point there, and name
+    no bin/rules commit (git records it). README.md links the guide.
+
+  BREAKING CHANGE: SUMMARIZE/ecosystem_summary's label column is now
+  gene_id, rule and group are new, and pathway, header and subheader are
+  gone. CAZy families are counted only as Family;EC Gene IDs there.
+
+
+
+### Miscellaneous Tasks
+
+- Require conventional PR titles; fix git-cliff commit bodies ([#549](https://github.com/BortonWrightonLabs/DRAM/pull/549)) ([235b87b](https://github.com/BortonWrightonLabs/DRAM/commit/235b87b76399b646579a287c67157198e02f338d))
+
+  Squash merges into dev take their title from the PR title, and git-cliff
+  groups the changelog by it, so a PR title check now enforces it.
+
+  - .github/workflows/pr-title.yml: amannn/action-semantic-pull-request
+    checks the PR title (and the commit title of single-commit PRs)
+    against the conventional commit types.
+  - cliff.toml: one group per type the check allows (adds Build, Revert);
+    Package kept for older commits.
+  - cliff.toml: commit bodies were cut at the first paragraph starting
+    `Word:` (git-cliff reads it as a trailer, e.g. "Tests:" or
+    "BREAKING CHANGE:") and the rest glued on as ", Tests:- ...". The body
+    is now the raw message after the title, so blank lines and markdown
+    lists survive. Co-authored-by trailers are dropped, and "([#123](https://github.com/BortonWrightonLabs/DRAM/pull/123))" from
+    squash merges links to the PR.
+
+
+
+### bin/rules (dram-rules)
+
+[1b098eb](https://github.com/BortonWrightonLabs/dram-rules/commit/1b098ebf7f0d6a2065af6961738e9d7cfbfe79cb)...[1a74997](https://github.com/BortonWrightonLabs/dram-rules/commit/1a749973eb281c0bea67cabe64badfdc8814b6f6)
+
+Changes in the rules submodule that the DRAM commits above do not describe.
+
+#### Bug Fixes
+
+- Add missing group values to ag rules ([977b9d8](https://github.com/BortonWrightonLabs/dram-rules/commit/977b9d8db814cd284f7b3208713a21cf85660445))
+
+
+- Evaluator bugs in not(), at_least COUNTS, missing columns and caching ([474c660](https://github.com/BortonWrightonLabs/dram-rules/commit/474c660443027603b90c7fbbc27c07bed8e11a9e))
+
+  - not() after a filter in a pipe raised TypeError (not_() got an unexpected
+    'masks' argument). not() now always negates its own argument; inside a
+    pipe a negated filter is ANDed with the filters before it.
+  - at_least(n, COUNTS, ...) never counted: eval_cycle cast hit counts to
+    bool, so COUNTS behaved like PRESENCE. Counts are kept; path_steps still
+    counts steps, not hits. The mode is now case-insensitive. This makes
+    Cyc2 (rules_common.tsv) work, e.g. A. ferrooxidans now scores Iron
+    Oxidation = true.
+  - filter_contains on a missing column was silently ignored, so the pipe
+    ran unfiltered. It now raises a RuleError like filter_compare, and the
+    message shows the rule_options to skip the rule instead.
+  - evaluate_rules (the traits path) now honours rule_options include_when,
+    parsed once into CompiledRules.rule_options; it previously ignored it.
+    probable-iron-reduction in traits_rules.tsv now requires
+    kegg_description, so traits runs without KEGG skip it instead of
+    failing. Existing taxonomy include_when options on traits now apply too.
+  - tax/column_count_values/column_sum_values crashed with a ShapeError when
+    a sample had no annotation rows; that sample is now False.
+  - get_val_cols built an AssertionError without raising it.
+  - functools.cache on Evaluator methods was shared by the whole class and
+    kept every Evaluator (and its annotations) alive; caches are now
+    per instance.
+
+
+- Build taxonomy tree by lineage path ([c373cab](https://github.com/BortonWrightonLabs/dram-rules/commit/c373cab2bf3a08c0da904ebac3b18dd427a8739b))
+
+  Partial lineages (e.g. 'Unclassified Bacteria') no longer recurse forever,
+  and empty ranks shared across lineages (f__, g__) no longer merge their
+  children into each other's branches.
+
+
+- Mixed-case gene ids get their abundance with --mapping ([4b5d2d4](https://github.com/BortonWrightonLabs/dram-rules/commit/4b5d2d4c02949cb608a976ebd2bcda269c6b2152))
+
+  The abundance join compared uppercased hits against the rules' original
+  spelling, so ids like McrA summed to 0. Also fix --save_dataframes with
+  --mapping, which assumed every table had a genome column. Adds an
+  end-to-end CLI test.
+
+
+- Plot genomes without a full taxonomy lineage ([3a52594](https://github.com/BortonWrightonLabs/dram-rules/commit/3a525949e8601679a7001bd4990a05849417977f))
+
+  The taxonomy filter only matched 7-rank lineages, so genomes with a
+  partial or missing taxonomy never appeared. Match any leaf of the tree
+  and always keep genomes that have no taxonomy.
+
+
+- Keep decimal abundances in mapping files ([0116573](https://github.com/BortonWrightonLabs/dram-rules/commit/01165730f868e30a6d6d2710ae052148dd508d55))
+
+  Column types were guessed from the first 100 rows, and ignore_errors turned
+  later decimals in an integer-looking column into null, then 0. Infer from
+  all rows and let malformed files fail loudly.
+
+
+- Rules that read annotation rows work with --mapping ([6496e39](https://github.com/BortonWrightonLabs/dram-rules/commit/6496e390fab0fe23b1005c4714dbf21645aac320))
+
+  Per-sample evaluation passed the raw annotations, which have no sample
+  column, so count_rows, sum_column and tax() crashed. Give it the annotation
+  rows of each sample: every gene with a non-zero abundance in that sample.
+
+
+- Plot genomes whose lineage is a prefix of another's ([6356d05](https://github.com/BortonWrightonLabs/dram-rules/commit/6356d054eef5b46f056d66cbe61323c3c860cf0c))
+
+  The taxonomy filter only matched leaf nodes, so a genome at an inner node
+  (d__B;p__C next to d__B;p__C;c__X) never appeared. Node ids are whole
+  lineages, so match each genome against every selected node.
+
+
+- Round abundances in the wide tables' row key ([2f39b37](https://github.com/BortonWrightonLabs/dram-rules/commit/2f39b37e2efafd5f86314510119859fcf09eec4d))
+
+  mean_sample_abundance and sample_abundance are part of the wide tables' row
+  key. Means that are equal on paper but were summed in a different order differ
+  in their last bits, which split a rule's rows and changed the row count from
+  run to run. They are now rounded to 10 significant figures (ABUNDANCE_SIG_FIGS)
+  in the wide tables only; the vertical tables keep the full values.
+
+  On the merged drep bins data with its mapping file, three runs now give
+  identical wide tables (eng_sys genome: 3,131 rows every run).
+
+
+
+#### Documentation
+
+- User docs for rules and rule functions; migration hints ([2231b90](https://github.com/BortonWrightonLabs/dram-rules/commit/2231b905b6180a63d73d7a2b87403c1e08cfb385))
+
+  Add user documentation, written to also replace DRAM2's rules_parser.md:
+  - docs/rules_parser.md: rule sheets, the rule language (function calls,
+    not(), row filters and pipes), rule_options include_when and
+    coverage, changes from earlier syntax, and troubleshooting
+  - docs/rule_functions.md: reference for the built-in functions
+  - docs/custom_rule_functions.md: writing, loading and testing your own
+    rule functions
+
+  Remove the design spec, now superseded by these docs.
+
+  Rules using removed syntax now say what to write instead: path_steps,
+  path_subunits, column_count_values and column_sum_values name their
+  replacements, and a choice word passed before an optional choice
+  parameter (e.g. at_least(2, PRESENCE, [...])) suggests mode=PRESENCE.
+
+
+
+#### Features
+
+- Rule function registry, typed rule functions and user functions ([a8e84b9](https://github.com/BortonWrightonLabs/dram-rules/commit/a8e84b946f1662ef79d569ecb14d0052b45063d2))
+
+  Rule functions are now defined once, as plain Python functions decorated
+  with @rule_function (dram_rules.rules_api). Type hints on the parameters
+  decide how each rule argument is read, and the return hint (PerSample or
+  RowFilter) decides where the function can be used. Built-ins live in
+  rule_parser/functions.py and use the same API, and users can add their
+  own with --functions FILE (repeatable). See docs/rule-functions-spec.md.
+
+  Compiling rules (RuleCompiler) matches each call to its function,
+  converts its arguments, and checks placement when the sheets load: row
+  filters only before `->`, per-sample values everywhere else. Gene IDs
+  are collected from sub-rule arguments automatically. Errors name the
+  rule, quote aliases as written, and give the chain of aliases an error
+  is in. While evaluating, every function result is checked against its
+  return hint, with a message saying what was returned and how to fix it.
+  User functions get read-only views of shared arrays.
+
+  Language changes (bundled sheets migrated, outputs unchanged):
+  - keyword arguments and comparison operators (>=, >, <=, <, ==, !=)
+  - at_least(n, group, mode=PRESENCE|COUNTS), mode optional
+  - column_count_values -> filter_compare(...) -> count_rows(...);
+    column_sum_values -> sum_column
+  - filter_contains and tax match plain text unless regex=true; tax now
+    honours pipe filters
+  - not() is part of the language, like & and |, and works on row filters
+    and per-sample values
+  - path_steps/path_subunits replaced by rule_options {"coverage": ...};
+    mixed coverage settings in one heatmap group are an error at load time
+  - probable-iron-reduction also requires heme_regulatory_motif_count
+
+  Also removes the unused step-order graph (trees_by_rules) and the
+  networkx dependency.
+
+
+- Taxonomy Label select relabels the y-axis by rank ([7449617](https://github.com/BortonWrightonLabs/dram-rules/commit/7449617dfd5dcad3ea229d1c775f4c660ad0a15c))
+
+  With 'Show Taxonomy on Y Axis' ticked, the first genome chart is labelled
+  '<rank> | <genome>' for the chosen rank (genome alone when the lineage has
+  no such rank). Previously the select was ignored and genomes sharing a
+  lineage collapsed onto one full-lineage row.
+
+
+
+#### Performance
+
+- Speed up present-map building and rule loading; fix pfam/cazy parsing ([09acbf4](https://github.com/BortonWrightonLabs/dram-rules/commit/09acbf41059355e1f846fb3e983e284538debd24))
+
+  prepare_present_map_df processed every annotation column in sequence on
+  the full frame (cast, explode, uppercase), then unpivoted ~47M rows before
+  the join discarded almost all of them. Each column is now its own lazy
+  branch, concatenated and collected once. ~6.5s -> ~0.6s on the 63-genome
+  test file, cutting the bgc run from ~10.7s to ~4.9s wall. Output is
+  identical for all bundled rule systems.
+
+  load_rules now collects once and parses each unique rule string once
+  (previously the whole plan, Lark parse included, ran four times), and the
+  parser is cached per process. Rule strings stay as a String column rather
+  than pl.Object.
+
+  Column parsers are now a readable table (ID_PARSERS, renamed from
+  ID_EXPR_DICT) of named parsers, with SUFFIX_PARSERS and DEFAULT_PARSER as
+  fallbacks so unknown database columns are still searched. Uppercasing and
+  "EC:" handling happen once in _match_key.
+
+  Fixes:
+  - pfam_hits/pfam_id and cazy_hits never matched rules: str.extract_all
+    returns the whole match, ignoring capture groups.
+  - from_rules mutated the shared BACKUP_GROUPBY_COLUMNS default, so later
+    calls in the same process lost topic_ecosystem as a backup group column.
+
+
+- Read mapping files fast and keep annotations lazy ([549a10c](https://github.com/BortonWrightonLabs/dram-rules/commit/549a10c707358ef7afb3c2c043e7ae295f820a0d))
+
+  - Read mapping sample columns as Float64 with types inferred from the
+    first 10k rows instead of the whole file (58 s of a 77 s run).
+  - Keep only non-zero sample abundances; join by-genome mappings on
+    genome instead of copying abundances onto every gene.
+  - Scan annotations lazily; Rows.df collects them on first use, so runs
+    whose rules never read rows never load them.
+  - Move mapping loading into processing.load_mapping; add scan_tsv.
+
+  Big annotations + mapping: 1:20 -> 0:17, peak RSS 14.5 -> 4.3 GB.
+  By-genome mapping: OOM-killed at 40.9 GB -> 0:14, 4.0 GB.
+
+
+- Sheets whose rules read rows share one in-memory copy of the annotations ([825b315](https://github.com/BortonWrightonLabs/dram-rules/commit/825b3159a2e431df8fd6c1de2fe812a0a252a906))
+
+  Before, each sheet whose rules read annotation rows (tax(), count_rows,
+  filters, also through aliases) read the whole annotations file again. Now the
+  CLI collects the annotations once, after building the Hits, and only when some
+  sheet's rule reads rows (CompiledRules.reads_rows). Visualize, traits, the
+  sample level and summarize all use that copy.
+
+  The per-sample join with a mapping file is still rebuilt for each sheet, from
+  memory: it has a row per gene per sample, so holding it for the whole run could
+  cost more memory than rebuilding it.
+
+  On raw-anno-63-plus-with-taxa.tsv:
+  - --viz --ecos ag,bgc,eng_sys,gut --traits: 32.4 s, 6.3 GB -> 30.4 s, 3.5 GB peak
+  - --viz --ecos gut --traits --sum (7 sheets): 104-106 s, 4.0-5.1 GB -> 100.5-101 s, 3.5 GB
+  - --viz --ecos ag (no rule reads rows): unchanged, 5.8 s, 2.4 GB
+  All output tables are identical.
+
+  Also adds a test for get_val_cols' multiple-value-column error; the inserted
+  lines put it in the diff, so the coverage gate now checks it.
+
+
+
+#### Rules
+
+- Update common rules with new iron rules for traits ([ebae146](https://github.com/BortonWrightonLabs/dram-rules/commit/ebae146a3cd89e9c4565cb0ac548537b606f921c))
+
+
+- Update common rules with new iron rules for traits ([cf5a84a](https://github.com/BortonWrightonLabs/dram-rules/commit/cf5a84a8309fd4af10ca1623792a20464976d5a5))
+
+
+- Add SoxXA, SoxYZ and SoxB aliases to the common rules ([d4dfcc2](https://github.com/BortonWrightonLabs/dram-rules/commit/d4dfcc2ea8a31bbe4beae75bcd8ba07741dbf608))
+
+  The aquatic sheet's Sulfur-Oxidation-Sox rule uses them; without them
+  --ecos aquatic stopped on an undefined alias.
+
+
+<!-- generated by git-cliff -->
+
+
 ## 2.0.0-beta42 - 2026-11-09
 
 [ebe8f31](https://github.com/BortonWrightonLabs/DRAM/commit/ebe8f31505be6bf6937923e6dc5a7670451681fe)...[9070261](https://github.com/BortonWrightonLabs/DRAM/commit/9070261c37c6ceab75d976acb29382e197e3b3da)
