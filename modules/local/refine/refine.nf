@@ -3,8 +3,8 @@ process REFINE {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:51f8873f5a533b04' :
-        'community.wave.seqera.io/library/python_bokeh_panel_click_pruned:5f117a69db01d17e' }"
+        'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:eecc2e59dfa7eb96' :
+        'community.wave.seqera.io/library/python_bokeh_panel_click_pruned:4aa7aba4b6411bd4' }"
 
     input:
     path( annotations, stageAs: "raw-annotations.tsv" )

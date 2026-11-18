@@ -2,16 +2,19 @@ channels:
   - conda-forge
   - bioconda
 
+# REFINE and COMBINE_ANNOTATIONS run dram-rules here: its dependencies must
+# match bin/rules/pyproject.toml (checked by tests/python/test_refine_env.py).
 dependencies:
   - python=3.14
   - bokeh>=3.0, <4.0
   - panel>=1.9, <2
   - click<9.0
-  - networkx>=3, <4
   - param>=2.0, <3.0
   - panel-material-ui>=0.16.2, <0.17
   - pandas>=2, <3.0
   - polars>=2, <3
-  - pyarrow
-  - lark
-  - xlsxwriter
+  - pyarrow>=15
+  - lark>=1.1, <2
+  - xlsxwriter>=3, <4
+  # combine_annotations.py reads FASTA with it
+  - scikit-bio=0.7.1

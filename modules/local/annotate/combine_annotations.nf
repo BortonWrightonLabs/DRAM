@@ -1,10 +1,10 @@
 process COMBINE_ANNOTATIONS {
     label 'process_small'
 
-    conda "${moduleDir}/environment.yml"
+    conda "${moduleDir}/../refine/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] ?
-        'oras://community.wave.seqera.io/library/python_pandas_polars_hmmer_pruned:efbc2044ad373273' :
-        'community.wave.seqera.io/library/python_pandas_polars_hmmer_pruned:0c7f6aa874829210' }"
+        'oras://community.wave.seqera.io/library/python_bokeh_panel_click_pruned:eecc2e59dfa7eb96' :
+        'community.wave.seqera.io/library/python_bokeh_panel_click_pruned:4aa7aba4b6411bd4' }"
 
     input:
     path(fastas, stageAs: "annotations/*" )
