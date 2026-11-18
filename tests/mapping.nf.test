@@ -41,8 +41,9 @@ nextflow_pipeline {
             assert columns.findAll { it.startsWith("sample:") } == ["sample:S1", "sample:S2"]
             assert columns.takeRight(2) == ["sample:S1", "sample:S2"]
             def genes = annotations.rows.collectEntries { [(it.query_id): it] }
-            assert genes["OWC_0000_k121_3157_2"].subMap(["sample:S1", "sample:S2"]) == ["sample:S1": "5.0", "sample:S2": "0.0"]
-            assert genes["OWC_0001_k121_21365628_13"].subMap(["sample:S1", "sample:S2"]) == ["sample:S1": "1.5", "sample:S2": "4.0"]
+            def abundances = { gene -> ["sample:S1", "sample:S2"].collect { genes[gene][it] as double } }
+            assert abundances("OWC_0000_k121_3157_2") == [5.0, 0.0]
+            assert abundances("OWC_0001_k121_21365628_13") == [1.5, 4.0]
             // genes missing from the mapping get empty cells
             assert genes["OWC_0000_k121_3157_4"]["sample:S1"] in [null, ""]
         }

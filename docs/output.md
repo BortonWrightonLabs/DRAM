@@ -6,7 +6,7 @@ This is a work in progress, but here is an updated list of output files for DRAM
   
 <summary><strong>ANNOTATE/</strong></summary>
 
-- `raw-annotations.tsv` — Initial gene annotations  
+- `raw-annotations.tsv` — Initial gene annotations; with `--mapping`, one `sample:<name>` column per sample at the end (empty for genes the mapping leaves out)  
 - `raw_rrna_scan.tsv` — rRNA scan results  
 - `collected_rrnas.tsv` — Filtered rRNAs  
 - `collected_trnas.tsv` — Filtered tRNAs  
