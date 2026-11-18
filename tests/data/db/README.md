@@ -35,7 +35,7 @@ pixi run python tests/scripts/build_mini_dbs.py kofam \
 `kofam/ids.txt` was chosen against `databases/kofam`, which is the GenomeNet archive
 `ftp://ftp.genome.jp/pub/db/kofam/archives/2022-08-01/` (its `ko_list` matches byte for byte,
 and the subset built from that archive is identical to one built from the local copy).
-CI builds from that archive (`KOFAM_RELEASE` in `.github/workflows/ci.yaml`). Other
+CI builds from that archive (`KOFAM_RELEASE` in `.github/workflows/tests.yml`). Other
 releases have different profiles and thresholds, so when `databases/kofam` is updated,
 rerun `select` and bump `KOFAM_RELEASE` together.
 
