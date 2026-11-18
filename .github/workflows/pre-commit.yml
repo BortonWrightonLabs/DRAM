@@ -1,13 +1,13 @@
-name: CI on push
+name: Pre-commit
 
-# Pre-commit on every change; the tests are in tests.yml
+# Lint and format checks on every change; the tests are in tests.yml
 on:
   pull_request:
   push:
     branches: [dev]
 
 jobs:
-  ci:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
