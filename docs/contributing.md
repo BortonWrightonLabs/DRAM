@@ -61,7 +61,10 @@ Rely on things that stay correct on their own over things someone has to remembe
 ## Contribution workflow
 
 1. Branch off `dev`.
-1. Open a PR into `dev` with a [Conventional Commit](https://www.conventionalcommits.org/) title (`feat: …`, `fix: …`, `docs: …`). The `conventional-title` check enforces it, and the changelog is built from these titles.
+1. Open a PR into `dev` with a [Conventional Commit](https://www.conventionalcommits.org/) title (`feat: …`, `fix: …`, `docs: …`). The `conventional-title` check enforces it, and the changelog is built from these titles (`cliff.toml`):
+   - `style:` is for formatting only and stays out of the changelog. A formatting commit with another type can be listed in `.git-blame-ignore-revs`, which git-cliff (2.14.1+) and `git blame` both skip.
+   - `fix(internal):` is a fix users of the pipeline can't see (code, not results or interface). It goes under an Internal subheading of Bug Fixes. If a change could alter outputs, make it a plain `fix:`, and split mixed changes into separate PRs.
+   - A fix for a bug that hasn't been released yet ends its message with a `Fixes: <sha>` trailer naming the commit that introduced it. The changelog leaves it out when that commit is in the same release, since users never saw the bug.
 1. Keep separate commits while the PR is in review. When it's ready to merge, squash the branch into one commit whose message describes the whole change: PRs into `dev` are squash merged, and with one commit the squash uses that commit's message.
 1. CI (pre-commit and the PR test gate below) must pass.
 
