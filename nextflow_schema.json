@@ -322,7 +322,7 @@
                     "type": "string",
                     "format": "file-path",
                     "exists": true,
-                    "description": "Gene or genome abundances per sample for visualize and traits: a gene (matching query_id) or genome column, then one column per sample."
+                    "description": "Gene or genome abundances per sample for visualize and traits: a gene (matching query_id) or genome column, then one column per sample. With --annotate, they are added to ANNOTATE/raw-annotations.tsv as sample:<name> columns."
                 },
                 "common_rules_tsv": {
                     "type": "string",

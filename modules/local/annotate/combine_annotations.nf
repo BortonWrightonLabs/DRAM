@@ -11,6 +11,7 @@ process COMBINE_ANNOTATIONS {
     path(genes, stageAs: "genes/*" )
     path(dbcan_output, stageAs: "dbcan/*")
     path(rgi_output, stageAs: "rgi/*")
+    path(mapping, stageAs: "mapping/*")
 
     output:
     path "raw-annotations.tsv", emit: combined_annotations_out
@@ -25,6 +26,7 @@ process COMBINE_ANNOTATIONS {
         --genes_dir genes \\
         --dbcan_dir dbcan \\
         --rgi_dir rgi \\
+        ${mapping ? "--mapping ${mapping}" : ''} \\
         --output raw-annotations.tsv
 
     """

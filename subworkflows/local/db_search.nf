@@ -84,6 +84,7 @@ workflow DB_SEARCH {
     use_dram_db
     use_vog
     call
+    mapping  // list: the mapping file, or [] for none; attached as Sample Columns
 
     main:
 
@@ -403,7 +404,8 @@ workflow DB_SEARCH {
         fastas,
         genes,
         dbcan_output,
-        rgi_output
+        rgi_output,
+        mapping
     )
     ch_combined_annotations = COMBINE_ANNOTATIONS.out.combined_annotations_out
 

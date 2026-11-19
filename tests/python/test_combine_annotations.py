@@ -109,16 +109,7 @@ def test_owc_hits_join_called_genes(tmp_path, kofam_hits, vogdb_hits):
     from conftest import OWC
     from utils.columns import order_columns
 
-    annotations = tmp_path / "annotations"
-    annotations.mkdir()
-    for hits in kofam_hits + vogdb_hits:
-        shutil.copy(hits, annotations)
-    output = tmp_path / "raw-annotations.tsv"
-    result = CliRunner().invoke(
-        combine_annotations,
-        ["--annotations_dir", str(annotations)]
-        + ["--genes_dir", str(OWC / "called_genes"), "--output", str(output)],
-    )
+    result, output = combine_owc(tmp_path, kofam_hits + vogdb_hits)
     assert result.exit_code == 0, result.output
     with open(output) as handle:
         reader = csv.DictReader(handle, delimiter="\t")
@@ -144,6 +135,78 @@ def test_owc_hits_join_called_genes(tmp_path, kofam_hits, vogdb_hits):
         assert {g: r[f"{db}_id"] for g, r in combined.items() if r[f"{db}_id"]} == (
             expected
         )
+
+
+def combine_owc(tmp_path, hits, *args):
+    """combine_annotations on the OWC called genes and `hits`; the result."""
+    from conftest import OWC
+
+    annotations = tmp_path / "annotations"
+    annotations.mkdir(exist_ok=True)
+    for path in hits:
+        shutil.copy(path, annotations)
+    # numbered, so one test can compare two runs in the same tmp_path
+    output = tmp_path / f"raw-annotations{len(list(tmp_path.glob('raw-*')))}.tsv"
+    result = CliRunner().invoke(
+        combine_annotations,
+        [
+            "--annotations_dir",
+            str(annotations),
+            "--genes_dir",
+            str(OWC / "called_genes"),
+        ]
+        + ["--output", str(output), *args],
+    )
+    return result, output
+
+
+def read_tsv(output):
+    return pl.read_csv(output, separator="\t", infer_schema_length=None)
+
+
+def test_gene_mapping_attached_as_sample_columns(tmp_path, kofam_hits, vogdb_hits):
+    from conftest import OWC
+
+    hits = kofam_hits + vogdb_hits
+    _, plain = combine_owc(tmp_path, hits)
+    result, mapped = combine_owc(
+        tmp_path, hits, "--mapping", str(OWC / "mapping_genes.tsv")
+    )
+    assert result.exit_code == 0, result.output
+    plain, mapped = read_tsv(plain), read_tsv(mapped)
+    assert mapped.columns == plain.columns + ["sample:S1", "sample:S2"]
+    assert mapped.drop("sample:S1", "sample:S2").equals(plain)
+    genes = {r["query_id"]: r for r in mapped.iter_rows(named=True)}
+    assert (
+        genes["OWC_0000_k121_3157_2"]["sample:S1"],
+        genes["OWC_0000_k121_3157_2"]["sample:S2"],
+    ) == (5.0, 0.0)
+    assert genes["OWC_0001_k121_21365628_13"]["sample:S1"] == 1.5
+    assert genes["OWC_0000_k121_3157_4"]["sample:S1"] is None  # not in the mapping
+
+
+def test_genome_mapping_repeats_on_each_gene(tmp_path, kofam_hits, vogdb_hits):
+    mapping = tmp_path / "genomes.tsv"
+    mapping.write_text("genome\tS1\nOWC_0000\t3\nOWC_0001\t4\n")
+    result, output = combine_owc(
+        tmp_path, kofam_hits + vogdb_hits, "--mapping", str(mapping)
+    )
+    assert result.exit_code == 0, result.output
+    by_genome = (
+        read_tsv(output).group_by("input_fasta").agg(pl.col("sample:S1").unique())
+    )
+    assert dict(by_genome.rows()) == {"OWC_0000": [3.0], "OWC_0001": [4.0]}
+
+
+def test_mapping_matching_nothing_fails(tmp_path, kofam_hits, vogdb_hits):
+    mapping = tmp_path / "nothing.tsv"
+    mapping.write_text("Geneid\tS1\nnot_a_gene\t1\n")
+    result, output = combine_owc(
+        tmp_path, kofam_hits + vogdb_hits, "--mapping", str(mapping)
+    )
+    assert result.exit_code != 0
+    assert "can't be mapped" in str(result.exception)
+    assert not output.exists()
 
 
 if __name__ == "__main__":
