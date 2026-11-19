@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
@@ -77,6 +78,21 @@ class OrderColumnsTests(unittest.TestCase):
     def test_keeps_every_column_once(self):
         columns = ["kegg_id", "query_id", "rank", "rgi_aro", "x"]
         self.assertCountEqual(order_columns(columns), columns)
+
+
+def test_standard_library_only():
+    """columns.py imports dram_rules.definitions; both must load without pandas or polars."""
+    # -S: no site-packages, so any import outside the standard library fails
+    result = subprocess.run(
+        [sys.executable, "-S", "-c", "import utils.columns"],
+        cwd=Path(__file__).resolve().parents[2] / "bin",
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, (
+        "utils/columns.py and dram_rules.definitions must import only the "
+        f"standard library:\n{result.stderr}"
+    )
 
 
 if __name__ == "__main__":

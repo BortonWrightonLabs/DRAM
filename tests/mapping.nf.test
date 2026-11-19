@@ -5,13 +5,14 @@ nextflow_pipeline {
     config "./pr.config"
     tag "pr"
 
-    // Refine's tables, one entry per file: row count and a checksum of the rows sorted
+    // Every published table but ANNOTATE's (the asserts check raw-annotations.tsv), one entry
+    // per file: row count and a checksum of the rows sorted. A new output folder fails the snapshot.
     def refineTables = { String outdir ->
         def out = new File(outdir).toPath()
         def tables = [:]
         out.eachFileRecurse(groovy.io.FileType.FILES) { f ->
             def name = out.relativize(f).toString()
-            if (name ==~ /(SUMMARIZE|VISUALIZE|TRAITS)\/.*\.tsv/) {
+            if (name.endsWith(".tsv") && !(name ==~ /(ANNOTATE|pipeline_info|multiqc)\/.*/)) {
                 def rows = f.readLines()
                 tables[name] = [rows: rows.size(), md5: ([rows[0]] + rows.drop(1).sort()).join("\n").md5()]
             }
@@ -38,10 +39,11 @@ nextflow_pipeline {
 
             def annotations = path("${params.outdir}/ANNOTATE/raw-annotations.tsv").csv(sep: "\t")
             def columns = annotations.columnNames
-            assert columns.findAll { it.startsWith("sample:") } == ["sample:S1", "sample:S2"]
-            assert columns.takeRight(2) == ["sample:S1", "sample:S2"]
+            def samples = ["sample:S1", "sample:S2"]
+            assert columns.findAll { it.startsWith("sample:") } == samples
+            assert columns.takeRight(2) == samples
             def genes = annotations.rows.collectEntries { [(it.query_id): it] }
-            def abundances = { gene -> ["sample:S1", "sample:S2"].collect { genes[gene][it] as double } }
+            def abundances = { gene -> samples.collect { genes[gene][it] as double } }
             assert abundances("OWC_0000_k121_3157_2") == [5.0, 0.0]
             assert abundances("OWC_0001_k121_21365628_13") == [1.5, 4.0]
             // genes missing from the mapping get empty cells

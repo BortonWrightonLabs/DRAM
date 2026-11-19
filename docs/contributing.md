@@ -95,7 +95,7 @@ Assert on published outputs (what lands in `--outdir`), not process names, input
 |---|---|
 | `tests/python/` | pytest unit tests for `bin/` scripts and `tests/scripts/`, and checks that config matches its source (`test_refine_env.py`) |
 | `tests/*.nf.test` | nf-test pipeline tests; `tests/pr.config` points the `pr` ones at the mini databases |
-| `tests/data/owc/` | two OWC genomes and their expected annotations |
+| `tests/data/owc/` | two OWC genomes, their expected annotations, and a gene mapping (`mapping_genes.tsv`) |
 | `tests/data/db/` | mini databases built from what OWC hits; rebuilt with `tests/scripts/build_mini_dbs.py` |
 | `tests/data/dram1/` | an anonymized DRAM1 run, built with `tests/scripts/anonymize_dram1.py` |
 | `tests/data/synthetic/` | a hand-built annotations table for databases the other fixtures don't annotate |
