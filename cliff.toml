@@ -87,9 +87,11 @@ commit_preprocessors = [
 # An array of regex based parsers for extracting data from the commit message.
 # Assigns commits to groups.
 # Optionally sets the commit's scope and can decide to exclude commits from further processing.
-# One group per type .github/workflows/pr-title.yml allows (the conventional types).
+# One group per type .github/workflows/pr-title.yml allows (the conventional types plus `rules`).
 commit_parsers = [
     { message = "^feat", group = "Features" },
+    # Changes to the built-in rule sheets
+    { message = "^rules", group = "Rules" },
     { message = "^fix", group = "Bug Fixes" },
     { message = "^doc", group = "Documentation" },
     { message = "^perf", group = "Performance" },

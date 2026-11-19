@@ -62,6 +62,7 @@ Rely on things that stay correct on their own over things someone has to remembe
 
 1. Branch off `dev`.
 1. Open a PR into `dev` with a [Conventional Commit](https://www.conventionalcommits.org/) title (`feat: …`, `fix: …`, `docs: …`). The `conventional-title` check enforces it, and the changelog is built from these titles (`cliff.toml`):
+   - `rules:` is for changes to the built-in rule sheets (a `bin/rules` bump, say). It gets its own Rules section in the changelog.
    - `style:` is for formatting only and stays out of the changelog. A formatting commit with another type can be listed in `.git-blame-ignore-revs`, which git-cliff (2.14.1+) and `git blame` both skip.
    - `fix(internal):` is a fix users of the pipeline can't see (code, not results or interface). It goes under an Internal subheading of Bug Fixes. If a change could alter outputs, make it a plain `fix:`, and split mixed changes into separate PRs.
    - A fix for a bug that hasn't been released yet ends its message with a `Fixes: <sha>` trailer naming the commit that introduced it. The changelog leaves it out when that commit is in the same release, since users never saw the bug.
