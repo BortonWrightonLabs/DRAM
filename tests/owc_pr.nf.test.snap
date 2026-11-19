@@ -925,8 +925,8 @@
                 "ANNOTATE/PRODIGAL/OWC_0001_called_genes.fna": "f9c89d25564e0d05a8b8926ccc16ffc1",
                 "ANNOTATE/RENAMED_GFFS/OWC_0000_called_genes.gff": "f07b1bc2c42ff683046967f210acf677",
                 "ANNOTATE/RENAMED_GFFS/OWC_0001_called_genes.gff": "f5b234f47ee59b34a7dba2823c0f0b4d",
-                "ANNOTATE/RENAMED_HEADERS/OWC_0000.fa": "94ce88faaa6985537505fc2f8c2f6ec5",
-                "ANNOTATE/RENAMED_HEADERS/OWC_0001.fa": "651a1d0f186fe7e9d92d65aef45e2a90"
+                "ANNOTATE/RENAMED_HEADERS/OWC_0000.fa": "5da97528bbd42187d8e323f160062fbf",
+                "ANNOTATE/RENAMED_HEADERS/OWC_0001.fa": "1dbc4cdca3a1cf47fdaeedb17aa81770"
             }
         ],
         "timestamp": "2026-11-18T08:40:14.017355915",
