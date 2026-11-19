@@ -2,6 +2,144 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0-beta44 - 2026-11-19
+
+[92d6183](https://github.com/BortonWrightonLabs/DRAM/commit/92d61833e1ffe1505db9f4884079febc6c67caed)...[caeebbb](https://github.com/BortonWrightonLabs/DRAM/commit/caeebbb60fb9c2e606c7582c2ae6bcc21376c509)
+
+### Highlights
+
+- With --mapping and --annotate, raw-annotations.tsv now has a sample:<name> abundance column per sample.
+- --ecos and --topics accept `all`.
+- --rename no longer double-prefixes FASTAs whose headers already start with the file name.
+- New antibiotic rules in the common and gut rules.
+
+### Features
+
+- COMBINE_ANNOTATIONS attaches the mapping file as Sample Columns ([#555](https://github.com/BortonWrightonLabs/DRAM/pull/555)) ([c329547](https://github.com/BortonWrightonLabs/DRAM/commit/c3295477e124832f96a25e98cccbe0751c4a29c0))
+
+  * feat: bump bin/rules: `all` for --ecos and --topics, Sample Columns in annotations
+
+  dram-rules 5254a0c. Annotations with sample:<name> columns stand in for a
+  mapping file in Refine; COMBINE_ANNOTATIONS attaches them next.
+
+  * feat: COMBINE_ANNOTATIONS attaches the mapping file as Sample Columns
+
+  With --mapping and --annotate, raw-annotations.tsv gets one sample:<name>
+  column per Sample, after every other column, joined by gene or genome as
+  dram-rules' join_mapping decides. REFINE then reads the abundances from the
+  annotations; with --annotations it still gets --mapping. order_columns keeps
+  Sample Columns last at every later step.
+
+  * docs: the mapping file becomes Sample Columns in raw-annotations.tsv
+
+  Also compare the mapping nf-test's abundances as numbers: nft-csv parses them.
+
+  * test: review fixes for the mapping tests
+
+  - tests/mapping.nf.test snapshots every published table but ANNOTATE's, so a new Refine output folder fails the snapshot instead of being skipped
+  - a pytest checks utils/columns.py, and the dram_rules.definitions it imports, load with only the standard library
+  - combine_owc is reused by test_owc_hits_join_called_genes; read_owc is renamed read_tsv
+  - docs/contributing.md lists the gene mapping fixture
+
+
+- --rename leaves FASTAs whose headers already carry the file name unchanged ([#553](https://github.com/BortonWrightonLabs/DRAM/pull/553)) ([2bef678](https://github.com/BortonWrightonLabs/DRAM/commit/2bef678a59c8029817e0f7dfca51e112dbb7c188))
+
+  Every rename (assembly FASTAs, input proteins and input gene nucleotides)
+  now runs one RENAME process and one rename_headers.py call per batch,
+  replacing bbmap rename.sh. A file whose headers all start with
+  <name>_ is symlinked through instead of being prefixed twice; a file
+  where only some do is renamed in full with a warning.
+
+  Renamed assembly FASTAs keep their input extension and line wrapping
+  instead of becoming .fa wrapped at 70 columns; the OWC snapshot's
+  RENAMED_HEADERS checksums change accordingly.
+
+
+
+### Rules
+
+- Update common and gut rules with new antiobiotic rules ([caeebbb](https://github.com/BortonWrightonLabs/DRAM/commit/caeebbb60fb9c2e606c7582c2ae6bcc21376c509))
+
+
+
+### Build
+
+- COMBINE_ANNOTATIONS runs on REFINE's environment ([#554](https://github.com/BortonWrightonLabs/DRAM/pull/554)) ([cbfb4c0](https://github.com/BortonWrightonLabs/DRAM/commit/cbfb4c007cfa2bfe6a0476657159cb5b571afa52))
+
+  * build: annotate container on polars 2
+
+  COMBINE_ANNOTATIONS will import dram-rules, which needs polars >=2,<3. The
+  annotate environment gets the same bound and its images are rebuilt with
+  wave (polars 1.42.1 -> 2.1.0, pandas 3.0.3 -> 3.1.1); every module on that
+  image points at the new tags. A pytest fails when the environment's bound
+  and bin/rules/pyproject.toml's differ.
+
+  * build: COMBINE_ANNOTATIONS runs on REFINE's environment
+
+  dram-rules needs pandas <3 as well as polars 2, and the annotate image ships
+  pandas 3, so instead of moving the annotate environment to polars 2,
+  COMBINE_ANNOTATIONS uses REFINE's environment, the one that copies
+  dram-rules' dependencies. That environment gets scikit-bio (FASTA reading)
+  and dram-rules' bounds for pyarrow, lark and xlsxwriter, and drops networkx,
+  which nothing on the image imports. The annotate environment drops polars:
+  combine_annotations.py was its only user. Both images are rebuilt.
+
+  test_refine_env.py replaces the polars-only check: every dependency in
+  bin/rules/pyproject.toml must be in REFINE's environment with the same
+  bound, and its Python must fit requires-python.
+
+
+
+### Miscellaneous Tasks
+
+- Changelog sections in parser order, internal fixes apart, unreleased fixes left out ([#551](https://github.com/BortonWrightonLabs/DRAM/pull/551)) ([ff95346](https://github.com/BortonWrightonLabs/DRAM/commit/ff95346634354e51953e197e11b08ae5f1bb793b))
+
+  cliff.toml (needs git-cliff 2.14.1+ for commit_groups):
+  - Sections follow commit_parsers order (commit_groups) instead of A-Z, so
+    Features and Bug Fixes come first.
+  - `style:` commits are skipped; git-cliff also skips commits listed in
+    .git-blame-ignore-revs.
+  - `fix(internal):` (any type scoped internal) goes under an Internal
+    subheading of its section.
+  - A commit with a `Fixes: <sha>` trailer naming a commit in the same
+    release is left out: users never saw that bug.
+
+  docs/contributing.md: the commit conventions above, in Contribution
+  workflow.
+
+
+- Skip the test suite when a PR only changes docs or other non-code files ([#552](https://github.com/BortonWrightonLabs/DRAM/pull/552)) ([9d51709](https://github.com/BortonWrightonLabs/DRAM/commit/9d51709691eed9c38820de15616210640e893b1b))
+
+  * ci: skip the test suite when a PR only changes docs or other non-code files
+
+  The PR gate (pixi run test, docker + apptainer) moves from ci.yaml to
+  tests.yml, with paths-ignore for markdown, docs/, LICENSE, cliff.toml and
+  editor/lint/docs-hosting config. Pre-commit stays in ci.yaml and runs on
+  every PR and push.
+
+  - kofam-cache moves with it, so KOFAM_RELEASE (the cache key) is defined
+    once; pushes to dev that only change those paths don't rebuild it.
+  - The ignore list is an exclude list: a non-code path missing from it only
+    runs the tests, it never skips them for code.
+  - Neither job is a required check (dev has no branch protection). A
+    workflow skipped by paths-ignore leaves its checks pending, so the
+    comment in tests.yml says to switch to a job-level filter if `test`
+    becomes required.
+  - docs/contributing.md says which PRs skip the test gate.
+
+  * ci: rename ci.yaml to pre-commit.yml
+
+  It only runs pre-commit now; the tests are in tests.yml. The workflow is
+  named Pre-commit and its job pre-commit, so the check reads
+  `Pre-commit / pre-commit` (nothing requires the old `CI on push / ci`).
+  tests.yml also ignores changes to pre-commit.yml, and
+  tests/data/db/README.md points at tests.yml for KOFAM_RELEASE.
+
+
+- Update ci and git cliff to allow rules type ([2ec4b77](https://github.com/BortonWrightonLabs/DRAM/commit/2ec4b77069f3b2c23cc6cd7ce381a13fbb333b99))
+
+
+
 ## 2.0.0-beta43 - 2026-11-18
 
 [5042b5c](https://github.com/BortonWrightonLabs/DRAM/commit/5042b5c3cd26c9a7623197470f49f5ac43c4fd6f)...[b348c8d](https://github.com/BortonWrightonLabs/DRAM/commit/b348c8d01d5d79c79b15142c45644aa6920e7dd2)

@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.\n
 # A fix with a `Fixes: <sha>` trailer naming a commit in the same release is
 # left out: users never saw that bug. Commits scoped `internal`, e.g.
 # `fix(internal): ...`, go under an "Internal" subheading of their group.
+# Highlights is the tag message: --with-tag-message for an unreleased version,
+# or the annotated tag's message (lightweight tags have none, so no section).
 # See https://keats.github.io/tera/docs/#introduction
 body = """
 {% macro print_commit(commit) %}\
@@ -35,6 +37,11 @@ body = """
         [{{ previous.commit_id | truncate(length=7, end="") }}](https://github.com/BortonWrightonLabs/DRAM/commit/{{ previous.commit_id }})...\
             [{{ commit_id | truncate(length=7, end="") }}](https://github.com/BortonWrightonLabs/DRAM/commit/{{ commit_id }})
     {% endif %}\
+{% endif %}\
+{% if message %}
+    ### Highlights
+
+    {{ message | trim }}
 {% endif %}\
 {% set_global release_ids = [] %}\
 {% for commit in commits %}\
