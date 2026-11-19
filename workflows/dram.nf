@@ -21,7 +21,7 @@ include { ANNOTATE               } from "../subworkflows/local/annotate.nf"
 include { QC                     } from "../subworkflows/local/qc.nf"
 include { ADD_ANNOTATIONS        } from "../modules/local/add_and_combine/add_annotations.nf"
 include { DECOMPRESS_FASTA       } from "../modules/local/rename/decompress_fasta.nf"
-include { RENAME_FASTA           } from "../modules/local/rename/rename_fasta.nf"
+include { RENAME as RENAME_FASTA } from "../modules/local/rename/rename.nf"
 include { resourceBytes          } from '../subworkflows/local/utils_resource_classes.nf'
 include { batchManifestToTuples; collectNamePathTuples } from '../subworkflows/local/utils_channels.nf'
 

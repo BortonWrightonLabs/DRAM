@@ -331,7 +331,7 @@ Write task execution details. DRAM already enables trace, report, timeline, and 
 
 `--rename`
 
-Prefix assembly or protein FASTA headers with the sample filename to make identifiers unique across samples. This is optional.
+Prefix assembly or protein FASTA headers with the sample filename to make identifiers unique across samples. This is optional. A FASTA whose headers all already start with `<filename>_` is passed through unchanged instead of being prefixed twice; one where only some do is renamed in full, with a warning in the task's `.command.err`.
 
 `--call`
 

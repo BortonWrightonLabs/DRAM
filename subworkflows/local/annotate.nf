@@ -1,5 +1,5 @@
-include { RENAME_PROTEINS        } from "../../modules/local/rename/rename_proteins.nf"
-include { RENAME_PROTEINS as RENAME_FNA       } from "../../modules/local/rename/rename_proteins.nf"
+include { RENAME as RENAME_PROTEINS } from "../../modules/local/rename/rename.nf"
+include { RENAME as RENAME_FNA      } from "../../modules/local/rename/rename.nf"
 include { CALL                   } from "../../subworkflows/local/call.nf"
 include { DB_SEARCH              } from "../../subworkflows/local/db_search.nf"
 include { GENE_LOCS              } from "../../modules/local/annotate/gene_locs.nf"

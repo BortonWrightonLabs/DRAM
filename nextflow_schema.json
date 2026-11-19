@@ -13,7 +13,7 @@
             "properties": {
                 "rename": {
                     "type": "boolean",
-                    "description": "Rename FASTA headers based on file name. Example: sample1.fa --> (fasta header renamed to) > sample1......  Why? DRAM output is focused on scaffolds/contigs with respect to each provided input input_fasta. Thus, without renaming FASTA headers, the individual scaffolds/contigs will not be distinguashable. *If you have already renamed your FASTA headers, do not include with '--call'."
+                    "description": "Rename FASTA headers based on file name. Example: sample1.fa --> (fasta header renamed to) > sample1......  Why? DRAM output is focused on scaffolds/contigs with respect to each provided input input_fasta. Thus, without renaming FASTA headers, the individual scaffolds/contigs will not be distinguashable. Files whose headers all already start with the file name are left unchanged."
                 },
                 "call": {
                     "type": "boolean",
