@@ -50,6 +50,22 @@ include { RUNDBCAN_CAZYMEANNOTATION                     } from '../../modules/nf
 
 include {checkDBVersion                                 } from '../../subworkflows/local/utils_pipeline_setup.nf'
 
+// The MMseqs2 databases, by the name users type in --anno_dbs and the *_dbs
+// options. The GPU flags and the sensitivity-rounds check both read this.
+def mmseqsDatabases() {
+    ['kegg', 'pfam', 'camper', 'methyl', 'canthyd', 'merops', 'uniref', 'card', 'tcdb', 'viral']
+}
+
+// A comma-separated list of database names, lowercased; empty or 'none' gives [].
+def parseDbList(value) {
+    (value?.tokenize(',')?.collect { db -> db.trim().toLowerCase() } ?: []).findAll { db -> db && db != 'none' }
+}
+
+// The MMseqs2 databases this run searches on GPU. Pfam has no GPU database.
+def mmseqsGpuDatabases() {
+    workflow.profile.contains('gpu') ? mmseqsDatabases() - 'pfam' - parseDbList(params.mmseqs_gpu_exclude_dbs) : []
+}
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW TO DB_SEARCH
@@ -137,17 +153,29 @@ workflow DB_SEARCH {
     def formattedOutputChannels = channel.of()
     def dbcanOutputChannels = channel.of()
     def rgiOutputChannels = channel.of()
-    use_mmseqs_gpu = workflow.profile.contains('gpu')
-    mmseqs_gpu_excluded_dbs = (params.mmseqs_gpu_exclude_dbs?.tokenize(',')?.collect { db -> db.trim().toLowerCase() } ?: []).findAll { db -> db && db != 'none' }
-    use_gpu_kegg = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('kegg')
-    use_gpu_camper = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('camper')
-    use_gpu_methyl = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('methyl')
-    use_gpu_canthyd = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('canthyd')
-    use_gpu_merops = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('merops')
-    use_gpu_uniref = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('uniref')
-    use_gpu_card = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('card')
-    use_gpu_tcdb = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('tcdb')
-    use_gpu_viral = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('viral')
+    gpu_dbs = mmseqsGpuDatabases()
+    // MM 10: opt-in sensitivity rounds for the listed CPU MMseqs2 searches.
+    rounds_dbs = parseDbList(params.mmseqs_sensitivity_rounds_dbs)
+    unknown_rounds_dbs = rounds_dbs - mmseqsDatabases()
+    if (unknown_rounds_dbs) {
+        error("--mmseqs_sensitivity_rounds_dbs: unknown database(s) ${unknown_rounds_dbs.join(', ')}. Valid names: ${mmseqsDatabases().join(', ')}, or none.")
+    }
+    rounds_searched = []
+    // Whether a CPU search runs in rounds (flags: ext.sensitivity_rounds_args in
+    // conf/modules.config). Records each one, so the rest can be warned about below.
+    roundsOn = { name ->
+        if (rounds_dbs.contains(name)) { rounds_searched << name }
+        rounds_dbs.contains(name)
+    }
+    use_gpu_kegg = gpu_dbs.contains('kegg')
+    use_gpu_camper = gpu_dbs.contains('camper')
+    use_gpu_methyl = gpu_dbs.contains('methyl')
+    use_gpu_canthyd = gpu_dbs.contains('canthyd')
+    use_gpu_merops = gpu_dbs.contains('merops')
+    use_gpu_uniref = gpu_dbs.contains('uniref')
+    use_gpu_card = gpu_dbs.contains('card')
+    use_gpu_tcdb = gpu_dbs.contains('tcdb')
+    use_gpu_viral = gpu_dbs.contains('viral')
     // All HMM databases reuse the one logical protein size measured at the
     // CALL/input_genes boundary. The physical MMseqs index is not re-measured.
     ch_hmm_queries = ch_called_proteins
@@ -162,7 +190,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_KEGG(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_kegg_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, kegg_name)
             ch_mmseqs_formatted = MMSEQS_GPU_KEGG.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_KEGG(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_kegg_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, kegg_name)
+            MMSEQS_KEGG(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_kegg_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, kegg_name, roundsOn.call('kegg'))
             ch_mmseqs_formatted = MMSEQS_KEGG.out.mmseqs_search_formatted_out
         }
 
@@ -176,7 +204,7 @@ workflow DB_SEARCH {
     }
     // PFAM annotation
     if (use_pfam) {
-        MMSEQS_PFAM(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_pfam_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, pfam_name)
+        MMSEQS_PFAM(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_pfam_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, pfam_name, false)
         ch_mmseqs_formatted = MMSEQS_PFAM.out.mmseqs_search_formatted_out
 
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
@@ -232,7 +260,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_CAMPER(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_camper_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, DB_CHANNEL_SETUP.out.ch_camper_mmseqs_list, camper_name)
             ch_mmseqs_formatted = MMSEQS_GPU_CAMPER.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_CAMPER(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_camper_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, DB_CHANNEL_SETUP.out.ch_camper_mmseqs_list, camper_name)
+            MMSEQS_CAMPER(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_camper_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, DB_CHANNEL_SETUP.out.ch_camper_mmseqs_list, camper_name, roundsOn.call('camper'))
             ch_mmseqs_formatted = MMSEQS_CAMPER.out.mmseqs_search_formatted_out
         }
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
@@ -249,7 +277,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_METHYL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_methyl_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, methyl_name)
             ch_mmseqs_formatted = MMSEQS_GPU_METHYL.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_METHYL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_methyl_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, methyl_name)
+            MMSEQS_METHYL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_methyl_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, methyl_name, roundsOn.call('methyl'))
             ch_mmseqs_formatted = MMSEQS_METHYL.out.mmseqs_search_formatted_out
         }
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
@@ -261,7 +289,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_CANTHYD(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_canthyd_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, DB_CHANNEL_SETUP.out.ch_canthyd_mmseqs_list, canthyd_name)
             ch_mmseqs_formatted = MMSEQS_GPU_CANTHYD.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_CANTHYD(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_canthyd_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, DB_CHANNEL_SETUP.out.ch_canthyd_mmseqs_list, canthyd_name)
+            MMSEQS_CANTHYD(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_canthyd_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, DB_CHANNEL_SETUP.out.ch_canthyd_mmseqs_list, canthyd_name, roundsOn.call('canthyd'))
             ch_mmseqs_formatted = MMSEQS_CANTHYD.out.mmseqs_search_formatted_out
         }
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
@@ -283,7 +311,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_MEROPS(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_merops_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, merops_name)
             ch_mmseqs_formatted = MMSEQS_GPU_MEROPS.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_MEROPS(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_merops_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, merops_name)
+            MMSEQS_MEROPS(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_merops_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, merops_name, roundsOn.call('merops'))
             ch_mmseqs_formatted = MMSEQS_MEROPS.out.mmseqs_search_formatted_out
         }
 
@@ -295,7 +323,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_UNIREF(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_uniref_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, uniref_name)
             ch_mmseqs_formatted = MMSEQS_GPU_UNIREF.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_UNIREF(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_uniref_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, uniref_name)
+            MMSEQS_UNIREF(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_uniref_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, uniref_name, roundsOn.call('uniref'))
             ch_mmseqs_formatted = MMSEQS_UNIREF.out.mmseqs_search_formatted_out
         }
 
@@ -344,7 +372,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_CARD(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_card_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, card_name)
             ch_mmseqs_formatted = MMSEQS_GPU_CARD.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_CARD(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_card_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, card_name)
+            MMSEQS_CARD(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_card_mmseqs_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, card_name, roundsOn.call('card'))
             ch_mmseqs_formatted = MMSEQS_CARD.out.mmseqs_search_formatted_out
         }
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
@@ -355,7 +383,7 @@ workflow DB_SEARCH {
             MMSEQS_GPU_TCDB(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_tcdb_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, tcdb_name)
             ch_mmseqs_formatted = MMSEQS_GPU_TCDB.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_TCDB(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_tcdb_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, tcdb_name)
+            MMSEQS_TCDB(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_tcdb_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, tcdb_name, roundsOn.call('tcdb'))
             ch_mmseqs_formatted = MMSEQS_TCDB.out.mmseqs_search_formatted_out
         }
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
@@ -378,11 +406,18 @@ workflow DB_SEARCH {
             MMSEQS_GPU_VIRAL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_viral_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, viral_name)
             ch_mmseqs_formatted = MMSEQS_GPU_VIRAL.out.mmseqs_search_formatted_out
         } else {
-            MMSEQS_VIRAL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_viral_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, viral_name)
+            MMSEQS_VIRAL(ch_mmseqs_queries, DB_CHANNEL_SETUP.out.ch_viral_db, params.bit_score_threshold, params.rbh_bit_score_threshold, default_sheet, viral_name, roundsOn.call('viral'))
             ch_mmseqs_formatted = MMSEQS_VIRAL.out.mmseqs_search_formatted_out
         }
 
         formattedOutputChannels = formattedOutputChannels.mix(ch_mmseqs_formatted)
+    }
+
+    (rounds_dbs - rounds_searched).each { name ->
+        def reason = name == 'pfam' ? 'Pfam is a profile search, and rounds were not measured on it'
+            : gpu_dbs.contains(name) ? 'it searches on GPU, which has its own prefilter'
+            : 'it is not searched in this run (check --anno_dbs)'
+        log.warn("--mmseqs_sensitivity_rounds_dbs: ignoring ${name}: ${reason}.")
     }
 
     fastas = formattedOutputChannels.map { it[1] }.toList()
@@ -429,17 +464,16 @@ workflow DB_CHANNEL_SETUP {
     main:
 
 
-    use_mmseqs_gpu = workflow.profile.contains('gpu')
-    mmseqs_gpu_excluded_dbs = (params.mmseqs_gpu_exclude_dbs?.tokenize(',')?.collect { db -> db.trim().toLowerCase() } ?: []).findAll { db -> db && db != 'none' }
-    use_gpu_kegg = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('kegg')
-    use_gpu_camper = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('camper')
-    use_gpu_methyl = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('methyl')
-    use_gpu_canthyd = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('canthyd')
-    use_gpu_merops = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('merops')
-    use_gpu_uniref = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('uniref')
-    use_gpu_card = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('card')
-    use_gpu_tcdb = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('tcdb')
-    use_gpu_viral = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('viral')
+    gpu_dbs = mmseqsGpuDatabases()
+    use_gpu_kegg = gpu_dbs.contains('kegg')
+    use_gpu_camper = gpu_dbs.contains('camper')
+    use_gpu_methyl = gpu_dbs.contains('methyl')
+    use_gpu_canthyd = gpu_dbs.contains('canthyd')
+    use_gpu_merops = gpu_dbs.contains('merops')
+    use_gpu_uniref = gpu_dbs.contains('uniref')
+    use_gpu_card = gpu_dbs.contains('card')
+    use_gpu_tcdb = gpu_dbs.contains('tcdb')
+    use_gpu_viral = gpu_dbs.contains('viral')
     ch_kegg_db = channel.empty()
     ch_kofam_db = channel.empty()
     ch_dbcan_db = channel.empty()

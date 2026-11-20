@@ -1,0 +1,49 @@
+nextflow_pipeline {
+
+    name "MMseqs2 sensitivity rounds (--mmseqs_sensitivity_rounds_dbs)"
+    script "../main.nf"
+    config "./pr.config"
+    tag "pr"
+
+    // The mini databases are too small to show a speedup or a changed hit, so
+    // this checks that the option runs and publishes annotations, not its effect.
+    test("Rounds on the CPU MMseqs databases") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                anno_dbs = "uniref,camper,canthyd"
+                // canthyd: typed name differs from its db_name (cant_hyd); pfam is skipped with a warning
+                mmseqs_sensitivity_rounds_dbs = "uniref, camper,CANTHYD,pfam"
+                summarize = false
+            }
+        }
+
+        then {
+            assert workflow.success
+            def annotations = path("${params.outdir}/ANNOTATE/raw-annotations.tsv").csv(sep: "\t")
+            // the mini CAMPER database has no OWC hits, so it has no columns to check
+            ["uniref_id", "cant_hyd_id"].each { column ->
+                assert annotations.columnNames.contains(column)
+                assert annotations.columns[column].any { it }
+            }
+        }
+    }
+
+    test("An unknown database name stops the run") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                anno_dbs = "uniref"
+                mmseqs_sensitivity_rounds_dbs = "keg"
+                summarize = false
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains("--mmseqs_sensitivity_rounds_dbs: unknown database(s) keg. Valid names: kegg, pfam,") }
+        }
+    }
+}

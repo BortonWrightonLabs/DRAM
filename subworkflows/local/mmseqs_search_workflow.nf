@@ -10,15 +10,16 @@ workflow MMSEQS_SEARCH_WORKFLOW {
     rbh_bit_score_threshold
     descriptions
     db_name
+    sensitivity_rounds  // boolean: search in sensitivity rounds
 
     main:
     buckets = bucketSearchBatches(queries,
         params.search_batch_size as int,
         batchMaxBytes(params.search_batch_max_size))
 
-    SEARCH_SMALL(buckets.small, database, bit_score_threshold, rbh_bit_score_threshold, descriptions, db_name)
-    SEARCH_MEDIUM(buckets.medium, database, bit_score_threshold, rbh_bit_score_threshold, descriptions, db_name)
-    SEARCH_LARGE(buckets.large, database, bit_score_threshold, rbh_bit_score_threshold, descriptions, db_name)
+    SEARCH_SMALL(buckets.small, database, bit_score_threshold, rbh_bit_score_threshold, descriptions, db_name, sensitivity_rounds)
+    SEARCH_MEDIUM(buckets.medium, database, bit_score_threshold, rbh_bit_score_threshold, descriptions, db_name, sensitivity_rounds)
+    SEARCH_LARGE(buckets.large, database, bit_score_threshold, rbh_bit_score_threshold, descriptions, db_name, sensitivity_rounds)
 
     raw = SEARCH_SMALL.out.mmseqs_search_raw_out
         .mix(SEARCH_MEDIUM.out.mmseqs_search_raw_out, SEARCH_LARGE.out.mmseqs_search_raw_out)

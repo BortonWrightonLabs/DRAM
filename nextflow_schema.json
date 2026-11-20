@@ -260,6 +260,11 @@
                     "default": "methyl",
                     "description": "Comma-separated protein MMseqs databases that remain on CPUs when gpu profile is selected. Use none to send every GPU-capable database to GPUs. PFAM is always CPU-only."
                 },
+                "mmseqs_sensitivity_rounds_dbs": {
+                    "type": "string",
+                    "default": "none",
+                    "description": "Opt-in: comma-separated MMseqs databases (for example kegg,uniref) to search in rising sensitivity rounds (--start-sens 1 --sens-steps 3 -s 5.7) instead of one -s 5.7 search. Much faster on large databases, at the cost of a few changed best hits; see the usage docs. CPU searches only; Pfam is never searched in rounds. Default none."
+                },
                 "mmseqs_cuda_cache": {
                     "type": "string",
                     "format": "directory-path",
