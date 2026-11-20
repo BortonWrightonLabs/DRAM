@@ -304,6 +304,8 @@ For every batching option, Nextflow caches and retries an entire batch task. A f
 
 `--mmseqs_sensitivity_rounds_dbs kegg` searches the listed MMseqs databases in rising sensitivity rounds (`--start-sens 1 --sens-steps 3 -s 5.7`). MMseqs2 first searches every gene at low sensitivity, then sends only the genes still without a hit to the next, more sensitive round, ending at the default `-s 5.7`. It's off by default (`none`).
 
+This is the approach the [MMseqs2 user guide](https://mmseqs.com/latest/userguide.pdf) recommends under "How to find the best hit the fastest way". The guide says it can speed up best-hit searches 4–10 times. It also says there's a small chance the best hit is missed, because hits found at low sensitivity share more highly conserved k-mers, and that a higher start sensitivity (`--start-sens 4`) reduces this effect. To try that, set `ext.sensitivity_rounds_args` (below).
+
 The trade-off, measured on KEGG with 15 genomes (53,980 genes, one merged search):
 
 - About 7–8× less CPU time (48,192 s → about 6,200 s) and about 6× less wall time.
@@ -317,7 +319,8 @@ The flags come from `ext.sensitivity_rounds_args` on `MMSEQS_SEARCH` in `conf/mo
 ```groovy
 process {
     withName: MMSEQS_SEARCH {
-        ext.sensitivity_rounds_args = { db_name == 'kegg' ? '--start-sens 1 --sens-steps 2 -s 5.7' : '--start-sens 1 --sens-steps 3 -s 5.7' }
+        // KEGG starts at the higher sensitivity the MMseqs2 user guide suggests; the rest keep the default
+        ext.sensitivity_rounds_args = { db_name == 'kegg' ? '--start-sens 4 --sens-steps 2 -s 5.7' : '--start-sens 1 --sens-steps 3 -s 5.7' }
     }
 }
 ```
