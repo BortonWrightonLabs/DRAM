@@ -279,9 +279,9 @@ When either batch size is greater than one, that stage waits for all its inputs 
 
 ## Optional search batching
 
-`--search_batch_size 10` runs up to ten HMM or MMseqs searches sequentially against one database in a single task. The default, `1`, runs one search per input per database and streams inputs as they become ready. Each search retains its own query, search statistics, gene locations, and output filenames. Queries are not concatenated and searches do not run concurrently inside a batch.
+`--search_batch_size 10` puts up to ten inputs against one database in a single task. The default, `1`, runs one task per input per database and streams inputs as they become ready. HMM searches run one after another inside the task. MMseqs searches run once for the whole batch: the inputs' proteins form one query database, so the target database is loaded once, and hits are split back to each input. MMseqs E-values depend only on the target database, so each input gets the same hits it would alone. Every input keeps its own gene locations and output filenames.
 
-`--search_batch_max_size '1.GB'` (the default) is the largest individual query input allowed to join a batch. Inputs at or below the limit can be grouped up to `search_batch_size`, regardless of their combined size. An input above the limit runs alone. Database size is never considered. For an MMseqs query made of several files, those files together constitute one input. These options affect HMM and MMseqs searches only.
+`--search_batch_max_size '1.GB'` (the default) is the largest individual query input allowed to join a batch. Inputs at or below the limit can be grouped up to `search_batch_size`, regardless of their combined size. An input above the limit runs alone. Database size is never considered. These options affect HMM and MMseqs searches only.
 
 When batching is enabled, each database workflow waits for its input channel to finish and sorts by sample name before packing. This makes batch membership independent of task completion order, at the cost of delaying searches until all queries are ready. A batch's resource class comes from its largest individual protein query, whose size was measured once before database fan-out. The combined size of the batch, database size, and generated MMseqs index size do not affect its class.
 

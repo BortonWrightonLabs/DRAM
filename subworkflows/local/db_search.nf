@@ -155,10 +155,6 @@ workflow DB_SEARCH {
     if (DB_CHANNEL_SETUP.out.index_mmseqs.val) {
         // Use MMSEQS2 to index each called genes protein file
         MMSEQS_INDEX( ch_called_proteins )
-        ch_mmseqs_query = MMSEQS_INDEX.out.mmseqs_index_out
-        ch_mmseqs_queries = ch_mmseqs_query
-            .join(ch_gene_locs)
-            .map { name, query, query_bytes, loci -> tuple(name, query, loci, query_bytes) }
     }
 
     // All HMM databases reuse the one logical protein size measured at the
@@ -166,6 +162,8 @@ workflow DB_SEARCH {
     ch_hmm_queries = ch_called_proteins
         .join(ch_gene_locs)
         .map { name, proteins, protein_bytes, loci -> tuple(name, proteins, loci, protein_bytes) }
+    // MMseqs searches take the same protein FASTAs and index each batch together.
+    ch_mmseqs_queries = ch_hmm_queries
 
     // KEGG annotation
     if (use_kegg) {

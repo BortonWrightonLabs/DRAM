@@ -12,7 +12,7 @@ process MMSEQS_SEARCH {
     input:
     tuple( val(resource_class),
         val(sample_names),
-        path(query_database, stageAs: 'query_database/*', arity: '1..*'),
+        path(query_fasta, stageAs: 'query/*', arity: '1..*'),
         path(gene_locations, stageAs: 'locations/genes??.tsv', arity: '1..*')
         )
     path( mmseqs_database )
@@ -28,58 +28,51 @@ process MMSEQS_SEARCH {
     //tuple val( input_fasta ), path("mmseqs_out/${input_fasta}___mmseqs_rbh_${db_name}.tsv "), emit: mmseqs_search_rbh_formatted_out, optional: true
 
     script:
-    def query_names = query_database.collect { it.fileName.toString() }
-    if (query_names.unique(false).size() != query_names.size()) {
-        error('MMseqs query database filenames must be unique within a search batch')
+    if (query_fasta.size() != sample_names.size()) {
+        error('MMseqs search batches need exactly one protein FASTA per sample')
     }
-    def searches = sample_names.withIndex().collect { input_fasta, index ->
-        def prodigal_locs_tsv = gene_locations[index]
+    def descriptions = sample_names.withIndex().collect { input_fasta, index ->
         """
-
-    # Create temporary directory
-    mkdir -p mmseqs_out/tmp
-
-    if [ "${db_name}" != "pfam" ]; then
-        # Perform search
-        mmseqs search query_database/${input_fasta}.mmsdb ${db_name}.mmsdb mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/tmp --threads ${task.cpus}
-
-        # Filter to only hits with minimum bit score
-        mmseqs filterdb --filter-column 2 --comparison-operator ge --comparison-value ${bit_score_threshold} --threads ${task.cpus} mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/passing.mmsdb
-
-        mmseqs rmdb mmseqs_out/${input_fasta}_${db_name}.mmsdb
-
-        # Filter to only best hit
-        mmseqs filterdb mmseqs_out/passing.mmsdb mmseqs_out/best.mmsdb --extract-lines 1
-
-        mmseqs rmdb mmseqs_out/passing.mmsdb
-
-        # Convert results to BLAST outformat 6
-        mmseqs convertalis query_database/${input_fasta}.mmsdb ${db_name}.mmsdb  mmseqs_out/best.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus} --format-mode 4 --format-output "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
-
-        mmseqs rmdb mmseqs_out/best.mmsdb
-
-        # if statement for kegg rbh goes here
-    elif [ "${db_name}" == "pfam" ]; then
-        # Do profile search:
-        mmseqs search query_database/${input_fasta}.mmsdb ${db_name}.mmspro mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/tmp -k 5 -s 7  --threads ${task.cpus}
-
-        # Convert results to BLAST outformat 6 but include target headers for description parsing if possible
-        mmseqs convertalis query_database/${input_fasta}.mmsdb ${db_name}.mmspro mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus} --format-mode 4 --format-output "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
-    fi
-
-    # Check if the mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv file is empty
     if [ ! -s "mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv" ]; then
         echo "The file mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv is empty. Skipping further processing."
     else
-        # Call Python script for further processing
-        mmseqs_add_descriptions.py "${input_fasta}" "${db_name}" "db_descriptions.tsv" "${bit_score_threshold}" "${prodigal_locs_tsv}" "mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv" "mmseqs_out/${input_fasta}___mmseqs_${db_name}_formatted.csv"
+        mmseqs_add_descriptions.py "${input_fasta}" "${db_name}" "db_descriptions.tsv" "${bit_score_threshold}" "${gene_locations[index]}" "mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv" "mmseqs_out/${input_fasta}___mmseqs_${db_name}_formatted.csv"
     fi
-
         """
     }.join('\n')
     """
+    set -euo pipefail
     ln -s ${mmseqs_database}/* ./
-    ${searches}
+    mkdir -p mmseqs_out/tmp
+
+    # One query database for the whole batch. E-values depend only on the
+    # target, so hits match per-sample searches; qsetid maps them back.
+    mmseqs createdb ${query_fasta.join(' ')} query.mmsdb
+    printf '%s\\n' ${sample_names.join(' ')} > batch_samples.txt
+
+    if [ "${db_name}" != "pfam" ]; then
+        mmseqs search query.mmsdb ${db_name}.mmsdb mmseqs_out/hits.mmsdb mmseqs_out/tmp --threads ${task.cpus}
+
+        # Filter to only hits with minimum bit score
+        mmseqs filterdb --filter-column 2 --comparison-operator ge --comparison-value ${bit_score_threshold} --threads ${task.cpus} mmseqs_out/hits.mmsdb mmseqs_out/passing.mmsdb
+        mmseqs rmdb mmseqs_out/hits.mmsdb
+
+        # Filter to only best hit
+        mmseqs filterdb mmseqs_out/passing.mmsdb mmseqs_out/best.mmsdb --extract-lines 1
+        mmseqs rmdb mmseqs_out/passing.mmsdb
+
+        mmseqs convertalis query.mmsdb ${db_name}.mmsdb mmseqs_out/best.mmsdb mmseqs_out/batch_hits.tsv --threads ${task.cpus} --format-mode 4 --format-output "qsetid,query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
+        mmseqs rmdb mmseqs_out/best.mmsdb
+    else
+        # Profile search
+        mmseqs search query.mmsdb ${db_name}.mmspro mmseqs_out/hits.mmsdb mmseqs_out/tmp -k 5 -s 7 --threads ${task.cpus}
+        mmseqs convertalis query.mmsdb ${db_name}.mmspro mmseqs_out/hits.mmsdb mmseqs_out/batch_hits.tsv --threads ${task.cpus} --format-mode 4 --format-output "qsetid,query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
+        mmseqs rmdb mmseqs_out/hits.mmsdb
+    fi
+
+    split_mmseqs_batch.sh mmseqs_out/batch_hits.tsv batch_samples.txt "mmseqs_out" "___mmseqs_${db_name}.tsv"
+    rm mmseqs_out/batch_hits.tsv
+    ${descriptions}
     """
 }
 

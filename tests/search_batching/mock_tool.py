@@ -57,23 +57,27 @@ elif tool == "hmm_parser.py":
         Path(option("--output")).write_text(name + ":" + option("--db_name") + "\n")
 elif tool == "mmseqs":
     if args[0] == "createdb":
-        Path(args[2]).write_text(sample(args[1]) + "\n")
+        # one query database per batch: record each FASTA's sample in file order
+        names = "".join(sample(fasta) + "\n" for fasta in args[1:-1])
+        Path(args[-1]).write_text(names)
         # real createdb also writes <db>.index
-        Path(args[2] + ".index").write_text(sample(args[1]) + "\n")
+        Path(args[-1] + ".index").write_text(names)
     elif args[0] == "createindex":
         assert option("--threads") == "1"
         Path(args[1] + ".index").write_text(sample(args[1]) + "\n")
     elif args[0] == "search":
-        name = sample(args[1])
+        names = Path(args[1]).read_text().split()
         assert Path(args[1] + ".index").exists()
         assert Path(args[2]).exists()
-        if os.environ.get("FAIL_SAMPLE") == name:
+        if os.environ.get("FAIL_SAMPLE") in names:
             sys.exit(42)
-        Path(args[3]).write_text(name + "\n")
+        Path(args[3]).write_text(Path(args[1]).read_text())
     elif args[0] == "convertalis":
-        name = sample(args[1])
-        assert sample(args[3]) == name
-        Path(args[4]).write_text("" if name == "nohit" else name + "\n")
+        names = Path(args[1]).read_text().split()
+        assert Path(args[3]).read_text().split() == names
+        assert option("--format-output").startswith("qsetid,")
+        rows = [f"{i}\t{name}\n" for i, name in enumerate(names) if name != "nohit"]
+        Path(args[4]).write_text("qsetid\tquery\n" + "".join(rows))
     elif args[0] == "filterdb":
         # every filterdb flag DRAM uses takes a value; the positionals are in, out
         positional = [
@@ -87,7 +91,10 @@ elif tool == "mmseqs":
 elif tool == "mmseqs_add_descriptions.py":
     name, db, info, bitscore, loci, raw, output = args
     assert sample(loci) == name
-    assert sample(raw) == name
-    Path(output).write_text(name + ":" + db + "\n")
+    header, *rows = Path(raw).read_text().splitlines()
+    assert header == "query" and all(row == name for row in rows)
+    # stand-in for "no hits": the real script would write an empty table
+    if rows:
+        Path(output).write_text(name + ":" + db + "\n")
 else:
     raise AssertionError(tool)

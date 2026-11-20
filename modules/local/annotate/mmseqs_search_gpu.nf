@@ -13,7 +13,7 @@ process MMSEQS_SEARCH_GPU {
     input:
     tuple( val(resource_class),
         val(sample_names),
-        path(query_database, stageAs: 'query_database/*', arity: '1..*'),
+        path(query_fasta, stageAs: 'query/*', arity: '1..*'),
         path(gene_locations, stageAs: 'locations/genes??.tsv', arity: '1..*')
         )
     path( mmseqs_database )
@@ -27,26 +27,13 @@ process MMSEQS_SEARCH_GPU {
     tuple val(sample_names), path("mmseqs_out/*___mmseqs_${db_name}_formatted.csv"), emit: mmseqs_search_formatted_out, optional: true
 
     script:
-    def query_names = query_database.collect { it.fileName.toString() }
-    if (query_names.unique(false).size() != query_names.size()) {
-        error('MMseqs query database filenames must be unique within a search batch')
+    if (query_fasta.size() != sample_names.size()) {
+        error('MMseqs search batches need exactly one protein FASTA per sample')
     }
-    def searches = sample_names.withIndex().collect { input_fasta, index ->
-        def prodigal_locs_tsv = gene_locations[index]
+    def descriptions = sample_names.withIndex().collect { input_fasta, index ->
         """
-    mkdir -p mmseqs_out/tmp/${input_fasta}
-
-    mmseqs search query_database/${input_fasta}.mmsdb "\${target_db}" mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/tmp/${input_fasta} --gpu 1 --threads ${task.cpus}
-    mmseqs filterdb --filter-column 2 --comparison-operator ge --comparison-value ${bit_score_threshold} --threads ${task.cpus} mmseqs_out/${input_fasta}_${db_name}.mmsdb mmseqs_out/${input_fasta}_${db_name}_passing.mmsdb
-    mmseqs rmdb mmseqs_out/${input_fasta}_${db_name}.mmsdb
-    mmseqs filterdb mmseqs_out/${input_fasta}_${db_name}_passing.mmsdb mmseqs_out/${input_fasta}_${db_name}_best.mmsdb --extract-lines 1
-    mmseqs rmdb mmseqs_out/${input_fasta}_${db_name}_passing.mmsdb
-    # Convert results to BLAST outformat 6 but include target headers for description parsing if possible
-    mmseqs convertalis query_database/${input_fasta}.mmsdb "\${target_db}" mmseqs_out/${input_fasta}_${db_name}_best.mmsdb mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv --threads ${task.cpus} --format-mode 4 --format-output "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
-    mmseqs rmdb mmseqs_out/${input_fasta}_${db_name}_best.mmsdb
-
     if [ -s "mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv" ]; then
-        mmseqs_add_descriptions.py "${input_fasta}" "${db_name}" "db_descriptions.tsv" "${bit_score_threshold}" "${prodigal_locs_tsv}" "mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv" "mmseqs_out/${input_fasta}___mmseqs_${db_name}_formatted.csv"
+        mmseqs_add_descriptions.py "${input_fasta}" "${db_name}" "db_descriptions.tsv" "${bit_score_threshold}" "${gene_locations[index]}" "mmseqs_out/${input_fasta}___mmseqs_${db_name}.tsv" "mmseqs_out/${input_fasta}___mmseqs_${db_name}_formatted.csv"
     fi
         """
     }.join('\n')
@@ -97,7 +84,24 @@ process MMSEQS_SEARCH_GPU {
         echo "WARNING: MMseqs GPU index \${target_index} is \${index_size_bytes} bytes and this task has \${allocated_memory_bytes} bytes of host memory. At least 1.25 times the index size is recommended for search overhead." >&2
     fi
 
-    mkdir -p mmseqs_out
-    ${searches}
+    mkdir -p mmseqs_out/tmp
+
+    # One query database for the whole batch. E-values depend only on the
+    # target, so hits match per-sample searches; qsetid maps them back.
+    mmseqs createdb ${query_fasta.join(' ')} query.mmsdb
+    printf '%s\\n' ${sample_names.join(' ')} > batch_samples.txt
+
+    mmseqs search query.mmsdb "\${target_db}" mmseqs_out/hits.mmsdb mmseqs_out/tmp --gpu 1 --threads ${task.cpus}
+    mmseqs filterdb --filter-column 2 --comparison-operator ge --comparison-value ${bit_score_threshold} --threads ${task.cpus} mmseqs_out/hits.mmsdb mmseqs_out/passing.mmsdb
+    mmseqs rmdb mmseqs_out/hits.mmsdb
+    mmseqs filterdb mmseqs_out/passing.mmsdb mmseqs_out/best.mmsdb --extract-lines 1
+    mmseqs rmdb mmseqs_out/passing.mmsdb
+    # Convert results to BLAST outformat 6 but include target headers for description parsing if possible
+    mmseqs convertalis query.mmsdb "\${target_db}" mmseqs_out/best.mmsdb mmseqs_out/batch_hits.tsv --threads ${task.cpus} --format-mode 4 --format-output "qsetid,query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader"
+    mmseqs rmdb mmseqs_out/best.mmsdb
+
+    split_mmseqs_batch.sh mmseqs_out/batch_hits.tsv batch_samples.txt "mmseqs_out" "___mmseqs_${db_name}.tsv"
+    rm mmseqs_out/batch_hits.tsv
+    ${descriptions}
     """
 }
