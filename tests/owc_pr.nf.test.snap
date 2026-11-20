@@ -249,7 +249,7 @@
 
                 ],
                 "SUMMARIZE/ecosystem_summary.tsv": {
-                    "rows": 4675,
+                    "rows": 4851,
                     "counted": [
                         "K00441\t1\t0",
                         "K00441\t1\t0",
@@ -346,15 +346,15 @@
                     "[gene_ids_present:, genome:OWC_0001, long_name:sulfur-oxidizer, name:sulfur-oxidizer, present:false, topic_ecosystem:traits]"
                 ],
                 "VISUALIZE/default/df_genome.tsv": [
-                    "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Aminoglycosde efflux, name:Aminoglycosde efflux]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Aminoglycoside alteration, name:Aminoglycoside alteration]",
+                    "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Aminoglycoside efflux, name:Aminoglycoside efflux]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Aminoglycoside inactivation, name:Aminoglycoside inactivation]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Beta-lactam inactivation, name:Beta-lactam inactivation]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Macrolide alteration, name:Macrolide alteration]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Macrolide efflux, name:Macrolide efflux]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Macrolide inactivation, name:Macrolide inactivation]",
-                    "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Multidrug efflux, name:Multidrug efflux]",
-                    "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Sulfoamide target-replacement, name:Sulfoamide target-replacement]",
+                    "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Multi drug efflux, name:Multi drug efflux]",
+                    "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Sulfonamide target-replacement, name:Sulfonamide target-replacement]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Tetracycline efflux, name:Tetracycline efflux]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Tetracycline inactivation, name:Tetracycline inactivation]",
                     "[OWC_0000:false, OWC_0001:false, group:Antibiotic Resistance, long_name:Tetracycline protection, name:Tetracycline protection]",
@@ -447,15 +447,15 @@
                     "[OWC_0000:false, OWC_0001:false, group:Vitamin biosynthesis, long_name:Thiamine, name:Thiamine]"
                 ],
                 "VISUALIZE/default/df_vertical_genome.tsv": [
-                    "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Aminoglycosde efflux, name:Aminoglycosde efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Aminoglycoside alteration, name:Aminoglycoside alteration, present:false]",
+                    "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Aminoglycoside efflux, name:Aminoglycoside efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Aminoglycoside inactivation, name:Aminoglycoside inactivation, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Beta-lactam inactivation, name:Beta-lactam inactivation, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Macrolide alteration, name:Macrolide alteration, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Macrolide efflux, name:Macrolide efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Macrolide inactivation, name:Macrolide inactivation, present:false]",
-                    "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Multidrug efflux, name:Multidrug efflux, present:false]",
-                    "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Sulfoamide target-replacement, name:Sulfoamide target-replacement, present:false]",
+                    "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Multi drug efflux, name:Multi drug efflux, present:false]",
+                    "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Sulfonamide target-replacement, name:Sulfonamide target-replacement, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Tetracycline efflux, name:Tetracycline efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Tetracycline inactivation, name:Tetracycline inactivation, present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Antibiotic Resistance, long_name:Tetracycline protection, name:Tetracycline protection, present:false]",
@@ -546,15 +546,15 @@
                     "[gene_ids_present:, genome:OWC_0000, group:Vitamin biosynthesis, long_name:Pyridoxine (B6), name:Pyridoxine (B6), present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Vitamin biosynthesis, long_name:Riboflavin (B2), name:Riboflavin (B2), present:false]",
                     "[gene_ids_present:, genome:OWC_0000, group:Vitamin biosynthesis, long_name:Thiamine, name:Thiamine, present:false]",
-                    "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Aminoglycosde efflux, name:Aminoglycosde efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Aminoglycoside alteration, name:Aminoglycoside alteration, present:false]",
+                    "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Aminoglycoside efflux, name:Aminoglycoside efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Aminoglycoside inactivation, name:Aminoglycoside inactivation, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Beta-lactam inactivation, name:Beta-lactam inactivation, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Macrolide alteration, name:Macrolide alteration, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Macrolide efflux, name:Macrolide efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Macrolide inactivation, name:Macrolide inactivation, present:false]",
-                    "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Multidrug efflux, name:Multidrug efflux, present:false]",
-                    "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Sulfoamide target-replacement, name:Sulfoamide target-replacement, present:false]",
+                    "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Multi drug efflux, name:Multi drug efflux, present:false]",
+                    "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Sulfonamide target-replacement, name:Sulfonamide target-replacement, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Tetracycline efflux, name:Tetracycline efflux, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Tetracycline inactivation, name:Tetracycline inactivation, present:false]",
                     "[gene_ids_present:, genome:OWC_0001, group:Antibiotic Resistance, long_name:Tetracycline protection, name:Tetracycline protection, present:false]",
@@ -698,8 +698,8 @@
                             "module",
                             "rule"
                         ],
-                        "rows": 1035,
-                        "md5": "51a9174050659666ea768010b6df59a0"
+                        "rows": 1065,
+                        "md5": "ae1c0079218b590a8bb2d4546f3a0baa"
                     },
                     "gut": {
                         "columns": [
@@ -711,208 +711,58 @@
                             "module",
                             "rule"
                         ],
-                        "rows": 865,
-                        "md5": "ae2e48f355f9cd632f8d5a26219e54e8"
+                        "rows": 1011,
+                        "md5": "51492e2703a824c1fa00efff1a26bfae"
                     }
                 },
                 "SUMMARIZE/topic_summary.xlsx": {
-                    "Anabolism biosynthesis": {
+                    "assim": {
                         "columns": [
                             "OWC_0000",
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module"
+                            "module",
+                            "topic_ecosystem"
                         ],
-                        "rows": 585,
-                        "md5": "126758660b3c56a7de3b2c0e55d31588"
+                        "rows": 2175,
+                        "md5": "c4173f60363b32302b63aae7a8012321"
                     },
-                    "Assimilation nutrient aquistion": {
+                    "cell": {
                         "columns": [
                             "OWC_0000",
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module"
+                            "module",
+                            "topic_ecosystem"
                         ],
-                        "rows": 538,
-                        "md5": "2951a60d44a8287a52cde97fa46925a0"
+                        "rows": 356,
+                        "md5": "50d14f574a4f084de3fd2c26cf3d9059"
                     },
-                    "Carbon_Central Carbon": {
+                    "energy": {
                         "columns": [
                             "OWC_0000",
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module"
+                            "module",
+                            "topic_ecosystem"
                         ],
-                        "rows": 154,
-                        "md5": "8385585277c1610446ae31623b7a3539"
+                        "rows": 3462,
+                        "md5": "f7c55e062a38e7d6df6e6713b7c791a2"
                     },
-                    "Carbon_Hydrocarbons": {
+                    "env": {
                         "columns": [
                             "OWC_0000",
                             "OWC_0001",
                             "gene_description",
                             "gene_id",
-                            "module"
+                            "module",
+                            "topic_ecosystem"
                         ],
-                        "rows": 309,
-                        "md5": "fcbb7946013b8367a9437b2e61bb95c3"
-                    },
-                    "Carbon_Organic Trophic": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 2552,
-                        "md5": "0f29f1bd0031551b882a7874d746c752"
-                    },
-                    "Carbon_Other": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 22,
-                        "md5": "bb6339663d8bbc33d909aac5a88ab66f"
-                    },
-                    "Defense System-Viral": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 56,
-                        "md5": "af417190803bae68375612855530cf84"
-                    },
-                    "Housekeeping": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 282,
-                        "md5": "9ec9741c0c83fe57bbed3eb91d0d9db3"
-                    },
-                    "Motility": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 74,
-                        "md5": "a531d49ab4b704e6c4146468671f0edb"
-                    },
-                    "Photosynthesis": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 37,
-                        "md5": "ed2fd8fbe98371285c68631e00fb064f"
-                    },
-                    "Respiratory- Nitrogen": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 23,
-                        "md5": "a8b189c035717c6cb64d963142bad86e"
-                    },
-                    "Respiratory- Other": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 155,
-                        "md5": "38198953948f62fe763e5f99665b5f35"
-                    },
-                    "Respiratory- Oxygen": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 56,
-                        "md5": "61319831ddeceb84cda034ab35886720"
-                    },
-                    "Respiratory-ETC": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 154,
-                        "md5": "a10d92c0849f45354dfb4bea55101b6c"
-                    },
-                    "Social interactions": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 432,
-                        "md5": "86764079307928599cb18ce512453fb1"
-                    },
-                    "Stress Tolerance-Metal": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 186,
-                        "md5": "67253b8f2dca69c797302b06d7bcb0f2"
-                    },
-                    "Stress tolerance- general": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 152,
-                        "md5": "64b1a5293147b037981febcfedfe1313"
-                    },
-                    "Transporters": {
-                        "columns": [
-                            "OWC_0000",
-                            "OWC_0001",
-                            "gene_description",
-                            "gene_id",
-                            "module"
-                        ],
-                        "rows": 1052,
-                        "md5": "e30cfe1dfd163e8a44546370efe7e189"
+                        "rows": 826,
+                        "md5": "88d773a37438242c8297a8544dbe53a4"
                     }
                 }
             },
@@ -929,7 +779,7 @@
                 "ANNOTATE/RENAMED_HEADERS/OWC_0001.fa": "1dbc4cdca3a1cf47fdaeedb17aa81770"
             }
         ],
-        "timestamp": "2026-11-18T08:40:14.017355915",
+        "timestamp": "2026-11-19T17:16:35.209392275",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.10.4"

@@ -32,6 +32,7 @@ SUMMARY_METADATA = {
     "rule",
     "group",
     "workbook",
+    "sheet",
     "header",
     "subheader",
     "category",
