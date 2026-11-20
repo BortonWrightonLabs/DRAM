@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.0-beta45 - 2026-11-20
+
+[87c1722](https://github.com/BortonWrightonLabs/DRAM/commit/87c17222c47545baf4cdc94d607c5e415776a473)...[cb3a926](https://github.com/BortonWrightonLabs/DRAM/commit/cb3a92689e494087ea89aac619e1ddb1452051e6)
+
+### Highlights
+
+- Fix bug where summary topic output excel book was being tabbed by the `topic_ecosystem`
+  column instead of by which sheet things came from.
+
+### Rules
+
+- Bump bin/rules to one worksheet per Summarize Sheet ([#556](https://github.com/BortonWrightonLabs/DRAM/pull/556)) ([cb3a926](https://github.com/BortonWrightonLabs/DRAM/commit/cb3a92689e494087ea89aac619e1ddb1452051e6))
+
+  Move bin/rules 93905d6 -> 1ba7c40. The snapshots were last recorded at
+  5254a0c (the earlier bump to 93905d6 didn't re-record them), so this
+  re-records the differences from 5254a0c..1ba7c40:
+
+  - 93905d6 (rules data): the gut antibiotic labels are renamed
+    (Sulfoamide -> Sulfonamide target-replacement, Aminoglycosde ->
+    Aminoglycoside efflux, Multidrug -> Multi drug efflux) and their rules
+    look up more Gene IDs. The derived ecosystem summaries gain rows (gut
+    865 -> 1011, eng_sys 1035 -> 1065). Every changed label is absent in
+    the OWC genomes.
+  - 1ba7c40 (outputs): each Summary Collection workbook has one worksheet
+    per Summarize Sheet (topic_summary.xlsx: assim, cell, energy, env)
+    instead of one per Group. Group stays a topic_ecosystem column. The
+    TSVs have a new `sheet` column, which replaces topic_ecosystem in the
+    derived ones, and the columns are reordered. The topic worksheets hold
+    the same 6819 rows as the old Group worksheets.
+  - f324105 (rules data): descriptions and whitespace only.
+
+  No Gene Count, Presence or Coverage changed: the DRAM1 and synthetic
+  value baselines pass unchanged, and there are no allowlist edits.
+  refine_values.py treats `sheet` as metadata, not a Genome.
+
+  BREAKING CHANGE: Summary workbooks name their worksheets after the
+  --topics/--ecos name or custom file stem instead of the Group, and the
+  derived Summary TSVs replace topic_ecosystem with `sheet`. With
+  --summarize, --sum_custom and --viz_custom file names must be valid
+  Excel worksheet names.
+
+
+
 ## 2.0.0-beta44 - 2026-11-19
 
 [92d6183](https://github.com/BortonWrightonLabs/DRAM/commit/92d61833e1ffe1505db9f4884079febc6c67caed)...[caeebbb](https://github.com/BortonWrightonLabs/DRAM/commit/caeebbb60fb9c2e606c7582c2ae6bcc21376c509)
