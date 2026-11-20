@@ -743,7 +743,7 @@
                     "minimum": 1,
                     "default": 1,
                     "hidden": true,
-                    "description": "Maximum inputs searched sequentially against one database per HMM/MMseqs task. 1 disables batching. Can be combined with job arrays."
+                    "description": "Maximum inputs searched against one database per HMM/MMseqs task (HMM: one after another; MMseqs: one combined search). 1 disables batching. Can be combined with job arrays."
                 },
                 "search_batch_max_size": {
                     "type": "string",

@@ -11,7 +11,6 @@ include { GENE_LOCS                                     } from "../../modules/lo
 
 include { COMBINE_ANNOTATIONS                           } from "../../modules/local/annotate/combine_annotations.nf"
 
-include { MMSEQS_INDEX                                  } from "../../modules/local/annotate/mmseqs_index.nf"
 
 // One workflow alias per database; each wrapper owns batching and size aliases.
 include { MMSEQS_SEARCH_WORKFLOW as MMSEQS_MEROPS } from './mmseqs_search_workflow'
@@ -149,23 +148,13 @@ workflow DB_SEARCH {
     use_gpu_card = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('card')
     use_gpu_tcdb = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('tcdb')
     use_gpu_viral = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('viral')
-    // Here we will create mmseqs2 index files for each of the inputs if we are going to do a mmseqs2 database
-    // We use .val because we need to unwrap the workflow output.
-    // if the .out was from a process, this could block as it waited for DB_CHANNEL_SETUP, so use with caution
-    if (DB_CHANNEL_SETUP.out.index_mmseqs.val) {
-        // Use MMSEQS2 to index each called genes protein file
-        MMSEQS_INDEX( ch_called_proteins )
-        ch_mmseqs_query = MMSEQS_INDEX.out.mmseqs_index_out
-        ch_mmseqs_queries = ch_mmseqs_query
-            .join(ch_gene_locs)
-            .map { name, query, query_bytes, loci -> tuple(name, query, loci, query_bytes) }
-    }
-
     // All HMM databases reuse the one logical protein size measured at the
     // CALL/input_genes boundary. The physical MMseqs index is not re-measured.
     ch_hmm_queries = ch_called_proteins
         .join(ch_gene_locs)
         .map { name, proteins, protein_bytes, loci -> tuple(name, proteins, loci, protein_bytes) }
+    // MMseqs searches take the same protein FASTAs and index each batch together.
+    ch_mmseqs_queries = ch_hmm_queries
 
     // KEGG annotation
     if (use_kegg) {
@@ -451,7 +440,6 @@ workflow DB_CHANNEL_SETUP {
     use_gpu_card = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('card')
     use_gpu_tcdb = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('tcdb')
     use_gpu_viral = use_mmseqs_gpu && !mmseqs_gpu_excluded_dbs.contains('viral')
-    index_mmseqs = false
     ch_kegg_db = channel.empty()
     ch_kofam_db = channel.empty()
     ch_dbcan_db = channel.empty()
@@ -480,7 +468,6 @@ workflow DB_CHANNEL_SETUP {
     if (use_kegg) {
         kegg_db_path = use_gpu_kegg ? params.kegg_gpu_db : params.kegg_db
         ch_kegg_db = file(kegg_db_path).exists() ? file(kegg_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. KEGG ${use_gpu_kegg ? 'gpu' : 'cpu'} database file not found at ${kegg_db_path}")
-        index_mmseqs = true
     }
 
     if (use_kofam) {
@@ -496,19 +483,16 @@ workflow DB_CHANNEL_SETUP {
         ch_camper_hmm_db = file(params.camper_hmm_db).exists() ? file(params.camper_hmm_db) : error("Error: If using --annotate, you must supply prebuilt databases. CAMPER HMM database file not found at ${params.camper_hmm_db}")
         camper_mmseqs_db_path = use_gpu_camper ? params.camper_mmseqs_gpu_db : params.camper_mmseqs_db
         ch_camper_mmseqs_db = file(camper_mmseqs_db_path).exists() ? file(camper_mmseqs_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. CAMPER MMseqs2 ${use_gpu_camper ? 'gpu' : 'cpu'} database file not found at ${camper_mmseqs_db_path}")
-        index_mmseqs = true
         ch_camper_mmseqs_list = file(params.camper_mmseqs_list)
     }
 
     if (use_merops) {
         merops_db_path = use_gpu_merops ? params.merops_gpu_db : params.merops_db
         ch_merops_db = file(merops_db_path).exists() ? file(merops_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. MEROPS ${use_gpu_merops ? 'gpu' : 'cpu'} database file not found at ${merops_db_path}")
-        index_mmseqs = true
     }
 
     if (use_pfam) {
         ch_pfam_mmseqs_db = file(params.pfam_mmseq_db).exists() ? file(params.pfam_mmseq_db) : error("Error: If using --annotate, you must supply prebuilt databases. PFAM database file not found at ${params.pfam_mmseq_db}")
-        index_mmseqs = true
     }
 
     // if (use_heme) {
@@ -522,7 +506,6 @@ workflow DB_CHANNEL_SETUP {
     if (use_uniref) {
         uniref_db_path = use_gpu_uniref ? params.uniref_gpu_db : params.uniref_db
         ch_uniref_db = file(uniref_db_path).exists() ? file(uniref_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. UNIREF ${use_gpu_uniref ? 'gpu' : 'cpu'} database file not found at ${uniref_db_path}")
-        index_mmseqs = true
     }
 
     if (use_metals) {
@@ -540,13 +523,11 @@ workflow DB_CHANNEL_SETUP {
     if (use_card) {
         card_mmseqs_db_path = use_gpu_card ? params.card_gpu_db : params.card_db
         ch_card_mmseqs_db = file(card_mmseqs_db_path).exists() ? file(card_mmseqs_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. CARD MMseqs2 ${use_gpu_card ? 'gpu' : 'cpu'} database file not found at ${card_mmseqs_db_path}")
-        index_mmseqs = true
     }
 
     if (use_tcdb) {
         tcdb_db_path = use_gpu_tcdb ? params.tcdb_gpu_db : params.tcdb_db
         ch_tcdb_db = file(tcdb_db_path).exists() ? file(tcdb_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. TCDB ${use_gpu_tcdb ? 'gpu' : 'cpu'} database file not found at ${tcdb_db_path}")
-        index_mmseqs = true
     }
 
     if (use_dram_db) {
@@ -562,7 +543,6 @@ workflow DB_CHANNEL_SETUP {
     if (use_methyl) {
         methyl_db_path = use_gpu_methyl ? params.methyl_gpu_db : params.methyl_db
         ch_methyl_db = file(methyl_db_path).exists() ? file(methyl_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. METHYL ${use_gpu_methyl ? 'gpu' : 'cpu'} database file not found at ${methyl_db_path}")
-        index_mmseqs = true
     }
 
     if (use_fegenie) {
@@ -573,7 +553,6 @@ workflow DB_CHANNEL_SETUP {
         ch_canthyd_hmm_db = file(params.canthyd_hmm_db).exists() ? file(params.canthyd_hmm_db) : error("Error: If using --annotate, you must supply prebuilt databases. CANT_HYD HMM database file not found at ${params.canthyd_hmm_db}")
         canthyd_mmseqs_db_path = use_gpu_canthyd ? params.canthyd_mmseqs_gpu_db : params.canthyd_mmseqs_db
         ch_canthyd_mmseqs_db = file(canthyd_mmseqs_db_path).exists() ? file(canthyd_mmseqs_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. CANT_HYD MMseqs ${use_gpu_canthyd ? 'gpu' : 'cpu'} database file not found at ${canthyd_mmseqs_db_path}")
-        index_mmseqs = true
         ch_canthyd_mmseqs_list = file(params.canthyd_mmseqs_list)
     }
 
@@ -584,7 +563,6 @@ workflow DB_CHANNEL_SETUP {
     if (params.use_viral) {
         viral_db_path = use_gpu_viral ? params.viral_gpu_db : params.viral_db
         ch_viral_db = file(viral_db_path).exists() ? file(viral_db_path) : error("Error: If using --annotate, you must supply prebuilt databases. viral ${use_gpu_viral ? 'gpu' : 'cpu'} database file not found at ${viral_db_path}")
-        index_mmseqs = true
     }
 
     emit:
@@ -612,5 +590,4 @@ workflow DB_CHANNEL_SETUP {
     ch_canthyd_mmseqs_list
     ch_vogdb_db
     ch_viral_db
-    index_mmseqs
 }

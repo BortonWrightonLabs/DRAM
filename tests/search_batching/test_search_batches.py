@@ -28,10 +28,10 @@ class SearchBatchTests(unittest.TestCase):
         self.fixtures = self.folder / "fixtures"
         self.fixtures.mkdir()
         for name in ["alpha", "beta", "nohit", "medium", "large"]:
-            for suffix in [".faa", ".mmsdb", ".mmsdb.index", ".tsv"]:
+            for suffix in [".faa", ".tsv"]:
                 path = self.fixtures / (name + suffix)
                 path.write_text(name + "\n")
-                if suffix in [".faa", ".mmsdb"] and name in ["medium", "large"]:
+                if suffix == ".faa" and name in ["medium", "large"]:
                     with path.open("r+b") as handle:
                         handle.truncate(
                             (500 * 1024**2 if name == "medium" else 2 * 1024**3)
@@ -60,6 +60,8 @@ class SearchBatchTests(unittest.TestCase):
             script = mock_bin / name
             shutil.copyfile(HERE / "mock_tool.py", script)
             script.chmod(0o755)
+        # the real splitter, so batches are split back per sample as in production
+        shutil.copy(ROOT / "bin" / "split_mmseqs_batch.sh", mock_bin)
         self.config = self.folder / "test.config"
         self.config.write_text(f"""
 params {{
@@ -130,7 +132,7 @@ trace {{
             "main.nf", "--search_batch_size", "1", "--job_array_size", "1"
         )
         self.assertEqual(result.returncode, 0, result.stdout)
-        self.assertEqual(len(self.trace()), 20)
+        self.assertEqual(len(self.trace()), 15)
 
     def test_duplicate_names_fail(self):
         result = self.run_nextflow("helpers.nf", "--duplicate_test", "true")
@@ -142,21 +144,16 @@ trace {{
         result = self.run_nextflow("main.nf", *args)
         self.assertEqual(result.returncode, 0, result.stdout)
         rows = self.trace()
-        self.assertEqual(len(rows), 17)
+        self.assertEqual(len(rows), 12)
         for row in rows:
             resource = (Path(row["workdir"]) / "test_resources.txt").read_text().strip()
-            is_index = "INDEX_QUERIES" in row["name"]
             expected_queue = (
                 "kegg_only" if "MMSEQS_KEGG:" in row["name"] else "ordinary"
             )
             expected_time = (
-                "1h"
-                if is_index
-                else (
-                    "16h"
-                    if "SEARCH_SMALL" in row["name"]
-                    else ("1d 8h" if "SEARCH_MEDIUM" in row["name"] else "7d")
-                )
+                "16h"
+                if "SEARCH_SMALL" in row["name"]
+                else ("1d 8h" if "SEARCH_MEDIUM" in row["name"] else "7d")
             )
             self.assertEqual(resource, f"1|1 GB|{expected_time}|{expected_queue}")
         result = self.run_nextflow("main.nf", *args, "-resume")
@@ -174,11 +171,10 @@ trace {{
             "2.h",
         )
         self.assertEqual(result.returncode, 0, result.stdout)
-        self.assertEqual(len(self.trace()), 20)
+        self.assertEqual(len(self.trace()), 15)
         for row in self.trace():
-            expected_time = "1h" if "INDEX_QUERIES" in row["name"] else "2h"
             self.assertIn(
-                f"|{expected_time}|",
+                "|2h|",
                 (Path(row["workdir"]) / "test_resources.txt").read_text(),
             )
 
@@ -198,12 +194,12 @@ trace {{
             "main.nf", "--search_batch_size", "2", "--job_array_size", "2"
         )
         self.assertEqual(result.returncode, 0, result.stdout)
-        self.assertEqual(len(self.trace()), 17)
+        self.assertEqual(len(self.trace()), 12)
         submissions = (self.folder / "slurm-submissions.tsv").read_text().splitlines()
         self.assertTrue(
             any(line.startswith("array\t") for line in submissions), submissions
         )
-        self.assertLess(len(submissions), 17)
+        self.assertLess(len(submissions), 12)
 
 
 if __name__ == "__main__":
