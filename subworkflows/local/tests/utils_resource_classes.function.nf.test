@@ -206,4 +206,34 @@ nextflow_function {
             assert function.result == 12L
         }
     }
+
+    test("Search target uses the MMseqs2 index size") {
+        function "searchTarget"
+        when {
+            function {
+                """
+                input[0] = file("${projectDir}/subworkflows/local/tests/search_fixtures/mmseqs_db")
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result == [bytes: 12L, small: true]
+        }
+    }
+
+    test("Search target without an index uses the whole database") {
+        function "searchTarget"
+        when {
+            function {
+                """
+                input[0] = file("${projectDir}/subworkflows/local/tests/fixtures/flat.txt")
+                """
+            }
+        }
+        then {
+            assert function.success
+            assert function.result == [bytes: 5L, small: true]
+        }
+    }
 }

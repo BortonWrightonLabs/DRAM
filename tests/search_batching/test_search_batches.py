@@ -44,7 +44,8 @@ class SearchBatchTests(unittest.TestCase):
         target.mkdir()
         for db in ["kegg", "camper"]:
             (target / (db + ".mmsdb")).write_text(db + "\n")
-        with (target / "database-size-is-ignored").open("wb") as handle:
+        # 21 GiB sparse: search tasks are sized by their database (searchTarget())
+        with (target / "database-bulk").open("wb") as handle:
             handle.truncate(21 * 1024**3)
         mock_bin = self.fixtures / "bin"
         mock_bin.mkdir()
