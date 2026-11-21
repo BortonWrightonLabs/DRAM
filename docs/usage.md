@@ -181,6 +181,8 @@ HMM_SEARCH and MMSEQS_SEARCH requests come from both the input's class and the d
 
 MMseqs2 maps its whole index into memory, so the request follows the index: KEGG asks for about 206 GiB and UniRef about 411 GiB; the default `--max_memory` of 512 GB fits both. MMseqs2 judges memory from the machine, not the job's limit, and with too little memory it stalls until the time limit instead of failing. So before searching, each MMseqs task checks its memory against the index and stops with an error naming the size if it is too small. Raise `--max_memory` above the index size, or point the database parameter at a copy of the database without its `.idx*` files: without an index, DRAM passes `--split-memory-limit` and MMseqs2 splits the search to fit, which is slower but needs far less memory (KEGG ran in 40 GB).
 
+On a retry, search tasks grow only what ran out: memory doubles after exit code 137 (killed, usually out of memory), and time doubles after 140 or 143 (time limit). CPUs stay the same.
+
 With `--job_array_size`, Nextflow evaluates an array job's own request without task inputs, so search arrays ask for the `--max_cpus`, `--max_memory`, and `--max_time` caps. Each task inside the array still sizes itself.
 
 The following parameters cap a single task's request:
@@ -259,7 +261,7 @@ process {
 }
 ```
 
-Fixed overrides replace the default expressions, including their retry scaling and batching multipliers. The dynamic example preserves both for wall time. Defaults generally scale resources with `task.attempt` on retries, subject to the same caps; retries occur only when the error strategy allows them. Set requests to values supported by the chosen partition.
+Fixed overrides replace the default expressions, including their retry scaling and batching multipliers. The dynamic example preserves both for wall time. Most defaults scale resources with `task.attempt` on retries, subject to the same caps; the search labels instead grow only the resource that ran out ([Search resources](#search-resources)). Retries occur only when the error strategy allows them. Set requests to values supported by the chosen partition.
 
 For selector priority, `withName` overrides `withLabel`, which overrides unselected `process` defaults. An included process alias takes priority over its original name, and a fully qualified selector takes priority over either. A plain `process.memory` override therefore may not affect labeled DRAM tasks. See [Nextflow process selectors](https://www.nextflow.io/docs/stable/config.html#process-selectors).
 
