@@ -15,8 +15,8 @@ workflow DATABASE_TESTS {
     def info = fixture.resolve('info.tsv')
     HMM_KOFAM(hmm_queries, 1e-15, channel.value(fixture.resolve('target.hmm')), info, true, 'kofam')
     HMM_EMPTY(channel.empty(), 1e-15, channel.value(fixture.resolve('target.hmm')), info, false, 'empty')
-    MMSEQS_KEGG(mmseqs_queries, channel.value(fixture.resolve('target')), 60, 350, info, 'kegg')
-    MMSEQS_CAMPER(mmseqs_queries, channel.value(fixture.resolve('target')), 60, 350, info, 'camper')
+    MMSEQS_KEGG(mmseqs_queries, channel.value(fixture.resolve('target')), 60, 350, info, 'kegg', false)
+    MMSEQS_CAMPER(mmseqs_queries, channel.value(fixture.resolve('target')), 60, 350, info, 'camper', false)
 
     HMM_KOFAM.out.formatted_hits.map { name, result ->
         assert result.text.trim() == "${name}:kofam"

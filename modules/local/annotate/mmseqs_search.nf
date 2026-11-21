@@ -20,6 +20,7 @@ process MMSEQS_SEARCH {
     val( rbh_bit_score_threshold )
     path( db_descriptions, stageAs: "db_descriptions.tsv" )
     val( db_name )
+    val( sensitivity_rounds )  // search in rounds with task.ext.sensitivity_rounds_args (non-Pfam only)
 
 
     output:
@@ -30,6 +31,10 @@ process MMSEQS_SEARCH {
     script:
     if (query_fasta.size() != sample_names.size()) {
         error('MMseqs search batches need exactly one protein FASTA per sample')
+    }
+    def rounds_args = sensitivity_rounds ? task.ext.sensitivity_rounds_args : ''
+    if (sensitivity_rounds && !rounds_args) {
+        error("--mmseqs_sensitivity_rounds_dbs lists ${db_name}, but ext.sensitivity_rounds_args is empty for its search (see conf/modules.config)")
     }
     def descriptions = sample_names.withIndex().collect { input_fasta, index ->
         """
@@ -51,7 +56,7 @@ process MMSEQS_SEARCH {
     printf '%s\\n' ${sample_names.join(' ')} > batch_samples.txt
 
     if [ "${db_name}" != "pfam" ]; then
-        mmseqs search query.mmsdb ${db_name}.mmsdb mmseqs_out/hits.mmsdb mmseqs_out/tmp --threads ${task.cpus}
+        mmseqs search query.mmsdb ${db_name}.mmsdb mmseqs_out/hits.mmsdb mmseqs_out/tmp --threads ${task.cpus} ${rounds_args} ${task.ext.args ?: ''}
 
         # Filter to only hits with minimum bit score
         mmseqs filterdb --filter-column 2 --comparison-operator ge --comparison-value ${bit_score_threshold} --threads ${task.cpus} mmseqs_out/hits.mmsdb mmseqs_out/passing.mmsdb

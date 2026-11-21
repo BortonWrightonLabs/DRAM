@@ -300,6 +300,33 @@ Here each array contains up to 100 tasks, and each task searches up to ten input
 
 For every batching option, Nextflow caches and retries an entire batch task. A failed member fails the task, and retrying it repeats the other members too; retries occur only when the configured error strategy permits them. Changing the input set or batching parameters can change membership and reduce cache reuse. Per-sample output channels and published filenames are preserved. Start with small batches and increase them only when scheduler overhead is a demonstrated problem.
 
+## Optional MMseqs2 sensitivity rounds
+
+`--mmseqs_sensitivity_rounds_dbs kegg` searches the listed MMseqs databases in rising sensitivity rounds (`--start-sens 1 --sens-steps 3 -s 5.7`). MMseqs2 first searches every gene at low sensitivity, then sends only the genes still without a hit to the next, more sensitive round, ending at the default `-s 5.7`. It's off by default (`none`).
+
+This is the approach the [MMseqs2 user guide](https://mmseqs.com/latest/userguide.pdf) recommends under "How to find the best hit the fastest way". The guide says it can speed up best-hit searches 4–10 times. It also says there's a small chance the best hit is missed, because hits found at low sensitivity share more highly conserved k-mers, and that a higher start sensitivity (`--start-sens 4`) reduces this effect. To try that, set `ext.sensitivity_rounds_args` (below).
+
+The trade-off, measured on KEGG with 15 genomes (53,980 genes, one merged search):
+
+- About 7–8× less CPU time (48,192 s → about 6,200 s) and about 6× less wall time.
+- About 32 of 52,660 annotated genes (0.06%) change. 23 genes lost their hit, none of which had a KO; most were close to the 60-bit cutoff. Of the 9 genes whose KO changed, 3 lost their KO, 4 gained a KO from a weaker hit, and 2 swapped to a closely related KO.
+- Rounds can only make a best hit weaker, never stronger: a gene that finds a passing hit in an early round never reaches the later rounds, where a better hit might be.
+
+Rounds pay off on large databases such as KEGG and UniRef. On small databases they save little and can still swap in weaker hits. They apply to CPU searches only: a listed database that runs on GPU, Pfam (a profile search), or a database not in `--anno_dbs` is skipped with a warning. An unknown name stops the run.
+
+The flags come from `ext.sensitivity_rounds_args` on `MMSEQS_SEARCH` in `conf/modules.config`. To try other rounds, override it in your own config; the closure can read `db_name`, so the change can apply to one database (note that CANT-HYD's `db_name` is `cant_hyd`). The measured trade-off above applies only to the default flags.
+
+```groovy
+process {
+    withName: MMSEQS_SEARCH {
+        // KEGG starts at the higher sensitivity the MMseqs2 user guide suggests; the rest keep the default
+        ext.sensitivity_rounds_args = { db_name == 'kegg' ? '--start-sens 4 --sens-steps 2 -s 5.7' : '--start-sens 1 --sens-steps 3 -s 5.7' }
+    }
+}
+```
+
+`ext.args` on `MMSEQS_SEARCH` adds any other options to the `mmseqs search` step for non-Pfam databases, whether or not rounds are on. MMseqs2 rejects a flag given twice (`Duplicate parameter`), so change the rounds through `ext.sensitivity_rounds_args`, not by repeating `-s` in `ext.args`.
+
 ## Important Core Nextflow Options
 
 Nextflow provides many command-line options to control how the pipeline is run. Below are some of the most important ones for DRAM2 users. You will also notice that all Nextflow options can be seen by running:
