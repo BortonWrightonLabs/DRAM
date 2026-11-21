@@ -177,7 +177,7 @@ HMM_SEARCH and MMSEQS_SEARCH requests come from both the input's class and the d
 | CPUs, MMseqs | 2 | 6 / 12 / 24 |
 | Memory, HMM | 4 / 8 / 32 GB by input class | 4 / 8 / 32 GB |
 | Memory, MMseqs | index (or database) size + 1 GB per CPU + 4 GB | same |
-| Time | 8 / 16 / 168 hours × `search_batch_size` by input class | 8 / 16 / 168 hours × `search_batch_size` |
+| Time | 1 hour + ¼ of the big-database rate × `search_batch_size` | 1 hour + 1 / 2 / 24 hours × `search_batch_size` |
 
 MMseqs2 maps its whole index into memory, so the request follows the index: KEGG asks for about 206 GiB and UniRef about 411 GiB; the default `--max_memory` of 512 GB fits both. MMseqs2 judges memory from the machine, not the job's limit, and with too little memory it stalls until the time limit instead of failing. So before searching, each MMseqs task checks its memory against the index and stops with an error naming the size if it is too small. Raise `--max_memory` above the index size, or point the database parameter at a copy of the database without its `.idx*` files: without an index, DRAM passes `--split-memory-limit` and MMseqs2 splits the search to fit, which is slower but needs far less memory (KEGG ran in 40 GB).
 
@@ -303,7 +303,7 @@ When either batch size is greater than one, that stage waits for all its inputs 
 
 When batching is enabled, each database workflow waits for its input channel to finish and sorts by sample name before packing. This makes batch membership independent of task completion order, at the cost of delaying searches until all queries are ready. A batch's resource class comes from its largest individual protein query, whose size was measured once before database fan-out. The combined size of the batch, database size, and generated MMseqs index size do not affect its class; the database sets the rest of the request (see [Search resources](#search-resources)).
 
-CPU and memory follow [Search resources](#search-resources). Search wall time is multiplied by the configured `search_batch_size`, then capped by `max_time`. Even partial batches use that same multiplier so every array-capable process has uniform initial requests. Choose a smaller batch size or override the search resource labels if the resulting time cap is insufficient. Site overrides must also keep initial scheduler directives uniform within each array-capable process.
+CPU and memory follow [Search resources](#search-resources). Search wall time grows with the configured `search_batch_size` (one fixed hour plus a per-input rate), then is capped by `max_time`. Even partial batches use that same multiplier so every array-capable process has uniform initial requests. Choose a smaller batch size or override the search resource labels if the resulting time cap is insufficient. Site overrides must also keep initial scheduler directives uniform within each array-capable process.
 
 Batching and arrays can be used independently or together:
 
