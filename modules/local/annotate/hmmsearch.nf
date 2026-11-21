@@ -12,7 +12,8 @@ process HMM_SEARCH {
     input:
     tuple val(resource_class), val(sample_names),
         path(query_fastas, stageAs: 'queries/query??.faa', arity: '1..*'),
-        path(gene_locations, stageAs: 'locations/genes??.tsv', arity: '1..*')
+        path(gene_locations, stageAs: 'locations/genes??.tsv', arity: '1..*'),
+        val(target)  // searchTarget(): sizes CPUs, memory and time in conf/base.config
     val ( e_value )
     path( database_loc )
     path( hmm_info_path )

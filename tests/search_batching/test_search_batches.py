@@ -44,7 +44,8 @@ class SearchBatchTests(unittest.TestCase):
         target.mkdir()
         for db in ["kegg", "camper"]:
             (target / (db + ".mmsdb")).write_text(db + "\n")
-        with (target / "database-size-is-ignored").open("wb") as handle:
+        # 21 GiB sparse: search tasks are sized by their database (searchTarget())
+        with (target / "database-bulk").open("wb") as handle:
             handle.truncate(21 * 1024**3)
         mock_bin = self.fixtures / "bin"
         mock_bin.mkdir()
@@ -150,10 +151,11 @@ trace {{
             expected_queue = (
                 "kegg_only" if "MMSEQS_KEGG:" in row["name"] else "ordinary"
             )
+            # 1 h + per-genome time x batch size 2; both 21 GiB targets are big databases
             expected_time = (
-                "16h"
+                "3h"
                 if "SEARCH_SMALL" in row["name"]
-                else ("1d 8h" if "SEARCH_MEDIUM" in row["name"] else "7d")
+                else ("5h" if "SEARCH_MEDIUM" in row["name"] else "2d 1h")
             )
             self.assertEqual(resource, f"1|1 GB|{expected_time}|{expected_queue}")
         result = self.run_nextflow("main.nf", *args, "-resume")

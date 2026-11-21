@@ -689,7 +689,7 @@
                 },
                 "max_memory": {
                     "type": "string",
-                    "default": "200.GB",
+                    "default": "512.GB",
                     "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
                     "hidden": true,
                     "description": "Maximum memory that any single task can request, for example '64.GB'."

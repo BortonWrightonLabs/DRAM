@@ -161,17 +161,34 @@ Set `--resource_class_small_max_size '200.MB'` and `--resource_class_medium_max_
 
 Class thresholds control which resource requests an input receives. The independent `*_batch_size` and `*_batch_max_size` parameters control how many inputs share a task and which inputs may join a batch. To change CPU, memory, or time requests within a class, override the resource labels from `conf/base.config` in your custom config.
 
-Workload size is stored as per-sample channel metadata rather than re-read by every downstream database. DRAM measures the final decompressed/renamed input FASTA once for CALL_GENES, TRNA_SCAN, and RRNA_SCAN. After gene calling, it separately measures the called protein FASTA for every HMM/MMseqs search and the filtered FASTA for consumers such as QUAST and antiSMASH. Files, collections, and directory contents within one input are summed recursively. Database size, auxiliary description files, metadata tables, and the physical size of a generated MMseqs index are not included.
+Workload size is stored as per-sample channel metadata rather than re-read by every downstream database. DRAM measures the final decompressed/renamed input FASTA once for CALL_GENES, TRNA_SCAN, and RRNA_SCAN. After gene calling, it separately measures the called protein FASTA for every HMM/MMseqs search and the filtered FASTA for consumers such as QUAST and antiSMASH. Files, collections, and directory contents within one input are summed recursively. Auxiliary description files and metadata tables are not included. HMM and MMseqs searches are also sized by their database; see [Search resources](#search-resources).
 
 | Processes | Small | Medium | Large |
 | --- | --- | --- | --- |
 | CALL_GENES, TRNA_SCAN, RRNA_SCAN, and QUAST | 4 CPUs, 12 GB, 4 hours | 6 CPUs, 36 GB, 8 hours | 24 CPUs, 200 GB, 168 hours |
-| HMM_SEARCH and MMSEQS_SEARCH | 6 CPUs, 36 GB, 8 hours | 12 CPUs, 72 GB, 16 hours | 24 CPUs, 200 GB, 168 hours |
+
+### Search resources
+
+HMM_SEARCH and MMSEQS_SEARCH requests come from both the input's class and the database. A database is *small* when what the search holds is under 4 GiB: an MMseqs database's `.idx` index when it has one, otherwise the whole database. Small databases (MEROPS, CAMPER, CANT-HYD, CARD, TCDB, viral, and the small HMM sets) search in seconds; KOfam, VOG, Pfam, KEGG, and UniRef are big.
+
+| | Small database | Big database (input class small / medium / large) |
+| --- | --- | --- |
+| CPUs, HMM | 1 | 6 / 12 / 24 |
+| CPUs, MMseqs | 2 | 6 / 12 / 24 |
+| Memory, HMM | 4 / 8 / 32 GB by input class | 4 / 8 / 32 GB |
+| Memory, MMseqs | index (or database) size + 1 GB per CPU + 4 GB | same |
+| Time | 1 hour + ¼ of the big-database rate × `search_batch_size` | 1 hour + 1 / 2 / 24 hours × `search_batch_size` |
+
+MMseqs2 maps its whole index into memory, so the request follows the index: KEGG asks for about 206 GiB and UniRef about 411 GiB; the default `--max_memory` of 512 GB fits both. MMseqs2 judges memory from the machine, not the job's limit, and with too little memory it stalls until the time limit instead of failing. So before searching, each MMseqs task checks its memory against the index and stops with an error naming the size if it is too small. Raise `--max_memory` above the index size, or point the database parameter at a copy of the database without its `.idx*` files: without an index, DRAM passes `--split-memory-limit` and MMseqs2 splits the search to fit, which is slower but needs far less memory (KEGG ran in 40 GB).
+
+On a retry, search tasks grow only what ran out: memory doubles after exit code 137 (killed, usually out of memory), and time doubles after 140 or 143 (time limit). CPUs stay the same.
+
+With `--job_array_size`, Nextflow evaluates an array job's own request without task inputs, so search arrays ask for the `--max_cpus`, `--max_memory`, and `--max_time` caps. Each task inside the array still sizes itself.
 
 The following parameters cap a single task's request:
 
 - `--max_cpus 24`
-- `--max_memory '200.GB'`
+- `--max_memory '512.GB'`
 - `--max_time '168.h'`
 
 These are upper limits only; raising them does not increase a process request. A cluster configuration can override label resources when larger or smaller defaults are required.
@@ -239,11 +256,12 @@ To retain size-based CPU/memory requests while changing only search wall time, u
 process {
     withLabel: 'process_mmseqs_search' {
         time = { (resource_class == 'small' ? 12.h : resource_class == 'medium' ? 24.h : 48.h) * params.search_batch_size * task.attempt }
+        // In a job array's own request task inputs are absent; read them with delegate.get('target') if you use them.
     }
 }
 ```
 
-Fixed overrides replace the default expressions, including their retry scaling and batching multipliers. The dynamic example preserves both for wall time. Defaults generally scale resources with `task.attempt` on retries, subject to the same caps; retries occur only when the error strategy allows them. Set requests to values supported by the chosen partition.
+Fixed overrides replace the default expressions, including their retry scaling and batching multipliers. The dynamic example preserves both for wall time. Most defaults scale resources with `task.attempt` on retries, subject to the same caps; the search labels instead grow only the resource that ran out ([Search resources](#search-resources)). Retries occur only when the error strategy allows them. Set requests to values supported by the chosen partition.
 
 For selector priority, `withName` overrides `withLabel`, which overrides unselected `process` defaults. An included process alias takes priority over its original name, and a fully qualified selector takes priority over either. A plain `process.memory` override therefore may not affect labeled DRAM tasks. See [Nextflow process selectors](https://www.nextflow.io/docs/stable/config.html#process-selectors).
 
@@ -283,9 +301,9 @@ When either batch size is greater than one, that stage waits for all its inputs 
 
 `--search_batch_max_size '1.GB'` (the default) is the largest individual query input allowed to join a batch. Inputs at or below the limit can be grouped up to `search_batch_size`, regardless of their combined size. An input above the limit runs alone. Database size is never considered. These options affect HMM and MMseqs searches only.
 
-When batching is enabled, each database workflow waits for its input channel to finish and sorts by sample name before packing. This makes batch membership independent of task completion order, at the cost of delaying searches until all queries are ready. A batch's resource class comes from its largest individual protein query, whose size was measured once before database fan-out. The combined size of the batch, database size, and generated MMseqs index size do not affect its class.
+When batching is enabled, each database workflow waits for its input channel to finish and sorts by sample name before packing. This makes batch membership independent of task completion order, at the cost of delaying searches until all queries are ready. A batch's resource class comes from its largest individual protein query, whose size was measured once before database fan-out. The combined size of the batch, database size, and generated MMseqs index size do not affect its class; the database sets the rest of the request (see [Search resources](#search-resources)).
 
-CPU and memory follow the class defaults above. Search wall time is multiplied by the configured `search_batch_size`, then capped by `max_time`. Even partial batches use that same multiplier so every array-capable process has uniform initial requests. Choose a smaller batch size or override the search resource labels if the resulting time cap is insufficient. Site overrides must also keep initial scheduler directives uniform within each array-capable process.
+CPU and memory follow [Search resources](#search-resources). Search wall time grows with the configured `search_batch_size` (one fixed hour plus a per-input rate), then is capped by `max_time`. Even partial batches use that same multiplier so every array-capable process has uniform initial requests. Choose a smaller batch size or override the search resource labels if the resulting time cap is insufficient. Site overrides must also keep initial scheduler directives uniform within each array-capable process.
 
 Batching and arrays can be used independently or together:
 

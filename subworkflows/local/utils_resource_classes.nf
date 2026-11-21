@@ -54,3 +54,20 @@ def resourceClass(bytes) {
     }
     return 'large'
 }
+
+/*
+ * Size of a search target, for sizing search tasks by database rather than
+ * only by genome. `bytes` is what the search has to hold: an MMseqs2
+ * database's `.idx` when it has one (MMseqs2 maps the whole index), otherwise
+ * the whole database. `small` marks databases whose searches take seconds, so
+ * extra CPUs would only sit reserved.
+ */
+def searchTarget(database) {
+    def index = database.isDirectory()
+        ? database.listFiles().findAll { it.isFile() && it.name.endsWith('.idx') }.max { it.size() }
+        : null
+    def bytes = index ? index.size() as long : resourceBytes(database)
+    // 4 GiB separates the seconds-long searches (MEROPS index 3.1 GiB, the HMM
+    // sets under 100 MiB) from KOfam, VOG, Pfam, KEGG and UniRef.
+    return [bytes: bytes, small: bytes < 4L * 1024L * 1024L * 1024L]
+}

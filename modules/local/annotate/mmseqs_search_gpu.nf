@@ -14,7 +14,8 @@ process MMSEQS_SEARCH_GPU {
     tuple( val(resource_class),
         val(sample_names),
         path(query_fasta, stageAs: 'query/*', arity: '1..*'),
-        path(gene_locations, stageAs: 'locations/genes??.tsv', arity: '1..*')
+        path(gene_locations, stageAs: 'locations/genes??.tsv', arity: '1..*'),
+        val(target)  // searchTarget(): sizes CPUs, memory and time in conf/base.config
         )
     path( mmseqs_database )
     val( bit_score_threshold )
